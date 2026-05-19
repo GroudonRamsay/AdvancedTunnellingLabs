@@ -12,29 +12,31 @@
         <meta name="author" content="Miguel">
       
       
-        <link rel="canonical" href="https://groudonramsay.github.io/AdvancedTunnellingLabs/">
+        <link rel="canonical" href="https://groudonramsay.github.io/AdvancedTunnellingLabs/wireguard/">
       
       
+        <link rel="prev" href="../macsec/troubleshooting/">
       
-        <link rel="next" href="macsec/">
+      
+        <link rel="next" href="linux/">
       
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Advanced Tunnelling Labs</title>
+        <title>Overview - Advanced Tunnelling Labs</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,9 +55,9 @@
       
     
     
-      <link rel="stylesheet" href="stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#advanced-tunnelling-labs" class="md-skip">
+        <a href="#wireguard" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +98,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Advanced Tunnelling Labs" class="md-header__button md-logo" aria-label="Advanced Tunnelling Labs" data-md-component="logo">
+    <a href=".." title="Advanced Tunnelling Labs" class="md-header__button md-logo" aria-label="Advanced Tunnelling Labs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -116,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Overview
             
           </span>
         </div>
@@ -226,11 +228,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
         
   
   
@@ -251,7 +251,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="macsec/" class="md-tabs__link">
+        <a href="../macsec/" class="md-tabs__link">
           
   
   
@@ -267,11 +267,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="wireguard/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -291,7 +293,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="ipsec/" class="md-tabs__link">
+        <a href="../ipsec/" class="md-tabs__link">
           
   
   
@@ -311,7 +313,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="tls/" class="md-tabs__link">
+        <a href="../tls/" class="md-tabs__link">
           
   
   
@@ -331,7 +333,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="dtls/" class="md-tabs__link">
+        <a href="../dtls/" class="md-tabs__link">
           
   
   
@@ -351,7 +353,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="ssh/" class="md-tabs__link">
+        <a href="../ssh/" class="md-tabs__link">
           
   
   
@@ -391,7 +393,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Advanced Tunnelling Labs" class="md-nav__button md-logo" aria-label="Advanced Tunnelling Labs" data-md-component="logo">
+    <a href=".." title="Advanced Tunnelling Labs" class="md-nav__button md-logo" aria-label="Advanced Tunnelling Labs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -418,37 +420,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -464,48 +439,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Features
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#technologies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Technologies
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -571,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="macsec/" class="md-nav__link">
+      <a href="../macsec/" class="md-nav__link">
         
   
   
@@ -599,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="macsec/sr-linux/" class="md-nav__link">
+      <a href="../macsec/sr-linux/" class="md-nav__link">
         
   
   
@@ -627,7 +560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="macsec/containerlab/" class="md-nav__link">
+      <a href="../macsec/containerlab/" class="md-nav__link">
         
   
   
@@ -655,7 +588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="macsec/troubleshooting/" class="md-nav__link">
+      <a href="../macsec/troubleshooting/" class="md-nav__link">
         
   
   
@@ -687,28 +620,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -726,7 +662,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -741,10 +677,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="wireguard/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -760,6 +723,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cryptography
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typical-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Use Cases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topics-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topics Covered
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -772,7 +821,7 @@
   
   
     <li class="md-nav__item">
-      <a href="wireguard/linux/" class="md-nav__link">
+      <a href="linux/" class="md-nav__link">
         
   
   
@@ -800,7 +849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="wireguard/ospf/" class="md-nav__link">
+      <a href="ospf/" class="md-nav__link">
         
   
   
@@ -828,7 +877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="wireguard/troubleshooting/" class="md-nav__link">
+      <a href="troubleshooting/" class="md-nav__link">
         
   
   
@@ -917,7 +966,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ipsec/" class="md-nav__link">
+      <a href="../ipsec/" class="md-nav__link">
         
   
   
@@ -945,7 +994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ipsec/ikev2/" class="md-nav__link">
+      <a href="../ipsec/ikev2/" class="md-nav__link">
         
   
   
@@ -973,7 +1022,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ipsec/strongswan/" class="md-nav__link">
+      <a href="../ipsec/strongswan/" class="md-nav__link">
         
   
   
@@ -1001,7 +1050,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ipsec/troubleshooting/" class="md-nav__link">
+      <a href="../ipsec/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1090,7 +1139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tls/" class="md-nav__link">
+      <a href="../tls/" class="md-nav__link">
         
   
   
@@ -1118,7 +1167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tls/openssl/" class="md-nav__link">
+      <a href="../tls/openssl/" class="md-nav__link">
         
   
   
@@ -1146,7 +1195,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tls/certificates/" class="md-nav__link">
+      <a href="../tls/certificates/" class="md-nav__link">
         
   
   
@@ -1174,7 +1223,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tls/troubleshooting/" class="md-nav__link">
+      <a href="../tls/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1263,7 +1312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dtls/" class="md-nav__link">
+      <a href="../dtls/" class="md-nav__link">
         
   
   
@@ -1291,7 +1340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dtls/openssl/" class="md-nav__link">
+      <a href="../dtls/openssl/" class="md-nav__link">
         
   
   
@@ -1319,7 +1368,7 @@
   
   
     <li class="md-nav__item">
-      <a href="dtls/troubleshooting/" class="md-nav__link">
+      <a href="../dtls/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1408,7 +1457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ssh/" class="md-nav__link">
+      <a href="../ssh/" class="md-nav__link">
         
   
   
@@ -1436,7 +1485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ssh/keys/" class="md-nav__link">
+      <a href="../ssh/keys/" class="md-nav__link">
         
   
   
@@ -1464,7 +1513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ssh/hardening/" class="md-nav__link">
+      <a href="../ssh/hardening/" class="md-nav__link">
         
   
   
@@ -1492,7 +1541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ssh/troubleshooting/" class="md-nav__link">
+      <a href="../ssh/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1558,10 +1607,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#technologies" class="md-nav__link">
+  <a href="#cryptography" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Technologies
+        Cryptography
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typical-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Use Cases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#topics-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Topics Covered
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Configuration
       
     </span>
   </a>
@@ -1588,51 +1681,95 @@
   
 
 
-<h1 id="advanced-tunnelling-labs">Advanced Tunnelling Labs</h1>
-<p>Welcome to the Advanced Tunnelling Labs documentation portal.</p>
-<p>This site contains practical labs and deployment guides for:</p>
-<ul>
-<li>MACsec</li>
-<li>WireGuard</li>
-<li>IPsec</li>
-<li>TLS</li>
-<li>DTLS</li>
-<li>SSH</li>
-</ul>
+<h1 id="wireguard">WireGuard</h1>
+<p>WireGuard is a modern Layer 3 VPN protocol focused on simplicity, performance, and cryptographic security.</p>
 <hr />
 <h2 id="features">Features</h2>
 <ul>
-<li>Full configuration examples</li>
-<li>Containerlab topologies</li>
-<li>SR Linux integration</li>
-<li>Linux networking</li>
-<li>OpenSSL usage</li>
-<li>Troubleshooting workflows</li>
-<li>Security hardening guidance</li>
+<li>Minimal configuration</li>
+<li>High performance</li>
+<li>Modern cryptography</li>
+<li>UDP-based transport</li>
+<li>Simple key management</li>
+<li>Cross-platform support</li>
 </ul>
 <hr />
-<h2 id="technologies">Technologies</h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">MACsec</label><label for="__tabbed_1_2">WireGuard</label><label for="__tabbed_1_3">IPsec</label><label for="__tabbed_1_4">TLS</label><label for="__tabbed_1_5">DTLS</label><label for="__tabbed_1_6">SSH</label></div>
+<h2 id="cryptography">Cryptography</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Algorithm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Key Exchange</td>
+<td>Curve25519</td>
+</tr>
+<tr>
+<td>Encryption</td>
+<td>ChaCha20</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td>Poly1305</td>
+</tr>
+<tr>
+<td>Hashing</td>
+<td>BLAKE2s</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="typical-use-cases">Typical Use Cases</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Site-to-Site VPN</label><label for="__tabbed_1_2">Remote Access</label><label for="__tabbed_1_3">Lab Topologies</label><label for="__tabbed_1_4">Container Networking</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>Layer 2 encryption using IEEE 802.1AE.</p>
+<p>Connect remote networks securely.</p>
 </div>
 <div class="tabbed-block">
-<p>Modern lightweight VPN technology.</p>
+<p>Secure remote user connectivity.</p>
 </div>
 <div class="tabbed-block">
-<p>Enterprise-grade encrypted tunnelling.</p>
+<p>Encrypted routing experiments.</p>
 </div>
 <div class="tabbed-block">
-<p>Transport Layer Security for applications.</p>
-</div>
-<div class="tabbed-block">
-<p>Datagram TLS for UDP-based applications.</p>
-</div>
-<div class="tabbed-block">
-<p>Secure remote administration and tunnelling.</p>
+<p>Secure inter-container communication.</p>
 </div>
 </div>
+</div>
+<hr />
+<h2 id="example-topology">Example Topology</h2>
+<pre class="mermaid"><code>graph LR
+    A[WG Node 1] --- B[Internet]
+    B --- C[WG Node 2]</code></pre>
+<hr />
+<h2 id="topics-covered">Topics Covered</h2>
+<ul>
+<li>Linux WireGuard setup</li>
+<li>Peer configuration</li>
+<li>OSPF over WireGuard</li>
+<li>Routing integration</li>
+<li>MTU tuning</li>
+<li>Containerlab deployment</li>
+<li>Troubleshooting</li>
+</ul>
+<hr />
+<h2 id="example-configuration">Example Configuration</h2>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[Interface]</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">Address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">10.10.10.1/24</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">PrivateKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;private-key&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="na">ListenPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">51820</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">[Peer]</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">PublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;peer-public-key&gt;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">AllowedIPs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">10.10.10.2/32</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">Endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.1.10:51820</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Incorrect MTU values commonly cause fragmentation and tunnel instability.</p>
 </div>
 
 
@@ -1670,15 +1807,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
+          
+          <a href="../macsec/troubleshooting/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Troubleshooting">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Troubleshooting
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="macsec/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+          <a href="linux/" class="md-footer__link md-footer__link--next" aria-label="Next: Linux Setup">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Overview
+                Linux Setup
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1731,10 +1884,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
