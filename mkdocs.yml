@@ -1,7 +1,16 @@
 site_name: Advanced Tunnelling Labs
 site_url: https://groudonramsay.github.io/AdvancedTunnellingLabs/
+site_description: Advanced labs for MACsec, WireGuard, IPsec, TLS, DTLS and SSH
+site_author: Miguel
+
+repo_url: https://github.com/groudonramsay/AdvancedTunnellingLabs
+repo_name: groudonramsay/AdvancedTunnellingLabs
+
 theme:
   name: material
+
+  language: en
+
   palette:
     - scheme: default
       primary: indigo
@@ -9,9 +18,135 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
+
     - scheme: slate
       primary: indigo
       accent: indigo
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+
+  features:
+    # Navigation
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+
+    # Search
+    - search.suggest
+    - search.highlight
+    - search.share
+
+    # Content
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+
+    # TOC
+    - toc.follow
+
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  # Code highlighting
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+
+  # Admonitions
+  - admonition
+  - pymdownx.details
+
+  # Tabs
+  - pymdownx.tabbed:
+      alternate_style: true
+
+  # Better lists
+  - sane_lists
+
+  # Tables
+  - tables
+
+  # Task lists
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+  # Emoji
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator:
+        !!python/name:material.extensions.emoji.to_svg # Keyboard keys
+
+  - pymdownx.keys
+
+  # Mermaid diagrams
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format:
+            !!python/name:pymdownx.superfences.fence_code_format # Footnotes
+
+  - footnotes
+
+  # Attribute lists
+  - attr_list
+
+plugins:
+  - search
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/groudonramsay
+
+nav:
+  - Home: index.md
+
+  - MACsec:
+      - Overview: macsec/index.md
+      - SR Linux: macsec/sr-linux.md
+      - Containerlab: macsec/containerlab.md
+      - Troubleshooting: macsec/troubleshooting.md
+
+  - WireGuard:
+      - Overview: wireguard/index.md
+      - Linux Setup: wireguard/linux.md
+      - OSPF Integration: wireguard/ospf.md
+      - Troubleshooting: wireguard/troubleshooting.md
+
+  - IPsec:
+      - Overview: ipsec/index.md
+      - IKEv2: ipsec/ikev2.md
+      - strongSwan: ipsec/strongswan.md
+      - Troubleshooting: ipsec/troubleshooting.md
+
+  - TLS:
+      - Overview: tls/index.md
+      - OpenSSL: tls/openssl.md
+      - Certificates: tls/certificates.md
+      - Troubleshooting: tls/troubleshooting.md
+
+  - DTLS:
+      - Overview: dtls/index.md
+      - OpenSSL DTLS: dtls/openssl.md
+      - Troubleshooting: dtls/troubleshooting.md
+
+  - SSH:
+      - Overview: ssh/index.md
+      - Key Authentication: ssh/keys.md
+      - Hardening: ssh/hardening.md
+      - Troubleshooting: ssh/troubleshooting.md

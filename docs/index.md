@@ -1,17 +1,52 @@
-# Welcome to MkDocs
+# Advanced Tunnelling Labs
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome to the Advanced Tunnelling Labs documentation portal.
 
-## Commands
+This site contains practical labs and deployment guides for:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- MACsec
+- WireGuard
+- IPsec
+- TLS
+- DTLS
+- SSH
 
-## Project layout
+---
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Features
+
+- Full configuration examples
+- Containerlab topologies
+- SR Linux integration
+- Linux networking
+- OpenSSL usage
+- Troubleshooting workflows
+- Security hardening guidance
+
+---
+
+## Technologies
+
+=== "MACsec"
+
+    Layer 2 encryption using IEEE 802.1AE.
+
+=== "WireGuard"
+
+    Modern lightweight VPN technology.
+
+=== "IPsec"
+
+    Enterprise-grade encrypted tunnelling.
+
+=== "TLS"
+
+    Transport Layer Security for applications.
+
+=== "DTLS"
+
+    Datagram TLS for UDP-based applications.
+
+=== "SSH"
+
+    Secure remote administration and tunnelling.
