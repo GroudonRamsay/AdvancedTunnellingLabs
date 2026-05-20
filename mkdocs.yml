@@ -87,6 +87,7 @@ markdown_extensions:
       emoji_generator:
         !!python/name:material.extensions.emoji.to_svg # Keyboard keys
 
+
   - pymdownx.keys
 
   # Mermaid diagrams
@@ -96,6 +97,7 @@ markdown_extensions:
           class: mermaid
           format:
             !!python/name:pymdownx.superfences.fence_code_format # Footnotes
+
 
   - footnotes
 
@@ -115,6 +117,12 @@ extra:
 
 nav:
   - Home: index.md
+
+  - ContainerLab:
+      - Overview: containerlab/index.md
+
+  - GNS3:
+      - Overview: gns3/index.md
 
   - MACsec:
       - Overview: macsec/index.md
