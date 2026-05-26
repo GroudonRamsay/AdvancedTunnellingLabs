@@ -1,74 +1,96 @@
-# Containerlab
+# Containerlab Setup
 
 Containerlab is a container-based network emulation framework designed for rapid deployment of virtual networking laboratories.
 
-It enables the creation of complex topologies using Docker containers and virtual network operating systems. Our focus will
-be the usage of Nokia´s SR SIM.
+It enables engineers to quickly build realistic network topologies using several router images, the most important for us being Nokia´s SR SIM.
 
-## Features
+Containerlab uses Docker and Linux networking primitives to interconnect virtual nodes with high performance and minimal resource consumption.
 
-- Lightweight deployment
-- Fast topology startup
-- Native Linux networking
-- Docker integration
-- YAML-based topology definitions
-- Integrated packet captures
-- Automation friendly
+# Main Capabilities
 
-## Architecture
+- Fast Topology Deployment: Labs can be deployed in seconds using YAML topology definitions.
 
-```mermaid
-graph LR
-    A[Containerlab] --> B[Docker]
-    B --> C[Virtual Routers]
-    B --> D[Linux Hosts]
-    B --> E[Virtual Switches]
-```
+- Multi-Vendor Support: Containerlab supports numerous network operating systems and Linux distributions.
 
----
+- Native Linux Networking: Containerlab uses Linux bridges, namespaces, Docker networking.
 
-## Installation
+- Automation Friendly: Topology files are fully declarative and integrate easily with Git, Ansible and Python automation.
 
-## Install Docker
+- Packet Captures: Packet captures can be performed directly through the CLI or through WireShark containers through ContainerLab´s VSCode extension.
 
-=== "Ubuntu"
+# Recommended Environment
 
-    ```bash
-    sudo apt update
-    sudo apt install docker.io -y
-    sudo systemctl enable docker
-    sudo systemctl start docker
-    ```
+Containerlab is native to Linux, as such, we recommend using it in a native Linux computer, or running it in an Ubuntu VM, using VMware or VirtualBox.
 
-=== "Debian"
+!!! warning
 
-    ```bash
-    sudo apt update
-    sudo apt install docker.io -y
-    ```
+    Beware that large ContainerLab deployments might consume significant resources. As such, ensure that your device has the necessary resources to run ContainerLab, especially if it is a Virtual Machine.
 
----
+# Prerequisites
 
-## Install Containerlab
+Before installing Containerlab, install:
+
+- Docker
+- VSCode
+
+# Installation
+
+The ContainerLab team has prepared a command that should install all necessary components:
 
 ```bash
-bash -c "$(curl -sL https://get.containerlab.dev)"
+curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
 ```
 
-Verify installation:
+# VSCode Extensions
 
-```bash
-containerlab version
+ContainerLab has an extension that allows it to be fully run through a GUI in VSCode. This is very helpful to start working in ContainerLab and performing the laboratories as simply as possible.
+Besides the ContainerLab extension, we recommend others that help making its usage significantly better:
+
+| Extension    | Purpose            |
+| ------------ | ------------------ |
+| Containerlab | Topology support   |
+| YAML         | YAML syntax        |
+| Docker       | Docker integration |
+
+# Installing the ContainerLab VSCode Extension
+
+Open VSCode.
+
+Navigate to:
+
+```text
+Extensions → Search "Containerlab"
 ```
 
----
+Install:
 
-## Basic Topology
+```text
+Containerlab
+by srl-labs
+```
 
-Create a file named `lab.clab.yml`.
+# Features of the VSCode Extension
+
+The extension provides tools to visualize your topology and undeployed labs, deploy, destroy and redeploy your lab, access your devices through Shell and SSH and capture traffic between your devices with an in-built docker container with a WireShark image.
+
+# Using Containerlab with VSCode
+
+Create the folder where you want your lab to be in.
+
+```text
+Explorer → New Folder → clab-test
+```
+
+Create a topology file:
+
+```text
+clab-test.clab.yml
+```
+
+A base topology for two Alpine devices connected to each other is as follows:
 
 ```yaml
-name: simple-lab
+name: clab-test
 
 topology:
   nodes:
@@ -84,141 +106,31 @@ topology:
     - endpoints: ["r1:eth1", "r2:eth1"]
 ```
 
----
+The ContainerLab extension allows topology deployment directly from the editor.
 
-## Deploy the Lab
+Right-click the topology file and select:
 
-```bash
-sudo containerlab deploy -t lab.clab.yml
+```text
+Deploy
 ```
 
----
+To close your laboratory select the topology file again and select:
 
-## Inspect Running Nodes
-
-```bash
-docker ps
+```text
+Destroy
 ```
 
-```bash
-sudo containerlab inspect -t lab.clab.yml
-```
+Another way of using this, is by going directly to the ContainerLab tab in VSCode, choosing the undeployed lab, and deploying it from there.
 
----
+To configure a router directly through its CLI, you can access it through the extension, selecting the SSH option.
 
-## Access Containers
+To capture packets in your lab, choose the port where the capture will occur and select the Capture option.
 
-```bash
-docker exec -it clab-simple-lab-r1 sh
-```
+# Best Practices
 
----
-
-## Destroy the Lab
-
-```bash
-sudo containerlab destroy -t lab.clab.yml
-```
-
----
-
-## Nokia SR Linux Example
-
-```yaml
-name: srlab
-
-topology:
-  nodes:
-    r1:
-      kind: nokia_srlinux
-      image: ghcr.io/nokia/srlinux
-
-    r2:
-      kind: nokia_srlinux
-      image: ghcr.io/nokia/srlinux
-
-  links:
-    - endpoints: ["r1:e1-1", "r2:e1-1"]
-```
-
-Deploy:
-
-```bash
-sudo containerlab deploy -t srlab.clab.yml
-```
-
----
-
-## Useful Commands
-
-| Command                | Purpose                 |
-| ---------------------- | ----------------------- |
-| `containerlab deploy`  | Start topology          |
-| `containerlab destroy` | Remove topology         |
-| `containerlab inspect` | Show topology info      |
-| `docker ps`            | List running containers |
-| `docker exec`          | Access containers       |
-
----
-
-## Packet Capture
-
-Capture traffic directly on links:
-
-```bash
-sudo tcpdump -i br-clab
-```
-
-Or capture inside a node:
-
-```bash
-docker exec -it clab-simple-lab-r1 tcpdump -i eth1
-```
-
-## Troubleshooting
-
-## Containers Not Starting
-
-Check Docker status:
-
-```bash
-sudo systemctl status docker
-```
-
----
-
-## Interface Issues
-
-Verify Linux interfaces:
-
-```bash
-ip link show
-```
-
----
-
-## Bridge Problems
-
-Inspect Linux bridges:
-
-```bash
-bridge link
-```
-
----
-
-## Verify Containerlab Topology
-
-```bash
-sudo containerlab inspect -t lab.clab.yml
-```
-
----
-
-!!! warning
-
-    Containerlab requires Linux kernel networking support and performs best on native Linux environments.
-
-!!! note
-
-    Windows users should preferably run Containerlab inside WSL2 or a Linux virtual machine.
+- Use Git for topology versioning
+- Keep configs in separate folders
+- Use consistent interface naming
+- Capture traffic frequently to troubleshoot your labs
+- Validate Linux bridges carefully
+- Document addressing schemes
