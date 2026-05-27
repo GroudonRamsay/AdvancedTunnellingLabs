@@ -104,6 +104,10 @@ markdown_extensions:
   # Attribute lists
   - attr_list
 
+  # Image Extensions
+  - md_in_html
+  - pymdownx.blocks.caption
+
 plugins:
   - search
 
