@@ -780,15 +780,48 @@ sudo ip link set dev MACBridge2 promisc on
 
 This configuration ensures the bridges allow the necessary MKA and MACsec traffic to flow through, allowing the CAs to form, then the SAs and IS-IS to create its database, allowing packets to go from host1 to host2 fully encrypted.
 
-# Deploy the Laboratory
+# Laboratory Experiments
 
-Start the topology:
+Now that we have completed the laboratory setup, including its routers, hosts and linux bridges, we can begin with the experimental section, seeing MKA and MACsec in action, testing their features and learning about their inner workings.
 
-```bash
-sudo containerlab deploy -t macsec-main-lab.clab.yml
+## Deploy your laboratory
+
+Let´s begin with deploying our laboratory. Go to the ContainerLab page in VSCode, open the folder with your laboratory and select Deploy.
+
+<figure markdown id="figure-4">
+  ![Figure 4: Deploy function](../images/DeployFunction.png){width="200"}
+  <figcaption>Figure 4: Deploy Function</figcaption>
+</figure>
+
+When the deployment is finished you should have your laboratory and its devices appear in the deployed section.
+
+<figure markdown id="figure-5">
+  ![Figure 5: Deployed lab](../images/Deployedlab.png){width="200"}
+  <figcaption>Figure 5: Deployed Lab</figcaption>
+</figure>
+
+## Verify MKA, MACsec and IS-IS
+
+Now that everything is running, access all four routers, and ensure that MKA has live peers, that MACsec has the CAs formed and that the routing table displays the subnets learnt from IS-IS.
+
+To check the first two, you can run the following commands:
+
+```srl
+show macsec connectivity-association
+show macsec mka-session
 ```
 
----
+The first command will show the CAs present at that router, and the second will display all the peers that are running MKA with the selected router.
+
+??? question "How many CAs does R1 have? What about the other routers? Is there a difference between them?"
+
+    !!! solution "R1 has one CA, MACSEC_12, since it is the only association it participates in. R3 also participates in only one CA, MACSEC_23. The other two routers, R2 and R4, differ from the previous two, since they participate in two associations at the same time, showing in their tables both MACSEC_12 and MACSEC_23."
+
+After this check being positive, we will check the routing table to ensure we are capable of communicating between the two hosts. To do that we use the command:
+
+```srl
+show router route-table
+```
 
 # Verify Nodes
 
