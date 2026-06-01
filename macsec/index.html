@@ -2439,38 +2439,64 @@ As seen in Figure 1, protected frames include a MACsec Security Tag and Integrit
 </span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>sudo<span class="w"> </span>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>dev<span class="w"> </span>MACBridge2<span class="w"> </span>promisc<span class="w"> </span>on
 </span></code></pre></div>
 <p>This configuration ensures the bridges allow the necessary MKA and MACsec traffic to flow through, allowing the CAs to form, then the SAs and IS-IS to create its database, allowing packets to go from host1 to host2 fully encrypted.</p>
-<h1 id="deploy-the-laboratory">Deploy the Laboratory</h1>
-<p>Start the topology:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>containerlab<span class="w"> </span>deploy<span class="w"> </span>-t<span class="w"> </span>macsec-main-lab.clab.yml
+<h1 id="laboratory-experiments">Laboratory Experiments</h1>
+<p>Now that we have completed the laboratory setup, including its routers, hosts and linux bridges, we can begin with the experimental section, seeing MKA and MACsec in action, testing their features and learning about their inner workings.</p>
+<h2 id="deploy-your-laboratory">Deploy your laboratory</h2>
+<p>Let´s begin with deploying our laboratory. Go to the ContainerLab page in VSCode, open the folder with your laboratory and select Deploy.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: Deploy function" src="../images/DeployFunction.png" width="200" />
+  </p>
+<figcaption>Figure 4: Deploy Function</figcaption>
+</figure>
+<p>When the deployment is finished you should have your laboratory and its devices appear in the deployed section.</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: Deployed lab" src="../images/Deployedlab.png" width="200" />
+  </p>
+<figcaption>Figure 5: Deployed Lab</figcaption>
+</figure>
+<h2 id="verify-mka-macsec-and-is-is">Verify MKA, MACsec and IS-IS</h2>
+<p>Now that everything is running, access all four routers, and ensure that MKA has live peers, that MACsec has the CAs formed and that the routing table displays the subnets learnt from IS-IS.</p>
+<p>To check the first two, you can run the following commands:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>show macsec connectivity-association
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>show macsec mka-session
 </span></code></pre></div>
-<hr />
+<p>The first command will show the CAs present at that router, and the second will display all the peers that are running MKA with the selected router.</p>
+<details class="question">
+<summary>How many CAs does R1 have? What about the other routers? Is there a difference between them?</summary>
+<div class="admonition solution">
+<p class="admonition-title">R1 has one CA, MACSEC_12, since it is the only association it participates in. R3 also participates in only one CA, MACSEC_23. The other two routers, R2 and R4, differ from the previous two, since they participate in two associations at the same time, showing in their tables both MACSEC_12 and MACSEC_23.</p>
+</div>
+</details>
+<p>After this check being positive, we will check the routing table to ensure we are capable of communicating between the two hosts. To do that we use the command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>show router route-table
+</span></code></pre></div>
 <h1 id="verify-nodes">Verify Nodes</h1>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>ps
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>ps
 </span></code></pre></div>
 <hr />
 <h1 id="verify-linux-bridges">Verify Linux Bridges</h1>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>bridge<span class="w"> </span>link
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>bridge<span class="w"> </span>link
 </span></code></pre></div>
 <hr />
 <h1 id="macsec-verification">MACsec Verification</h1>
 <p>Verify MACsec sessions:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>show system security macsec connectivity-association
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>show system security macsec connectivity-association
 </span></code></pre></div>
 <hr />
 <h1 id="verify-mka-sessions">Verify MKA Sessions</h1>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>show system security macsec mka
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>show system security macsec mka
 </span></code></pre></div>
 <hr />
 <h1 id="verify-is-is">Verify IS-IS</h1>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>show network-instance default protocols isis adjacency
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>show network-instance default protocols isis adjacency
 </span></code></pre></div>
 <hr />
 <h1 id="packet-captures">Packet Captures</h1>
 <p>Capture traffic on the Linux bridge:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>MACBridge1<span class="w"> </span>-e
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>MACBridge1<span class="w"> </span>-e
 </span></code></pre></div>
 <p>MACsec traffic should appear with EtherType:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>0x88e5
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>0x88e5
 </span></code></pre></div>
 <hr />
 <h1 id="expected-results">Expected Results</h1>
@@ -2517,10 +2543,10 @@ As seen in Figure 1, protected frames include a MACsec Security Tag and Integrit
 <hr />
 <h2 id="linux-bridge-problems">Linux Bridge Problems</h2>
 <p>Inspect bridge forwarding:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>bridge<span class="w"> </span>link
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>bridge<span class="w"> </span>link
 </span></code></pre></div>
 <p>Verify multicast behavior:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>MACBridge1
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>MACBridge1
 </span></code></pre></div>
 <hr />
 <h2 id="is-is-adjacency-failure">IS-IS Adjacency Failure</h2>
