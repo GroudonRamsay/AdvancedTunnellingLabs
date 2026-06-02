@@ -130,9 +130,6 @@ nav:
 
   - MACsec:
       - Overview: macsec/index.md
-      - SR Linux: macsec/sr-linux.md
-      - Containerlab: macsec/containerlab.md
-      - Troubleshooting: macsec/troubleshooting.md
 
   - WireGuard:
       - Overview: wireguard/index.md
