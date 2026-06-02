@@ -18,7 +18,7 @@
         <link rel="prev" href="../gns3/">
       
       
-        <link rel="next" href="sr-linux/">
+        <link rel="next" href="../wireguard/">
       
       
         
@@ -751,90 +751,6 @@
 
       </a>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="sr-linux/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    SR Linux
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="containerlab/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Containerlab
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -2470,109 +2386,65 @@ As seen in Figure 1, protected frames include a MACsec Security Tag and Integrit
 <p>After this check being positive, we will check the routing table to ensure we are capable of communicating between the two hosts. To do that we use the command:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>show router route-table
 </span></code></pre></div>
-<h1 id="verify-nodes">Verify Nodes</h1>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>ps
+<p>The result for this command should be a table similar in entries to the one presented below:</p>
+<figure id="figure-6">
+<p><img alt="Figure 6: Route Table" src="../images/RouteTable.png" />
+  </p>
+<figcaption>Figure 6: Route Table</figcaption>
+</figure>
+<p>With all these elements in place and confirmed, we will now perform the final test to ensure the lab is ready for our experiments.</p>
+<p>Now we will ping from host 1 to host 2. To do that, simply access host 1 through its shell and ping host 2 with the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ping<span class="w"> </span><span class="m">172</span>.31.0.1
 </span></code></pre></div>
-<hr />
-<h1 id="verify-linux-bridges">Verify Linux Bridges</h1>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>bridge<span class="w"> </span>link
+<p>You should see a positive response and your ping being answered by host 2.</p>
+<h2 id="mka-and-macsec-packet-analysis">MKA and MACsec packet analysis</h2>
+<p>For this section, we will start going more in-depth regarding MKA and MACsec, triggering MKA to start again in order to see its handshake and the packets that are involved.</p>
+<p>To achieve that, we will reboot both R2 and R4, and place Wireshark probes on both of their interfaces, in order to see the MKA packets traversing our laboratory.</p>
+<p>To place the probes, use the available Capture function from VSCode, and place on both interfaces of both routers.</p>
+<p>To reboot the routers, you can use the following commands:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>configure global
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>admin reboot now
 </span></code></pre></div>
-<hr />
-<h1 id="macsec-verification">MACsec Verification</h1>
-<p>Verify MACsec sessions:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>show system security macsec connectivity-association
-</span></code></pre></div>
-<hr />
-<h1 id="verify-mka-sessions">Verify MKA Sessions</h1>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>show system security macsec mka
-</span></code></pre></div>
-<hr />
-<h1 id="verify-is-is">Verify IS-IS</h1>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>show network-instance default protocols isis adjacency
-</span></code></pre></div>
-<hr />
-<h1 id="packet-captures">Packet Captures</h1>
-<p>Capture traffic on the Linux bridge:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>MACBridge1<span class="w"> </span>-e
-</span></code></pre></div>
-<p>MACsec traffic should appear with EtherType:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>0x88e5
-</span></code></pre></div>
-<hr />
-<h1 id="expected-results">Expected Results</h1>
-<table>
-<thead>
-<tr>
-<th>Validation</th>
-<th>Expected Result</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MACsec CA</td>
-<td>Established</td>
-</tr>
-<tr>
-<td>MKA Sessions</td>
-<td>Up</td>
-</tr>
-<tr>
-<td>IS-IS Adjacencies</td>
-<td>Operational</td>
-</tr>
-<tr>
-<td>Host Connectivity</td>
-<td>Successful</td>
-</tr>
-<tr>
-<td>Packet Captures</td>
-<td>Encrypted frames</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h1 id="troubleshooting">Troubleshooting</h1>
-<h2 id="macsec-sessions-down">MACsec Sessions Down</h2>
-<p>Verify:</p>
-<ul>
-<li>CAK matches</li>
-<li>CKN matches</li>
-<li>Interface state</li>
-<li>Ethernet connectivity</li>
-</ul>
-<hr />
-<h2 id="linux-bridge-problems">Linux Bridge Problems</h2>
-<p>Inspect bridge forwarding:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>bridge<span class="w"> </span>link
-</span></code></pre></div>
-<p>Verify multicast behavior:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>ip<span class="w"> </span>link<span class="w"> </span>show<span class="w"> </span>MACBridge1
-</span></code></pre></div>
-<hr />
-<h2 id="is-is-adjacency-failure">IS-IS Adjacency Failure</h2>
-<p>Verify:</p>
-<ul>
-<li>MACsec operational state</li>
-<li>MTU configuration</li>
-<li>Interface bindings</li>
-</ul>
-<hr />
-<h2 id="traffic-appears-unencrypted">Traffic Appears Unencrypted</h2>
-<p>Possible causes:</p>
-<ul>
-<li>MACsec disabled</li>
-<li>Incorrect Connectivity Association</li>
-<li>Bridge filtering issues</li>
-</ul>
-<hr />
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Linux bridges may filter MACsec EtherTypes unless forwarding behavior is configured correctly.</p>
+<p>This command should restart both routers, dropping your connection shortly after, you can reconnect into the router and see that the Live Peer list is now empty or still forming. This is where MKA comes in, rebuilding the CAs, reelecting a Key Server and redistributing the SAKs to initiate MACsec again.</p>
+<p>By sorting your Wireshark for EAPOL, you will be able to see only MKA packets. With this filter, it will be easy to identify a pattern of MKA normal operation with the connection already formed and functioning. But when the reboot is performed, we will be able to detect a major change in this pattern, which will allow us to detect and study the packets sent during the handshake.</p>
+<p>MKA normal operation should look like this:</p>
+<figure id="figure-7">
+<p><img alt="Figure 7: MKA Normal Operation" src="../images/MKAnormal.png" />
+  </p>
+<figcaption>Figure 7: MKA Normal Operation</figcaption>
+</figure>
+<p>In Figure 7, the first packet that we see is from the Key Server, which announces itself, and then sends information to keep the association alive. The other routers respond with their own information and the KeepAlive is complete.</p>
+<p>When we upset this pattern by resetting the connection, we expect something similar to the next image to appear:</p>
+<figure id="figure-8">
+<p><img alt="Figure 8: MKA Handshake" src="../images/MKAreconn.png" />
+  </p>
+<figcaption>Figure 8: MKA Handshake</figcaption>
+</figure>
+<p>The first five packets are unsuccessful attempts to find more peers and begin MKA. But at the sixth packet, numbered 512, we see that both peer lists and basic parameters are sent, signaling that peers were found and that the Key Server election has begun.</p>
+<p>The following message comes from the elected Key Server notifying its peers of its election, which the other peers respond positively.</p>
+<p>Finally the Key Server distributes the SAK, which will be used by all peers to encrypt packets that use MACsec for protection.</p>
+<div class="admonition question">
+<p class="admonition-title">What is the cypher used for the key? What is this key identifier number? According to MACsec SAK Use were there any keys before this one?</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>MACsec WAN mode preserves VLAN tags while encrypting Ethernet payloads.</p>
-</div>
+<p>Now that MKA has been analysed, and its packets dissected, let´s move forward and view packets encrypted by MACsec and what are their contents.</p>
+<p>To begin, keep your Wireshark probes active, in order to capture the ICMP packets that will be crossing from our ping, encrypted by MACsec.</p>
+<p>With the probes active, return to host 1, and begin a ping to host 2.</p>
+<p>With the ping active, we will be able to see packets like the following pass through:</p>
+<figure id="figure-9">
+<p><img alt="Figure 9: MACsec packets" src="../images/MACsecPackets.png" />
+  </p>
+<figcaption>Figure 9: MACsec Packets</figcaption>
+</figure>
+<p>These packets contain within the ICMP packets that compose a Ping, albeit we cannot see them due to MACsec´s encryption. Let´s analyse the security tag, and see if it matches what was displayed in Figure 1.</p>
+<figure id="figure-10">
+<p><img alt="Figure 10: Live Security Tag" src="../images/LiveTag.png" />
+  </p>
+<figcaption>Figure 10: Live Security Tag</figcaption>
+</figure>
+<p>As we can see, the security tag in our packet contains the TCI and AN in the beggining, followed by the SL, PN, the SCI and finally the ICV, which matches what we saw theoretically in the introduction of this laboratory. The following data is protected by the SAK and we cannot view it, as we expected.</p>
+<h2 id="key-server-election-and-reelection">Key Server Election and Reelection</h2>
+<h2 id="mka-rekeying">MKA Rekeying</h2>
+<h2 id="replay-protection">Replay Protection</h2>
 
 
 
@@ -2627,13 +2499,13 @@ As seen in Figure 1, protected frames include a MACsec Security Tag and Integrit
         
         
           
-          <a href="sr-linux/" class="md-footer__link md-footer__link--next" aria-label="Next: SR Linux">
+          <a href="../wireguard/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                SR Linux
+                Overview
               </div>
             </div>
             <div class="md-footer__button md-icon">
