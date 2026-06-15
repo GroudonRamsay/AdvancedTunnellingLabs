@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Advanced labs for MACsec, WireGuard, IPsec, TLS, DTLS and SSH">
+        <meta name="description" content="Advanced labs for MACsec, ANYsec WireGuard, IPsec, TLS, DTLS and SSH">
       
       
         <meta name="author" content="Miguel">
       
       
-        <link rel="canonical" href="https://groudonramsay.github.io/AdvancedTunnellingLabs/ssh/keys/">
+        <link rel="canonical" href="https://groudonramsay.github.io/AdvancedTunnellingLabs/macsec/experiments/">
       
       
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../hardening/">
+        <link rel="next" href="../../anysec/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Key Authentication - Advanced Tunnelling Labs</title>
+        <title>Experiments - Advanced Tunnelling Labs</title>
       
     
     
@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#laboratory-experiments" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -113,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Key Authentication
+              Experiments
             
           </span>
         </div>
@@ -282,15 +287,37 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../macsec/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
   MACsec
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../anysec/" class="md-tabs__link">
+          
+  
+  
+  ANYsec
 
         </a>
       </li>
@@ -382,17 +409,35 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../ssh/" class="md-tabs__link">
           
   
   
   SSH
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../pki/" class="md-tabs__link">
+          
+  
+  
+  PKI
 
         </a>
       </li>
@@ -660,28 +705,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -699,7 +747,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -717,7 +765,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../macsec/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -733,6 +781,154 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-your-laboratory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploy your laboratory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-mka-macsec-and-is-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify MKA, MACsec and IS-IS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mka-and-macsec-packet-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MKA and MACsec packet analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-server-election-and-reelection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Server Election and Reelection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mka-rekeying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MKA Rekeying
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replay-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -777,7 +973,7 @@
   <span class="md-ellipsis">
     
   
-    WireGuard
+    ANYsec
   
 
     
@@ -793,7 +989,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    WireGuard
+    ANYsec
   
 
           </label>
@@ -806,7 +1002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wireguard/" class="md-nav__link">
+      <a href="../../anysec/" class="md-nav__link">
         
   
   
@@ -834,70 +1030,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../wireguard/linux/" class="md-nav__link">
+      <a href="../../anysec/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Linux Setup
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../wireguard/ospf/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    OSPF Integration
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../wireguard/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -950,7 +1090,7 @@
   <span class="md-ellipsis">
     
   
-    IPsec
+    WireGuard
   
 
     
@@ -966,7 +1106,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    IPsec
+    WireGuard
   
 
           </label>
@@ -979,7 +1119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ipsec/" class="md-nav__link">
+      <a href="../../wireguard/" class="md-nav__link">
         
   
   
@@ -1007,70 +1147,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ipsec/ikev2/" class="md-nav__link">
+      <a href="../../wireguard/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    IKEv2
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../ipsec/strongswan/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    strongSwan
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../ipsec/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -1123,7 +1207,7 @@
   <span class="md-ellipsis">
     
   
-    TLS
+    IPsec
   
 
     
@@ -1139,7 +1223,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    TLS
+    IPsec
   
 
           </label>
@@ -1152,7 +1236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tls/" class="md-nav__link">
+      <a href="../../ipsec/" class="md-nav__link">
         
   
   
@@ -1180,70 +1264,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tls/openssl/" class="md-nav__link">
+      <a href="../../ipsec/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    OpenSSL
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tls/certificates/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Certificates
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tls/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -1296,7 +1324,7 @@
   <span class="md-ellipsis">
     
   
-    DTLS
+    TLS
   
 
     
@@ -1309,6 +1337,123 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TLS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tls/experiments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DTLS
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1353,42 +1498,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../dtls/openssl/" class="md-nav__link">
+      <a href="../../dtls/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    OpenSSL DTLS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../dtls/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -1413,31 +1530,28 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
         
           
-          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
             
   
   
@@ -1455,8 +1569,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1473,7 +1587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../ssh/" class="md-nav__link">
         
   
   
@@ -1498,53 +1612,17 @@
                 
   
   
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Key Authentication
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
   
   
     <li class="md-nav__item">
-      <a href="../hardening/" class="md-nav__link">
+      <a href="../../ssh/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Hardening
+    Experiments
   
 
     
@@ -1558,6 +1636,67 @@
 
               
             
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PKI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PKI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
                 
   
@@ -1565,14 +1704,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../../pki/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Troubleshooting
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pki/experiments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
   
 
     
@@ -1611,6 +1778,91 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploy-your-laboratory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deploy your laboratory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-mka-macsec-and-is-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify MKA, MACsec and IS-IS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mka-and-macsec-packet-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MKA and MACsec packet analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-server-election-and-reelection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Server Election and Reelection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mka-rekeying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MKA Rekeying
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replay-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1629,9 +1881,98 @@
   
 
 
-  <h1>Key Authentication</h1>
+  <h1>Experiments</h1>
 
-
+<h2 id="laboratory-experiments">Laboratory Experiments</h2>
+<p>Now that we have completed the laboratory setup, including its routers, hosts and linux bridges, we can begin with the experimental section, seeing MKA and MACsec in action, testing their features and learning about their inner workings.</p>
+<h2 id="deploy-your-laboratory">Deploy your laboratory</h2>
+<p>Let´s begin with deploying our laboratory. Go to the ContainerLab page in VSCode, open the folder with your laboratory and select Deploy.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: Deploy function" src="../../images/DeployFunction.png" width="200" />
+  </p>
+<figcaption>Figure 4: Deploy Function</figcaption>
+</figure>
+<p>When the deployment is finished you should have your laboratory and its devices appear in the deployed section.</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: Deployed lab" src="../../images/Deployedlab.png" width="200" />
+  </p>
+<figcaption>Figure 5: Deployed Lab</figcaption>
+</figure>
+<h2 id="verify-mka-macsec-and-is-is">Verify MKA, MACsec and IS-IS</h2>
+<p>Now that everything is running, access all four routers, and ensure that MKA has live peers, that MACsec has the CAs formed and that the routing table displays the subnets learnt from IS-IS.</p>
+<p>To check the first two, you can run the following commands:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>show macsec connectivity-association
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>show macsec mka-session
+</span></code></pre></div>
+<p>The first command will show the CAs present at that router, and the second will display all the peers that are running MKA with the selected router.</p>
+<details class="question">
+<summary>How many CAs does R1 have? What about the other routers? Is there a difference between them?</summary>
+<div class="admonition solution">
+<p class="admonition-title">R1 has one CA, MACSEC_12, since it is the only association it participates in. R3 also participates in only one CA, MACSEC_23. The other two routers, R2 and R4, differ from the previous two, since they participate in two associations at the same time, showing in their tables both MACSEC_12 and MACSEC_23.</p>
+</div>
+</details>
+<p>After this check being positive, we will check the routing table to ensure we are capable of communicating between the two hosts. To do that we use the command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>show router route-table
+</span></code></pre></div>
+<p>The result for this command should be a table similar in entries to the one presented below:</p>
+<figure id="figure-6">
+<p><img alt="Figure 6: Route Table" src="../../images/RouteTable.png" />
+  </p>
+<figcaption>Figure 6: Route Table</figcaption>
+</figure>
+<p>With all these elements in place and confirmed, we will now perform the final test to ensure the lab is ready for our experiments.</p>
+<p>Now we will ping from host 1 to host 2. To do that, simply access host 1 through its shell and ping host 2 with the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ping<span class="w"> </span><span class="m">172</span>.31.0.1
+</span></code></pre></div>
+<p>You should see a positive response and your ping being answered by host 2.</p>
+<h2 id="mka-and-macsec-packet-analysis">MKA and MACsec packet analysis</h2>
+<p>For this section, we will start going more in-depth regarding MKA and MACsec, triggering MKA to start again in order to see its handshake and the packets that are involved.</p>
+<p>To achieve that, we will reboot both R2 and R4, and place Wireshark probes on both of their interfaces, in order to see the MKA packets traversing our laboratory.</p>
+<p>To place the probes, use the available Capture function from VSCode, and place on both interfaces of both routers.</p>
+<p>To reboot the routers, you can use the following commands:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>configure global
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>admin reboot now
+</span></code></pre></div>
+<p>This command should restart both routers, dropping your connection shortly after, you can reconnect into the router and see that the Live Peer list is now empty or still forming. This is where MKA comes in, rebuilding the CAs, reelecting a Key Server and redistributing the SAKs to initiate MACsec again.</p>
+<p>By sorting your Wireshark for EAPOL, you will be able to see only MKA packets. With this filter, it will be easy to identify a pattern of MKA normal operation with the connection already formed and functioning. But when the reboot is performed, we will be able to detect a major change in this pattern, which will allow us to detect and study the packets sent during the handshake.</p>
+<p>MKA normal operation should look like this:</p>
+<figure id="figure-7">
+<p><img alt="Figure 7: MKA Normal Operation" src="../../images/MKAnormal.png" />
+  </p>
+<figcaption>Figure 7: MKA Normal Operation</figcaption>
+</figure>
+<p>In Figure 7, the first packet that we see is from the Key Server, which announces itself, and then sends information to keep the association alive. The other routers respond with their own information and the KeepAlive is complete.</p>
+<p>When we upset this pattern by resetting the connection, we expect something similar to the next image to appear:</p>
+<figure id="figure-8">
+<p><img alt="Figure 8: MKA Handshake" src="../../images/MKAreconn.png" />
+  </p>
+<figcaption>Figure 8: MKA Handshake</figcaption>
+</figure>
+<p>The first five packets are unsuccessful attempts to find more peers and begin MKA. But at the sixth packet, numbered 512, we see that both peer lists and basic parameters are sent, signaling that peers were found and that the Key Server election has begun.</p>
+<p>The following message comes from the elected Key Server notifying its peers of its election, which the other peers respond positively.</p>
+<p>Finally the Key Server distributes the SAK, which will be used by all peers to encrypt packets that use MACsec for protection.</p>
+<div class="admonition question">
+<p class="admonition-title">What is the cypher used for the key? What is this key identifier number? According to MACsec SAK Use were there any keys before this one?</p>
+</div>
+<p>Now that MKA has been analysed, and its packets dissected, let´s move forward and view packets encrypted by MACsec and what are their contents.</p>
+<p>To begin, keep your Wireshark probes active, in order to capture the ICMP packets that will be crossing from our ping, encrypted by MACsec.</p>
+<p>With the probes active, return to host 1, and begin a ping to host 2.</p>
+<p>With the ping active, we will be able to see packets like the following pass through:</p>
+<figure id="figure-9">
+<p><img alt="Figure 9: MACsec packets" src="../../images/MACsecPackets.png" />
+  </p>
+<figcaption>Figure 9: MACsec Packets</figcaption>
+</figure>
+<p>These packets contain within the ICMP packets that compose a Ping, albeit we cannot see them due to MACsec´s encryption. Let´s analyse the security tag, and see if it matches what was displayed in Figure 1.</p>
+<figure id="figure-10">
+<p><img alt="Figure 10: Live Security Tag" src="../../images/LiveTag.png" />
+  </p>
+<figcaption>Figure 10: Live Security Tag</figcaption>
+</figure>
+<p>As we can see, the security tag in our packet contains the TCI and AN in the beggining, followed by the SL, PN, the SCI and finally the ICV, which matches what we saw theoretically in the introduction of this laboratory. The following data is protected by the SAK and we cannot view it, as we expected.</p>
+<h2 id="key-server-election-and-reelection">Key Server Election and Reelection</h2>
+<h2 id="mka-rekeying">MKA Rekeying</h2>
+<h2 id="replay-protection">Replay Protection</h2>
 
 
 
@@ -1686,13 +2027,13 @@
         
         
           
-          <a href="../hardening/" class="md-footer__link md-footer__link--next" aria-label="Next: Hardening">
+          <a href="../../anysec/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Hardening
+                Overview
               </div>
             </div>
             <div class="md-footer__button md-icon">

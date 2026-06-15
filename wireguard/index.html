@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Advanced labs for MACsec, WireGuard, IPsec, TLS, DTLS and SSH">
+        <meta name="description" content="Advanced labs for MACsec, ANYsec WireGuard, IPsec, TLS, DTLS and SSH">
       
       
         <meta name="author" content="Miguel">
@@ -15,10 +15,10 @@
         <link rel="canonical" href="https://groudonramsay.github.io/AdvancedTunnellingLabs/wireguard/">
       
       
-        <link rel="prev" href="../macsec/">
+        <link rel="prev" href="../anysec/experiments/">
       
       
-        <link rel="next" href="linux/">
+        <link rel="next" href="experiments/">
       
       
         
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#wireguard" class="md-skip">
+        <a href="#wireguard-laboratory" class="md-skip">
           Skip to content
         </a>
       
@@ -307,6 +307,26 @@
   
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../anysec/" class="md-tabs__link">
+          
+  
+  
+  ANYsec
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -398,6 +418,26 @@
   
   
   SSH
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../pki/" class="md-tabs__link">
+          
+  
+  
+  PKI
 
         </a>
       </li>
@@ -743,6 +783,151 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../macsec/experiments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ANYsec
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ANYsec
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anysec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anysec/experiments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -775,10 +960,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -796,8 +981,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -819,8 +1004,6 @@
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
-      
-        
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
@@ -864,8 +1047,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -874,10 +1055,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#wireguard-laboratory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
+        WireGuard Laboratory
       
     </span>
   </a>
@@ -885,10 +1066,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cryptography" class="md-nav__link">
+  <a href="#noise-based-handshake" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cryptography
+        Noise-based Handshake
       
     </span>
   </a>
@@ -896,10 +1077,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#typical-use-cases" class="md-nav__link">
+  <a href="#wireguard-laboratory-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Typical Use Cases
+        WireGuard Laboratory Overview
       
     </span>
   </a>
@@ -907,10 +1088,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-topology" class="md-nav__link">
+  <a href="#laboratory-topology" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example Topology
+        Laboratory Topology
       
     </span>
   </a>
@@ -918,21 +1099,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#topics-covered" class="md-nav__link">
+  <a href="#topology-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Topics Covered
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example Configuration
+        Topology Configuration
       
     </span>
   </a>
@@ -955,243 +1125,14 @@
   
   
     <li class="md-nav__item">
-      <a href="linux/" class="md-nav__link">
+      <a href="experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Linux Setup
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="ospf/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    OSPF Integration
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    IPsec
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    IPsec
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ipsec/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ipsec/ikev2/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    IKEv2
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ipsec/strongswan/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    strongSwan
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ipsec/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -1244,7 +1185,7 @@
   <span class="md-ellipsis">
     
   
-    TLS
+    IPsec
   
 
     
@@ -1260,7 +1201,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    TLS
+    IPsec
   
 
           </label>
@@ -1273,7 +1214,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tls/" class="md-nav__link">
+      <a href="../ipsec/" class="md-nav__link">
         
   
   
@@ -1301,70 +1242,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../tls/openssl/" class="md-nav__link">
+      <a href="../ipsec/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    OpenSSL
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tls/certificates/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Certificates
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tls/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -1417,7 +1302,7 @@
   <span class="md-ellipsis">
     
   
-    DTLS
+    TLS
   
 
     
@@ -1433,7 +1318,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    DTLS
+    TLS
   
 
           </label>
@@ -1446,7 +1331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dtls/" class="md-nav__link">
+      <a href="../tls/" class="md-nav__link">
         
   
   
@@ -1474,42 +1359,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../dtls/openssl/" class="md-nav__link">
+      <a href="../tls/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    OpenSSL DTLS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dtls/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -1562,7 +1419,7 @@
   <span class="md-ellipsis">
     
   
-    SSH
+    DTLS
   
 
     
@@ -1575,6 +1432,123 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DTLS
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dtls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dtls/experiments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1619,14 +1593,103 @@
   
   
     <li class="md-nav__item">
-      <a href="../ssh/keys/" class="md-nav__link">
+      <a href="../ssh/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Key Authentication
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PKI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PKI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pki/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
   
 
     
@@ -1647,42 +1710,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../ssh/hardening/" class="md-nav__link">
+      <a href="../pki/experiments/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Hardening
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ssh/troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Troubleshooting
+    Experiments
   
 
     
@@ -1720,8 +1755,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1730,10 +1763,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#features" class="md-nav__link">
+  <a href="#wireguard-laboratory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Features
+        WireGuard Laboratory
       
     </span>
   </a>
@@ -1741,10 +1774,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cryptography" class="md-nav__link">
+  <a href="#noise-based-handshake" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Cryptography
+        Noise-based Handshake
       
     </span>
   </a>
@@ -1752,10 +1785,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#typical-use-cases" class="md-nav__link">
+  <a href="#wireguard-laboratory-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Typical Use Cases
+        WireGuard Laboratory Overview
       
     </span>
   </a>
@@ -1763,10 +1796,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-topology" class="md-nav__link">
+  <a href="#laboratory-topology" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example Topology
+        Laboratory Topology
       
     </span>
   </a>
@@ -1774,21 +1807,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#topics-covered" class="md-nav__link">
+  <a href="#topology-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Topics Covered
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example Configuration
+        Topology Configuration
       
     </span>
   </a>
@@ -1815,96 +1837,156 @@
   
 
 
-<h1 id="wireguard">WireGuard</h1>
-<p>WireGuard is a modern Layer 3 VPN protocol focused on simplicity, performance, and cryptographic security.</p>
-<hr />
-<h2 id="features">Features</h2>
+  <h1>Overview</h1>
+
+<h2 id="wireguard-laboratory">WireGuard Laboratory</h2>
+<p>WireGuard is a modern VPN protocol that prioritises simplicity, minimal attack surface, and high performance. Designed to be small and auditable, WireGuard contrasts with the complex, feature-rich
+designs of older VPN stacks by providing a concise codebase and a clear security model.</p>
+<p>At its core, WireGuard implements a lightweight network tunnel with strong cryptography, aiming to deliver nearkernel-space performance while remaining easy to configure and maintain.</p>
+<p>The protocol is built around a small set of cryptographic primitives chosen for performance and modern security characteristics: Curve25519 for ephemeral Diffie–Hellman, ChaCha20-Poly1305 for authenticated encryption, and Blake2s for hashing. Together these primitives provide robust perfect forward secrecy and resistance to common classes of attacks.</p>
+<h2 id="noise-based-handshake">Noise-based Handshake</h2>
+<p>WireGuard’s handshake is built on the Noise Protocol Framework, specifically the Noise_IKpsk2 pattern, defined by the prior knowledge of the initiator and responder static public keys, used
+for authentication, and optionally of a Preshared Key for stronger key derivation.</p>
+<p>In this construction, each peer possesses a long-term static Curve25519 keypair and generates fresh ephemeral keys for every handshake. This pattern provides mutual authentication by requiring the initiator to prove knowledge of the responder’s static public key via keyed MACs, while both sides verify possession of the corresponding private keys through multiple ECDH computations over static–ephemeral and ephemeral–ephemeral key pairs. The resulting shared secrets are expanded with HKDF-BLAKE2s to derive session keys with perfect forward secrecy.</p>
+<p>The practical application of this handshake is rather simple, completing in 1-RTT. The following figure depicts the handshake:</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: WireGuard´s Handshake" src="../images/WGHand.png" />
+  </p>
+<figcaption>Figure 1: WireGuard´s Handshake</figcaption>
+</figure>
+<h2 id="wireguard-laboratory-overview">WireGuard Laboratory Overview</h2>
+<p>Now that we grasp some of WireGuard´s most important concepts and features, we will advance to the configuration of its experimental laboratory to see all these concepts in practice.</p>
+<p>This laboratory demonstrates:</p>
 <ul>
-<li>Minimal configuration</li>
-<li>High performance</li>
-<li>Modern cryptography</li>
-<li>UDP-based transport</li>
-<li>Simple key management</li>
-<li>Cross-platform support</li>
+<li>GNS3 configuration for 3 Linux hosts with WireGuard installed</li>
+<li>Setup for two WireGuard hosts to form a tunnel</li>
+<li>Roaming capability of WireGuard to form a tunnel with the same peer in two different hosts</li>
+<li>Packet analysis of WireGuard´s handshake, KeepAlive messages and normal operation</li>
 </ul>
-<hr />
-<h2 id="cryptography">Cryptography</h2>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Algorithm</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Key Exchange</td>
-<td>Curve25519</td>
-</tr>
-<tr>
-<td>Encryption</td>
-<td>ChaCha20</td>
-</tr>
-<tr>
-<td>Authentication</td>
-<td>Poly1305</td>
-</tr>
-<tr>
-<td>Hashing</td>
-<td>BLAKE2s</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="typical-use-cases">Typical Use Cases</h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Site-to-Site VPN</label><label for="__tabbed_1_2">Remote Access</label><label for="__tabbed_1_3">Lab Topologies</label><label for="__tabbed_1_4">Container Networking</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>Connect remote networks securely.</p>
-</div>
-<div class="tabbed-block">
-<p>Secure remote user connectivity.</p>
-</div>
-<div class="tabbed-block">
-<p>Encrypted routing experiments.</p>
-</div>
-<div class="tabbed-block">
-<p>Secure inter-container communication.</p>
-</div>
-</div>
-</div>
-<hr />
-<h2 id="example-topology">Example Topology</h2>
-<pre class="mermaid"><code>graph LR
-    A[WG Node 1] --- B[Internet]
-    B --- C[WG Node 2]</code></pre>
-<hr />
-<h2 id="topics-covered">Topics Covered</h2>
+<h2 id="laboratory-topology">Laboratory Topology</h2>
+<p>The topology contains:</p>
 <ul>
-<li>Linux WireGuard setup</li>
-<li>Peer configuration</li>
-<li>OSPF over WireGuard</li>
-<li>Routing integration</li>
-<li>MTU tuning</li>
-<li>Containerlab deployment</li>
-<li>Troubleshooting</li>
+<li>Three Linux hosts with internet access</li>
+<li>A NAT for internet access</li>
+<li>An ethernet switch to connect all devices</li>
+<li>Two WireGuard peers, with two machines sharing the same host</li>
 </ul>
-<hr />
-<h2 id="example-configuration">Example Configuration</h2>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[Interface]</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">Address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">10.10.10.1/24</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">PrivateKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;private-key&gt;</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="na">ListenPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">51820</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">[Peer]</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">PublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&lt;peer-public-key&gt;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="na">AllowedIPs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">10.10.10.2/32</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="na">Endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.1.10:51820</span>
-</span></code></pre></div>
+<figure id="figure-2">
+<p><img alt="Figure 2: WireGuard Laboratory Topology" src="../images/WGTopology.png" width="400" />
+  </p>
+<figcaption>Figure 2: WireGuard Laboratory Topology</figcaption>
+</figure>
+<h2 id="topology-configuration">Topology Configuration</h2>
+<p>To create this topology, begin by placing the NAT, from GNS3´s appliances and an Ethernet Switch, and connect them both.</p>
+<p>Then create the three Linux hosts. The hosts used for this laboratory were Cloud Guests, for their easy setup with internet connection.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Incorrect MTU values commonly cause fragmentation and tunnel instability.</p>
+<p>Before activating the Linux hosts, go to Configure -&gt; HDD, and resize each of their drives to have at least 10000 more MB, to ensure there is space to update the host and install WireGuard.</p>
 </div>
+<p>Now that the hosts are in place and connected to the switch, start them one by one, waiting for the their setup to finish before activating the next one. To login use:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ubuntu
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ubuntu
+</span></code></pre></div>
+<p>Then update their software before installing WireGuard with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade
+</span></code></pre></div>
+<p>Finally, install WireGuard with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>wireguard
+</span></code></pre></div>
+<p>With this, you should have all three hosts updated and with WireGuard available to use.</p>
+<p>Now, we will generate the key pair for each host and setup their WireGuard configurations.</p>
+<p>Firstly, we will generate the private/public key pair for WG1 and WG2, using the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>wg<span class="w"> </span>genkey<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>privatekey<span class="w"> </span><span class="p">|</span><span class="w"> </span>wg<span class="w"> </span>pubkey<span class="w"> </span>&gt;<span class="w"> </span>publickey
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cat<span class="w"> </span>privatekey
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cat<span class="w"> </span>publickey
+</span></code></pre></div>
+<p>Save the two keys from both hosts in a note file to use afterwards.</p>
+<p>With the keys generated and saved, we now need to check the IP address of WG1, so that the two other devices can connect to it.</p>
+<p>Simply run the following command on WG1 and save the output in a note file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ip<span class="w"> </span>add
+</span></code></pre></div>
+<p>With all the keys and necessary information obtained, we will now configure our WireGuard devices to be able to connect to each other and form a tunnel.</p>
+<p>For WG1, use the following command to create and open a configuration file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/wireguard/wg0.conf
+</span></code></pre></div>
+<p>Then, paste the following configuration into the file using right click:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[Interface]
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>PrivateKey = cat privatekey (WG1)
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Address = 10.0.0.1/24
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>ListenPort = 51820
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>[Peer]
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>PublicKey = cat publickey (WG2)
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>AllowedIPs = 10.0.0.2/32
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>PersistentKeepalive = 25
+</span></code></pre></div>
+<p>Place the respective private and public keys in the marked spots, and then save and exit from the file.</p>
+<p>With this configuration, we instruct WireGuard to create the virtual interface wg0, which will listen on port 51820 and use the address 10.0.0.1.</p>
+<p>Now we will configure both WG2 and RoamingTester with the same configuration:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>[Interface]
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>PrivateKey = cat privatekey (WG2)
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Address = 10.0.0.2/24
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>ListenPort = 51820
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>[Peer]
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>PublicKey = cat publickey (WG1)
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>AllowedIPs = 10.0.0.1/32
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>Endpoint = WG1IP:51820
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>PersistentKeepalive = 25
+</span></code></pre></div>
+<p>With this configuration on both devices, we instruct them to create the wg0 interface, with 10.0.0.2 as their IP. Furthermore, we instruct them that their peer is 10.0.0.1, and that the IP to respond back during the handshake is the IP of WG1.</p>
+<div class="admonition question">
+<p class="admonition-title">Why did we configure RoamingTester with the same keys and interface as WG2? What can we accomplish with this?</p>
+</div>
+<p>With the configurations complete, all that is left is to test if it was properly setup and if the tunnel forms.</p>
+<p>To test this, first we will activate the interface in WG1, using the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>wg-quick<span class="w"> </span>up<span class="w"> </span>wg0
+</span></code></pre></div>
+<p>And we will check on its status using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>wg
+</span></code></pre></div>
+<p>You should see an output similar to the one presented in Figure 3.</p>
+<figure id="figure-3">
+<p><img alt="Figure 3: WireGuard Interface Output" src="../images/WGInt.png" width="400" />
+  </p>
+<figcaption>Figure 3: WireGuard Interface Output</figcaption>
+</figure>
+<p>This means that our interface is up and waiting for a peer to begin the connection. Now we will start the interface on WG2 to check if everything is correct.</p>
+<p>To start the interface we will do the same command as WG1:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>wg-quick<span class="w"> </span>up<span class="w"> </span>wg0
+</span></code></pre></div>
+<p>And the same command to check the interface:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>wg
+</span></code></pre></div>
+<p>The difference this time, is the fact that now there are two interfaces up that are each other´s peer, which means that a tunnel will now form, and we will get a different output, detailed in Figure 4:</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: WireGuard Interface Output2" src="../images/WGInt2.png" width="400" />
+  </p>
+<figcaption>Figure 4: WireGuard Tunnel formed</figcaption>
+</figure>
+<p>With this output we can verify that this interface is also functioning, and that a peer, WG1, has formed a tunnel.</p>
+<p>We will end our testing by opening WireShark in GNS3 in a link between WG1 and WG2, and then by performing a ping from WG1 to the tunnel entrance of WG2, to ensure that WireGuard is in use.</p>
+<p>To test this we will first ping the regular interface of WG2, to see that the underlying connection still exists and works:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ping<span class="w"> </span><span class="m">192</span>.168.122.139
+</span></code></pre></div>
+<p>And we will see in WireShark that the ICMP packets appear as usual and that connection is still here.</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: WG1 Regular Ping" src="../images/WGPing1.png" />
+  </p>
+<figcaption>Figure 5: WG1 Regular Ping</figcaption>
+</figure>
+<p>Now we will ping through the WireGuard tunnel, and see that the connection is now encrypted. First, we ping using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ping<span class="w"> </span><span class="m">10</span>.0.0.2
+</span></code></pre></div>
+<p>And now we should see in WireShark the following packets:</p>
+<figure id="figure-6">
+<p><img alt="Figure 5: WG1 Tunnel Ping" src="../images/WGPing2.png" />
+  </p>
+<figcaption>Figure 6: WG1 Tunnel Ping</figcaption>
+</figure>
+<p>Which means that the tunnel has successfully formed and the packets that go through it are encrypted with WireGuard.</p>
+<p>Now that the setup is complete, we will perform some experiments to see WireGuard in action, following the guides in <a href="experiments/">WireGuard Experiments</a></p>
 
 
 
@@ -1942,7 +2024,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../macsec/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+          <a href="../anysec/experiments/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Experiments">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1952,20 +2034,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview
+                Experiments
               </div>
             </div>
           </a>
         
         
           
-          <a href="linux/" class="md-footer__link md-footer__link--next" aria-label="Next: Linux Setup">
+          <a href="experiments/" class="md-footer__link md-footer__link--next" aria-label="Next: Experiments">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Linux Setup
+                Experiments
               </div>
             </div>
             <div class="md-footer__button md-icon">
