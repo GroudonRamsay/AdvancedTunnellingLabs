@@ -1,6 +1,6 @@
 site_name: Advanced Tunnelling Labs
 site_url: https://groudonramsay.github.io/AdvancedTunnellingLabs/
-site_description: Advanced labs for MACsec, WireGuard, IPsec, TLS, DTLS and SSH
+site_description: Advanced labs for MACsec, ANYsec WireGuard, IPsec, TLS, DTLS and SSH
 site_author: Miguel
 
 repo_url: https://github.com/groudonramsay/AdvancedTunnellingLabs
@@ -130,32 +130,32 @@ nav:
 
   - MACsec:
       - Overview: macsec/index.md
+      - Experiments: macsec/experiments.md
+
+  - ANYsec:
+      - Overview: anysec/index.md
+      - Experiments: anysec/experiments.md
 
   - WireGuard:
       - Overview: wireguard/index.md
-      - Linux Setup: wireguard/linux.md
-      - OSPF Integration: wireguard/ospf.md
-      - Troubleshooting: wireguard/troubleshooting.md
+      - Experiments: wireguard/experiments.md
 
   - IPsec:
       - Overview: ipsec/index.md
-      - IKEv2: ipsec/ikev2.md
-      - strongSwan: ipsec/strongswan.md
-      - Troubleshooting: ipsec/troubleshooting.md
+      - Experiments: ipsec/experiments.md
 
   - TLS:
       - Overview: tls/index.md
-      - OpenSSL: tls/openssl.md
-      - Certificates: tls/certificates.md
-      - Troubleshooting: tls/troubleshooting.md
+      - Experiments: tls/experiments.md
 
   - DTLS:
       - Overview: dtls/index.md
-      - OpenSSL DTLS: dtls/openssl.md
-      - Troubleshooting: dtls/troubleshooting.md
+      - Experiments: dtls/experiments.md
 
   - SSH:
       - Overview: ssh/index.md
-      - Key Authentication: ssh/keys.md
-      - Hardening: ssh/hardening.md
-      - Troubleshooting: ssh/troubleshooting.md
+      - Experiments: ssh/experiments.md
+
+  - PKI:
+      - Overview: pki/index.md
+      - Experiments: pki/experiments.md
