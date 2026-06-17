@@ -904,10 +904,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mka-rekeying" class="md-nav__link">
+  <a href="#mka-rekeyingkey-rollover" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MKA Rekeying
+        MKA Rekeying/Key Rollover
       
     </span>
   </a>
@@ -915,10 +915,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#replay-protection" class="md-nav__link">
+  <a href="#replay-attackprotection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Replay Protection
+        Replay Attack/Protection
       
     </span>
   </a>
@@ -1840,10 +1840,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mka-rekeying" class="md-nav__link">
+  <a href="#mka-rekeyingkey-rollover" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MKA Rekeying
+        MKA Rekeying/Key Rollover
       
     </span>
   </a>
@@ -1851,10 +1851,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#replay-protection" class="md-nav__link">
+  <a href="#replay-attackprotection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Replay Protection
+        Replay Attack/Protection
       
     </span>
   </a>
@@ -1930,8 +1930,7 @@
 <p>To achieve that, we will reboot both R2 and R4, and place Wireshark probes on both of their interfaces, in order to see the MKA packets traversing our laboratory.</p>
 <p>To place the probes, use the available Capture function from VSCode, and place on both interfaces of both routers.</p>
 <p>To reboot the routers, you can use the following commands:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>configure global
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>admin reboot now
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>admin reboot now
 </span></code></pre></div>
 <p>This command should restart both routers, dropping your connection shortly after, you can reconnect into the router and see that the Live Peer list is now empty or still forming. This is where MKA comes in, rebuilding the CAs, reelecting a Key Server and redistributing the SAKs to initiate MACsec again.</p>
 <p>By sorting your Wireshark for EAPOL, you will be able to see only MKA packets. With this filter, it will be easy to identify a pattern of MKA normal operation with the connection already formed and functioning. But when the reboot is performed, we will be able to detect a major change in this pattern, which will allow us to detect and study the packets sent during the handshake.</p>
@@ -1971,8 +1970,48 @@
 </figure>
 <p>As we can see, the security tag in our packet contains the TCI and AN in the beggining, followed by the SL, PN, the SCI and finally the ICV, which matches what we saw theoretically in the introduction of this laboratory. The following data is protected by the SAK and we cannot view it, as we expected.</p>
 <h2 id="key-server-election-and-reelection">Key Server Election and Reelection</h2>
-<h2 id="mka-rekeying">MKA Rekeying</h2>
-<h2 id="replay-protection">Replay Protection</h2>
+<p>In this experience, our focus will be on the Key Server Election mechanism in the beggining of MKA, and in the reelection of a Key Server when the current one is no longer available. We will also explore changing priorities to choose the Key Server.</p>
+<p>The first step of our experience is to analyse the configurations that we used for the routers and look for a specific line that changes the whole Key Server Election process.</p>
+<p>In the configuration of R4, we can identify in the MACsec configuration the following line:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mka-key-server-priority 0
+</span></code></pre></div>
+<p>When a Key Server is being elected, if there is no configuration targeting the priority of these routers, MKA will use other elements, for example, their member identifier. However, if there is a configuration altering all of the devices priorities, similar to our laboratory, then MKA elects the server with the highest priority, which is the device with a priority number closer or equal to zero.</p>
+<p>In our configurations, we can identify that R4 has a priority of 0, which means it will always be elected if it is available, then R2 has a priority of 1, and R1 and R3 have a priority of 10. These values were chosen with the intent of making the Key Server always a device present in both CAs, if possible.</p>
+<p>We will now trigger an election process, so that we can follow it with WireShark and see what happens.</p>
+<p>To do so, set a probe in R1 and R3 facing their respective CAs.</p>
+<p>To be able to trigger a full election process, and not just a reelection, we will need to reboot all routers at the same time. To do so, use SSH to access to all four routers at the same time, and prepare in each one the following command to execute at the same time:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>admin reboot now
+</span></code></pre></div>
+<p>By rebooting all nodes, with WireShark open, we will be able to watch the whole handshake process occur again, but this time we will only focus on the Key Server Election part.</p>
+<p>After ordering the reboot, traffic in WireShark will pause, when it resumes the first few EAPOL packets will contain what we want to see. We will focus on the first few packets received in R1 and R3, where we can see them receiving a message from R4, with its priority, but still unelected.</p>
+<figure id="figure-11">
+<p><img alt="Figure 11: First packet from R4" src="../../images/MACKEYElection.png" />
+  </p>
+<figcaption>Figure 11: First packet from R4</figcaption>
+</figure>
+<p>After this message we can see the packet where the Key Server annouces its eletion, seeing that the tag Key Server changes from False to True.</p>
+<figure id="figure-12">
+<p><img alt="Figure 12: Second packet from R4" src="../../images/MACKEYElected.png" />
+  </p>
+<figcaption>Figure 12: Second packet from R4</figcaption>
+</figure>
+<p>And after this MKA follows its regular course and enables MACsec to start working on protecting traffic.</p>
+<p>Now we will see a reelection occur in an already established CA, by shutting down R4, making R2 the new elected Key Server.</p>
+<p>To do this we keep the previous WireShark probes, and run in R4 the command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>configure global
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>card 1 admin-state disable
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>commit
+</span></code></pre></div>
+<p>This command disables the router card, effectively cutting it from communicating with the remaining routers.</p>
+<p>We can then notice that after the last message from R4, a few KeepAlives will still arrive from R2, since the timer for R4 has yet to expire. After this we will notice a message from R2, annoucing itself as the new Key Server and distributing the new SAK.</p>
+<figure id="figure-13">
+<p><img alt="Figure 13: Key Server Reelection" src="../../images/MACKEYReelection.png" />
+  </p>
+<figcaption>Figure 13: Key Server Reelection</figcaption>
+</figure>
+<p>After a brief period of waiting for a KeepAlive, the members of the CA notice that R4 is gone, begin a reelection, electing R2 as the new Key Server, following our chosen priority, and resume normal operations without having to perform the whole handshake again.</p>
+<h2 id="mka-rekeyingkey-rollover">MKA Rekeying/Key Rollover</h2>
+<h2 id="replay-attackprotection">Replay Attack/Protection</h2>
 
 
 
