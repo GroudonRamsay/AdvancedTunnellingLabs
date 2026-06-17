@@ -69,7 +69,6 @@ To place the probes, use the available Capture function from VSCode, and place o
 To reboot the routers, you can use the following commands:
 
 ```srl
-configure global
 admin reboot now
 ```
 
@@ -125,6 +124,69 @@ As we can see, the security tag in our packet contains the TCI and AN in the beg
 
 ## Key Server Election and Reelection
 
-## MKA Rekeying
+In this experience, our focus will be on the Key Server Election mechanism in the beggining of MKA, and in the reelection of a Key Server when the current one is no longer available. We will also explore changing priorities to choose the Key Server.
 
-## Replay Protection
+The first step of our experience is to analyse the configurations that we used for the routers and look for a specific line that changes the whole Key Server Election process.
+
+In the configuration of R4, we can identify in the MACsec configuration the following line:
+
+```srl
+mka-key-server-priority 0
+```
+
+When a Key Server is being elected, if there is no configuration targeting the priority of these routers, MKA will use other elements, for example, their member identifier. However, if there is a configuration altering all of the devices priorities, similar to our laboratory, then MKA elects the server with the highest priority, which is the device with a priority number closer or equal to zero.
+
+In our configurations, we can identify that R4 has a priority of 0, which means it will always be elected if it is available, then R2 has a priority of 1, and R1 and R3 have a priority of 10. These values were chosen with the intent of making the Key Server always a device present in both CAs, if possible.
+
+We will now trigger an election process, so that we can follow it with WireShark and see what happens.
+
+To do so, set a probe in R1 and R3 facing their respective CAs.
+
+To be able to trigger a full election process, and not just a reelection, we will need to reboot all routers at the same time. To do so, use SSH to access to all four routers at the same time, and prepare in each one the following command to execute at the same time:
+
+```srl
+admin reboot now
+```
+
+By rebooting all nodes, with WireShark open, we will be able to watch the whole handshake process occur again, but this time we will only focus on the Key Server Election part.
+
+After ordering the reboot, traffic in WireShark will pause, when it resumes the first few EAPOL packets will contain what we want to see. We will focus on the first few packets received in R1 and R3, where we can see them receiving a message from R4, with its priority, but still unelected.
+
+<figure markdown id="figure-11">
+  ![Figure 11: First packet from R4](../images/MACKEYElection.png)
+  <figcaption>Figure 11: First packet from R4</figcaption>
+</figure>
+
+After this message we can see the packet where the Key Server annouces its eletion, seeing that the tag Key Server changes from False to True.
+
+<figure markdown id="figure-12">
+  ![Figure 12: Second packet from R4](../images/MACKEYElected.png)
+  <figcaption>Figure 12: Second packet from R4</figcaption>
+</figure>
+
+And after this MKA follows its regular course and enables MACsec to start working on protecting traffic.
+
+Now we will see a reelection occur in an already established CA, by shutting down R4, making R2 the new elected Key Server.
+
+To do this we keep the previous WireShark probes, and run in R4 the command:
+
+```srl
+configure global
+card 1 admin-state disable
+commit
+```
+
+This command disables the router card, effectively cutting it from communicating with the remaining routers.
+
+We can then notice that after the last message from R4, a few KeepAlives will still arrive from R2, since the timer for R4 has yet to expire. After this we will notice a message from R2, annoucing itself as the new Key Server and distributing the new SAK.
+
+<figure markdown id="figure-13">
+  ![Figure 13: Key Server Reelection](../images/MACKEYReelection.png)
+  <figcaption>Figure 13: Key Server Reelection</figcaption>
+</figure>
+
+After a brief period of waiting for a KeepAlive, the members of the CA notice that R4 is gone, begin a reelection, electing R2 as the new Key Server, following our chosen priority, and resume normal operations without having to perform the whole handshake again.
+
+## MKA Rekeying/Key Rollover
+
+## Replay Attack/Protection
