@@ -904,10 +904,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mka-rekeyingkey-rollover" class="md-nav__link">
+  <a href="#key-rollover-and-rekeying" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MKA Rekeying/Key Rollover
+        Key Rollover and Rekeying
       
     </span>
   </a>
@@ -915,10 +915,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#replay-attackprotection" class="md-nav__link">
+  <a href="#replay-attack-and-protection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Replay Attack/Protection
+        Replay Attack and Protection
       
     </span>
   </a>
@@ -1840,10 +1840,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mka-rekeyingkey-rollover" class="md-nav__link">
+  <a href="#key-rollover-and-rekeying" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MKA Rekeying/Key Rollover
+        Key Rollover and Rekeying
       
     </span>
   </a>
@@ -1851,10 +1851,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#replay-attackprotection" class="md-nav__link">
+  <a href="#replay-attack-and-protection" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Replay Attack/Protection
+        Replay Attack and Protection
       
     </span>
   </a>
@@ -2010,8 +2010,130 @@
 <figcaption>Figure 13: Key Server Reelection</figcaption>
 </figure>
 <p>After a brief period of waiting for a KeepAlive, the members of the CA notice that R4 is gone, begin a reelection, electing R2 as the new Key Server, following our chosen priority, and resume normal operations without having to perform the whole handshake again.</p>
-<h2 id="mka-rekeyingkey-rollover">MKA Rekeying/Key Rollover</h2>
-<h2 id="replay-attackprotection">Replay Attack/Protection</h2>
+<h2 id="key-rollover-and-rekeying">Key Rollover and Rekeying</h2>
+<p>We will now analyse another important feature of MACsec, its capability of changing keys during operation, or rollover, and the rekeying that occurs as a consequence.</p>
+<p>To begin, we will change the MACsec configuration of CA12 in R1, R2 and R4, to have a second pre-shared key:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>macsec {
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        connectivity-association &quot;MACSEC_12&quot; {
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>            admin-state enable
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>            description &quot;R1-R2-R4 MACsec&quot;
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>            macsec-encrypt true
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>            clear-tag-mode none
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>            cipher-suite gcm-aes-xpn-128
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>            static-cak {
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>                active-psk 1
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>                mka-key-server-priority 10
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>                mka-hello-interval 5
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>                pre-shared-key 1 {
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>                    encryption-type aes-128-cmac
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>                    cak 0123456789ABCDEF0123456789ABCDEF
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>                    cak-name &quot;CA12&quot;
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>                }
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>                pre-shared-key 2 {
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>                    encryption-type aes-128-cmac
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>                    cak 123456789ABCDEF0123456789ABCDEF1
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>                    cak-name &quot;CA21&quot;
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>                }
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>            }
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>        }
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>    }
+</span></code></pre></div>
+<p>With the addition of a second key, we can now ask the routers during operation, to switch their active pre-shared key to the new one, starting a rollover process in CA12, that leads to the rekeying of that CA´s keys.</p>
+<p>Now save the new configurations and redeploy the laboratory for them to take effect. When the laboratory is redeployed, you can enter any router with CA12, and verify that it is using psk 1, using:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>show macsec connectivity-association &quot;MACSEC_12&quot; detail
+</span></code></pre></div>
+<p>After confirming that, open two WireShark probes, in R1 and R2, facing CA12, and run the following command in all three routers:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>configure global
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>macsec connectivity-association &quot;MACSEC_12&quot; static-cak active-psk 2
+</span></code></pre></div>
+<p>When you have done this in all three routers, run the following command at the same time:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>commit
+</span></code></pre></div>
+<p>This will activate the change of active pre-shared keys, beggining a Key Rollover process, where the CA will begin rekeying all of its keys in order to use the new active psk.</p>
+<p>We can witness this process happening in WireShark, by noticing that the regular operation pattern is briefly affected, and a singular packet is all that is necessary to process the rekeying:</p>
+<figure id="figure-14">
+<p><img alt="Figure 14: Key Rollover and Rekeying" src="../../images/MACKEYRoll2.png" />
+  </p>
+<figcaption>Figure 14: Key Rollover and Rekeying Part 1</figcaption>
+</figure>
+<figure id="figure-15">
+<p><img alt="Figure 15: Key Rollover and Rekeying" src="../../images/MACKEYRoll1.png" />
+  </p>
+<figcaption>Figure 15: Key Rollover and Rekeying Part 2</figcaption>
+</figure>
+<p>In Figure 14, we can identify that a singular packet from the Key Server, ordering the rekeying was all it took to alter the SAK used by the CA. We can also notice in the details of the packet, that the CAK name has changed from ca12, to ca21, which is the new key we added. We can also confirm that this is a new key by noticing that the Latest key, which is the new one, has been transmited or received yet.</p>
+<p>Then, in Figure 15, we can identify the new Key number was updated, from the old one being 1, to the new one which is 2.</p>
+<p>And if we do the previous command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>show macsec connectivity-association &quot;MACSEC_12&quot; detail
+</span></code></pre></div>
+<p>We will see that the Active Pre-Shared-Key Index is now 2, and the CKN is CA21, proving that the rollover and rekeying has effectively occured.</p>
+<p>With this experiment, we have added a new pre-shared key to CA12, altered the active pre-shared key to be the new one during operation, leading to a Key Rollover process, that led to a rekeying process coordinated by the Key Server, which generated new keys and resumed normal operation without having to reform the CA.</p>
+<h2 id="replay-attack-and-protection">Replay Attack and Protection</h2>
+<p>Another important feature of MACsec is its capability of preventing several types of attacks from occuring against its peers and communications. Some examples are, denial of service, intrusions, man in the middle, masquerading, and most importantly for our experiment, replay attacks.</p>
+<p>These attacks consist in capturing packets sent by a legitimate peer of MACsec´s CA, and replaying them, in an attempt to obtain the keys used for encryption.</p>
+<p>In our laboratory, the protection against this kind of attack is currently turned off, but we can easily turn it on by using the following configuration in all routers:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>macsec {
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>        connectivity-association &quot;MACSEC_12&quot; {
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>            admin-state enable
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>            description &quot;R1-R2-R4 MACsec&quot;
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>            replay-protection true
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>            replay-window-size 32
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>            macsec-encrypt true
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>            clear-tag-mode none
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>            cipher-suite gcm-aes-xpn-128
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>            static-cak {
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>                active-psk 1
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>                mka-key-server-priority 10
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>                mka-hello-interval 5
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>                pre-shared-key 1 {
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>                    encryption-type aes-128-cmac
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>                    cak 0123456789ABCDEF0123456789ABCDEF
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>                    cak-name &quot;CA12&quot;
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>                }
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>                pre-shared-key 2 {
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>                    encryption-type aes-128-cmac
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>                    cak 123456789ABCDEF0123456789ABCDEF1
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>                    cak-name &quot;CA21&quot;
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>                }
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>            }
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>        }
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>    }
+</span></code></pre></div>
+<p>This configuration includes two new lines, that activate replay protection, and set its replay window at 32. This means that if a packet number differs from the current counter in that peer by more than 32, MACsec will drop that packet.</p>
+<p>To confirm that the changes took effect, run the command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>show macsec connectivity-association &quot;MACSEC_12&quot; detail
+</span></code></pre></div>
+<p>And verify that the replay protection is now enabled and that the replay window is 32.</p>
+<p>Now that the protection is active, we must attack it to test its functioning. To do that, we will perform a continuous ping from host1 to host2, capturing its packets when they are crossing the Linux Bridge.</p>
+<p>To perform this capture, first start a ping from host1 to host2, using the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ping<span class="w"> </span><span class="m">172</span>.31.0.1
+</span></code></pre></div>
+<p>Then, on your main device terminal, run the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>MACBridge1<span class="w"> </span>-w<span class="w"> </span>macsec.pcap<span class="w"> </span>ether<span class="w"> </span>proto<span class="w"> </span>0x88e5
+</span></code></pre></div>
+<p>This command will capture all MACsec traffic crossing MACBridge1, which is mostly our pings. Let it run for 10 seconds and then stop it.</p>
+<p>With this large collection of packets, most of them if not all, are guaranteed to be considered late by MACsec and dropped.</p>
+<p>Now, run the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>tcpreplay<span class="w"> </span>-i<span class="w"> </span>MACBridge1<span class="w"> </span>macsec.pcap
+</span></code></pre></div>
+<p>This command uses MACBridge1 to replay the captured packets to their respective receivers. After this is done, we expect to see in the receivers some statistics that show late packets in MACsec, which will be dropped according to the replay protection we activated.</p>
+<p>To see these statistics we go to R1 and use the command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>show port 1/1/c2/1 macsec sub-port 1 statistics
+</span></code></pre></div>
+<p>This will show us many statistics of different parts of MACsec, the part that is of our interest is the following:</p>
+<figure id="figure-16">
+<p><img alt="Figure 16: Replay Attack Statistics in R1" src="../../images/MACReplay1.png" />
+  </p>
+<figcaption>Figure 16: Replay Attack Statistics in R1</figcaption>
+</figure>
+<p>In R1, we can see that MACsec identified 24 packets as being late, which means they were outside of the replay protection window, and as such were discarded. We can observe this same behaviour in R2:</p>
+<figure id="figure-17">
+<p><img alt="Figure 16: Replay Attack Statistics in R2" src="../../images/MACReplay2.png" />
+  </p>
+<figcaption>Figure 16: Replay Attack Statistics in R2</figcaption>
+</figure>
+<p>We can observe that in this case, MACsec detected 31 late packets and discarded them.</p>
+<p>With this experiment, we activated MACsec´s replay protection, learned about its functioning and features, such as the replay protection window, and performed a simple replay attack against the routers of CA12, confirming that MACsec detected the late packets we sent, and promptly discarded them.</p>
 
 
 
