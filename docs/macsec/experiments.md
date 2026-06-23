@@ -187,6 +187,181 @@ We can then notice that after the last message from R4, a few KeepAlives will st
 
 After a brief period of waiting for a KeepAlive, the members of the CA notice that R4 is gone, begin a reelection, electing R2 as the new Key Server, following our chosen priority, and resume normal operations without having to perform the whole handshake again.
 
-## MKA Rekeying/Key Rollover
+## Key Rollover and Rekeying
 
-## Replay Attack/Protection
+We will now analyse another important feature of MACsec, its capability of changing keys during operation, or rollover, and the rekeying that occurs as a consequence.
+
+To begin, we will change the MACsec configuration of CA12 in R1, R2 and R4, to have a second pre-shared key:
+
+```srl
+macsec {
+        connectivity-association "MACSEC_12" {
+            admin-state enable
+            description "R1-R2-R4 MACsec"
+            macsec-encrypt true
+            clear-tag-mode none
+            cipher-suite gcm-aes-xpn-128
+            static-cak {
+                active-psk 1
+                mka-key-server-priority 10
+                mka-hello-interval 5
+                pre-shared-key 1 {
+                    encryption-type aes-128-cmac
+                    cak 0123456789ABCDEF0123456789ABCDEF
+                    cak-name "CA12"
+                }
+                pre-shared-key 2 {
+                    encryption-type aes-128-cmac
+                    cak 123456789ABCDEF0123456789ABCDEF1
+                    cak-name "CA21"
+                }
+            }
+        }
+    }
+```
+
+With the addition of a second key, we can now ask the routers during operation, to switch their active pre-shared key to the new one, starting a rollover process in CA12, that leads to the rekeying of that CA´s keys.
+
+Now save the new configurations and redeploy the laboratory for them to take effect. When the laboratory is redeployed, you can enter any router with CA12, and verify that it is using psk 1, using:
+
+```srl
+show macsec connectivity-association "MACSEC_12" detail
+```
+
+After confirming that, open two WireShark probes, in R1 and R2, facing CA12, and run the following command in all three routers:
+
+```srl
+configure global
+macsec connectivity-association "MACSEC_12" static-cak active-psk 2
+```
+
+When you have done this in all three routers, run the following command at the same time:
+
+```srl
+commit
+```
+
+This will activate the change of active pre-shared keys, beggining a Key Rollover process, where the CA will begin rekeying all of its keys in order to use the new active psk.
+
+We can witness this process happening in WireShark, by noticing that the regular operation pattern is briefly affected, and a singular packet is all that is necessary to process the rekeying:
+
+<figure markdown id="figure-14">
+  ![Figure 14: Key Rollover and Rekeying](../images/MACKEYRoll2.png)
+  <figcaption>Figure 14: Key Rollover and Rekeying Part 1</figcaption>
+</figure>
+
+<figure markdown id="figure-15">
+  ![Figure 15: Key Rollover and Rekeying](../images/MACKEYRoll1.png)
+  <figcaption>Figure 15: Key Rollover and Rekeying Part 2</figcaption>
+</figure>
+
+In Figure 14, we can identify that a singular packet from the Key Server, ordering the rekeying was all it took to alter the SAK used by the CA. We can also notice in the details of the packet, that the CAK name has changed from ca12, to ca21, which is the new key we added. We can also confirm that this is a new key by noticing that the Latest key, which is the new one, has been transmited or received yet.
+
+Then, in Figure 15, we can identify the new Key number was updated, from the old one being 1, to the new one which is 2.
+
+And if we do the previous command:
+
+```srl
+show macsec connectivity-association "MACSEC_12" detail
+```
+
+We will see that the Active Pre-Shared-Key Index is now 2, and the CKN is CA21, proving that the rollover and rekeying has effectively occured.
+
+With this experiment, we have added a new pre-shared key to CA12, altered the active pre-shared key to be the new one during operation, leading to a Key Rollover process, that led to a rekeying process coordinated by the Key Server, which generated new keys and resumed normal operation without having to reform the CA.
+
+## Replay Attack and Protection
+
+Another important feature of MACsec is its capability of preventing several types of attacks from occuring against its peers and communications. Some examples are, denial of service, intrusions, man in the middle, masquerading, and most importantly for our experiment, replay attacks.
+
+These attacks consist in capturing packets sent by a legitimate peer of MACsec´s CA, and replaying them, in an attempt to obtain the keys used for encryption.
+
+In our laboratory, the protection against this kind of attack is currently turned off, but we can easily turn it on by using the following configuration in all routers:
+
+```srl
+macsec {
+        connectivity-association "MACSEC_12" {
+            admin-state enable
+            description "R1-R2-R4 MACsec"
+            replay-protection true
+            replay-window-size 32
+            macsec-encrypt true
+            clear-tag-mode none
+            cipher-suite gcm-aes-xpn-128
+            static-cak {
+                active-psk 1
+                mka-key-server-priority 10
+                mka-hello-interval 5
+                pre-shared-key 1 {
+                    encryption-type aes-128-cmac
+                    cak 0123456789ABCDEF0123456789ABCDEF
+                    cak-name "CA12"
+                }
+                pre-shared-key 2 {
+                    encryption-type aes-128-cmac
+                    cak 123456789ABCDEF0123456789ABCDEF1
+                    cak-name "CA21"
+                }
+            }
+        }
+    }
+```
+
+This configuration includes two new lines, that activate replay protection, and set its replay window at 32. This means that if a packet number differs from the current counter in that peer by more than 32, MACsec will drop that packet.
+
+To confirm that the changes took effect, run the command:
+
+```srl
+show macsec connectivity-association "MACSEC_12" detail
+```
+
+And verify that the replay protection is now enabled and that the replay window is 32.
+
+Now that the protection is active, we must attack it to test its functioning. To do that, we will perform a continuous ping from host1 to host2, capturing its packets when they are crossing the Linux Bridge.
+
+To perform this capture, first start a ping from host1 to host2, using the command:
+
+```bash
+ping 172.31.0.1
+```
+
+Then, on your main device terminal, run the command:
+
+```bash
+sudo tcpdump -i MACBridge1 -w macsec.pcap ether proto 0x88e5
+```
+
+This command will capture all MACsec traffic crossing MACBridge1, which is mostly our pings. Let it run for 10 seconds and then stop it.
+
+With this large collection of packets, most of them if not all, are guaranteed to be considered late by MACsec and dropped.
+
+Now, run the command:
+
+```bash
+sudo tcpreplay -i MACBridge1 macsec.pcap
+```
+
+This command uses MACBridge1 to replay the captured packets to their respective receivers. After this is done, we expect to see in the receivers some statistics that show late packets in MACsec, which will be dropped according to the replay protection we activated.
+
+To see these statistics we go to R1 and use the command:
+
+```srl
+show port 1/1/c2/1 macsec sub-port 1 statistics
+```
+
+This will show us many statistics of different parts of MACsec, the part that is of our interest is the following:
+
+<figure markdown id="figure-16">
+  ![Figure 16: Replay Attack Statistics in R1](../images/MACReplay1.png)
+  <figcaption>Figure 16: Replay Attack Statistics in R1</figcaption>
+</figure>
+
+In R1, we can see that MACsec identified 24 packets as being late, which means they were outside of the replay protection window, and as such were discarded. We can observe this same behaviour in R2:
+
+<figure markdown id="figure-17">
+  ![Figure 16: Replay Attack Statistics in R2](../images/MACReplay2.png)
+  <figcaption>Figure 16: Replay Attack Statistics in R2</figcaption>
+</figure>
+
+We can observe that in this case, MACsec detected 31 late packets and discarded them.
+
+With this experiment, we activated MACsec´s replay protection, learned about its functioning and features, such as the replay protection window, and performed a simple replay attack against the routers of CA12, confirming that MACsec detected the late packets we sent, and promptly discarded them.
