@@ -27,8 +27,8 @@ Now that we grasp some of WireGuard´s most important concepts and features, we 
 
 This laboratory demonstrates:
 
-- GNS3 configuration for 3 Linux hosts with WireGuard installed
-- Setup for two WireGuard hosts to form a tunnel
+- GNS3 configuration for 3 Docker hosts with WireGuard installed
+- Setup for two WireGuard peers to form a tunnel
 - Roaming capability of WireGuard to form a tunnel with the same peer in two different hosts
 - Packet analysis of WireGuard´s handshake, KeepAlive messages and normal operation
 
@@ -36,8 +36,7 @@ This laboratory demonstrates:
 
 The topology contains:
 
-- Three Linux hosts with internet access
-- A NAT for internet access
+- Three Docker containers with WireGuard pre-installed
 - An ethernet switch to connect all devices
 - Two WireGuard peers, with two machines sharing the same host
 
@@ -48,35 +47,18 @@ The topology contains:
 
 ## Topology Configuration
 
-To create this topology, begin by placing the NAT, from GNS3´s appliances and an Ethernet Switch, and connect them both.
-
-Then create the three Linux hosts. The hosts used for this laboratory were Cloud Guests, for their easy setup with internet connection.
-
-!!! warning
-
-    Before activating the Linux hosts, go to Configure -> HDD, and resize each of their drives to have at least 10000 more MB, to ensure there is space to update the host and install WireGuard.
-
-Now that the hosts are in place and connected to the switch, start them one by one, waiting for the their setup to finish before activating the next one. To login use:
+To create this topology, we need to obtain the necessary docker container, which can be done by doing:
 
 ```bash
-ubuntu
-ubuntu
+New Template -> Manually create a new template -> Docker Containers ->
+New -> New Image -> ghcr.io/groudonramsay/ubuntu-wireguard:1.0
 ```
 
-Then update their software before installing WireGuard with:
+For the options use Telnet, 1 Adapter and for Envirnoment Variable use --cap-add NET_ADMIN.
 
-```bash
-sudo apt update
-sudo apt upgrade
-```
+With the Docker appliance created, it is just a matter of placing all three machines and an ethernet switch connecting them all together.
 
-Finally, install WireGuard with:
-
-```bash
-sudo apt install wireguard
-```
-
-With this, you should have all three hosts updated and with WireGuard available to use.
+Now that the hosts are in place and connected to the switch, start them all, and let´s begin the configuration.
 
 Now, we will generate the key pair for each host and setup their WireGuard configurations.
 
@@ -90,20 +72,23 @@ cat publickey
 
 Save the two keys from both hosts in a note file to use afterwards.
 
-With the keys generated and saved, we now need to check the IP address of WG1, so that the two other devices can connect to it.
-
-Simply run the following command on WG1 and save the output in a note file:
+With the keys generated and saved, we now need to set the IP address of all devices. To do so use the commands:
 
 ```bash
-ip add
+ip address add dev eth0 100.0.0.1
+ip link set eth0 up
+ip route add 100.0.0.0/24 dev eth0
+ip add show eth0
 ```
+
+For WG2, change the last digit to 2, and for RoamingTester change the last digit to 3.
 
 With all the keys and necessary information obtained, we will now configure our WireGuard devices to be able to connect to each other and form a tunnel.
 
 For WG1, use the following command to create and open a configuration file:
 
 ```bash
-sudo nano /etc/wireguard/wg0.conf
+nano /etc/wireguard/wg0.conf
 ```
 
 Then, paste the following configuration into the file using right click:
@@ -135,7 +120,7 @@ ListenPort = 51820
 [Peer]
 PublicKey = cat publickey (WG1)
 AllowedIPs = 10.0.0.1/32
-Endpoint = WG1IP:51820
+Endpoint = 100.0.0.1:51820
 PersistentKeepalive = 25
 ```
 
@@ -148,13 +133,13 @@ With the configurations complete, all that is left is to test if it was properly
 To test this, first we will activate the interface in WG1, using the command:
 
 ```bash
-sudo wg-quick up wg0
+wg-quick up wg0
 ```
 
 And we will check on its status using:
 
 ```bash
-sudo wg
+wg
 ```
 
 You should see an output similar to the one presented in Figure 3.
@@ -169,13 +154,13 @@ This means that our interface is up and waiting for a peer to begin the connecti
 To start the interface we will do the same command as WG1:
 
 ```bash
-sudo wg-quick up wg0
+wg-quick up wg0
 ```
 
 And the same command to check the interface:
 
 ```bash
-sudo wg
+wg
 ```
 
 The difference this time, is the fact that now there are two interfaces up that are each other´s peer, which means that a tunnel will now form, and we will get a different output, detailed in Figure 4:
@@ -192,7 +177,7 @@ We will end our testing by opening WireShark in GNS3 in a link between WG1 and W
 To test this we will first ping the regular interface of WG2, to see that the underlying connection still exists and works:
 
 ```bash
-ping 192.168.122.139
+ping 100.0.0.2
 ```
 
 And we will see in WireShark that the ICMP packets appear as usual and that connection is still here.
@@ -216,5 +201,7 @@ And now we should see in WireShark the following packets:
 </figure>
 
 Which means that the tunnel has successfully formed and the packets that go through it are encrypted with WireGuard.
+
+!!! note "With the usage of Docker Image and containers for our WireGuard devices, it is entirely possible to perform this laboratory in ContainerLab if that is your preference."
 
 Now that the setup is complete, we will perform some experiments to see WireGuard in action, following the guides in [WireGuard Experiments](experiments.md)

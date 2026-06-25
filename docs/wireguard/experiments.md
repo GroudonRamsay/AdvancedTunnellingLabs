@@ -60,7 +60,7 @@ With this we have finished an in-depth study of WireGuard´s Handshake. Now we w
 
 ## WireGuard´s Regular Operation and KeepAlive
 
-We will now analyse how WireGuard works in its normal state of operation, verifying packets encrypted by it, and its KeepAlive packets, to better understande them and WireGuard as a whole.
+We will now analyse how WireGuard works in its normal state of operation, verifying packets encrypted by it, and its KeepAlive packets, to better understand them and WireGuard as a whole.
 
 Keep everything as it was when we finished the previous experiment. Lets begin by analysing the KeepAlive packets, that we had already seen from the previous experiments. WireGuard uses KeepAlive to ensure that the two peers are still up and connected, and has a setting to choose the time, in seconds, between each KeepAlive.
 
@@ -71,7 +71,7 @@ We will be using the first two KeepAlive packets, right after the initial handsh
   <figcaption>Figure 5: WireGuard KeepAlive Packets</figcaption>
 </figure>
 
-From these packets we can see the follwing elements:
+From these packets we can see the following elements:
 
 <figure markdown id="figure-6">
   ![Figure 6: WireGuard KeepAlive Analysis](../images/WGKeepAA.png)
@@ -123,7 +123,7 @@ We have been using the same tunnel between WG1 and WG2 for our previous experime
 Then we will turn on the interface in RoamingTester, and we should see in WireShark a connection forming, and by running in WG1 and RoamingTester the following command, we should see that a connection is indeed established with a new IP address, but with the same peer:
 
 ```bash
-sudo wg
+wg
 ```
 
 <figure markdown id="figure-9">
