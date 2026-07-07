@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#laboratory-experiments" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -912,6 +917,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -928,6 +951,78 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mka-over-udp-handshake-and-keepalive-comparisons-with-macsec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MKA over UDP, Handshake and KeepAlive comparisons with MACsec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#end-to-end-encryption-vs-hop-by-hop-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-End encryption vs Hop-by-Hop encryption
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tunnel-encryption-and-slicing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tunnel Encryption and Slicing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Encryption
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1661,6 +1756,69 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mka-over-udp-handshake-and-keepalive-comparisons-with-macsec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MKA over UDP, Handshake and KeepAlive comparisons with MACsec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#end-to-end-encryption-vs-hop-by-hop-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-End encryption vs Hop-by-Hop encryption
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tunnel-encryption-and-slicing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tunnel Encryption and Slicing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#service-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Encryption
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1681,7 +1839,53 @@
 
   <h1>Experiments</h1>
 
-
+<h2 id="laboratory-experiments">Laboratory Experiments</h2>
+<p>With the laboratory completed, we will now move forward to the experiments related to ANYsec. Our aim for this section will be to analyse ANYsec´s most important components related to its tunnelling capabilities, and do some technical comparisons with MACsec.</p>
+<h2 id="mka-over-udp-handshake-and-keepalive-comparisons-with-macsec">MKA over UDP, Handshake and KeepAlive comparisons with MACsec</h2>
+<p>For our first experience, we will study the way ANYsec does its authentication. Similar to MACsec, ANYsec uses MKA to perform its authentication process and to share the session keys that will be used to secure the traffic within ANYsec.</p>
+<p>The main difference between ANYsec´s MKA and MACsec´s MKA, is that for ANYsec, the MKA packets are sent using UDP, since it is needed to send the packets through entire networks and not only on a link level.</p>
+<div class="admonition warning">
+<p class="admonition-title">For the majority, if not all of the ANYsec packets we will be analysing, WireShark is still incapable of dissecting them. As such all the figures we will display with dissected packets are done in WireShark with the plugin <a href="https://github.com/xavixava/anysec-dissectors">ANYsec Dissectors</a> installed. We recommend installing it for the full experience.</p>
+</div>
+<p>We will then need to see the MKA process occuring to see any diferences or similarities. For this we will retrigger a handshake by rebooting routers PE1 and PE2 using the following command at both machines simultaneously:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>admin reboot now
+</span></code></pre></div>
+<p>Before running the command place WireShark probes at the two ports of both routers that are facing P3 and P4, and then run the command to see the handshake and the MKA process.</p>
+<p>The result will be similar to what we have seen in MACsec, a sudden break from the KeepAlive routine, and then the MKA Handshake packets appearing, followed by the routine packets again.</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: MKA Handshake from the Key Server view" src="../../images/ANYMKAKEYSERVER.png" />
+  </p>
+<figcaption>Figure 1: MKA Handshake from the Key Server view</figcaption>
+</figure>
+<p>From this Figure we can identify some interesting aspects. First of all, the MKA process is identical to the one we see in MACsec, and secondly, we can see two handshakes occuring at once, due to the two services using tunnel encryption.</p>
+<figure id="figure-2">
+<p><img alt="Figure 2: MKA Handshake First Key Name" src="../../images/ANYMKAKEYNAME1.png" />
+  </p>
+<figcaption>Figure 2: MKA Handshake First Key Name</figcaption>
+</figure>
+<figure id="figure-3">
+<p><img alt="Figure 3: MKA Handshake Second Key Name" src="../../images/ANYMKAKEYNAME2.png" />
+  </p>
+<figcaption>Figure 3: MKA Handshake Second Key Name</figcaption>
+</figure>
+<p>We can see in Figures 2 and 3, that the CAK names for both packets are different and match the names we used in the configuration of the two services using tunnel encryption.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: MKA Handshake Second Key Name" src="../../images/ANYMKAKEYDIST.png" />
+  </p>
+<figcaption>Figure 4: MKA Handshake Second Key Name</figcaption>
+</figure>
+<p>In Figure 4 we can see the final handshake packets, which distribute the two SAKs that will be used by the ANYsec tunnel, specifically the two slices using tunnel encryption. This way each slice has its own SAK, which means its own encryption, detached from the other slices.</p>
+<p>Following the full handshake process, we can see that ANYsec uses MKA to the letter, following exactly MACsec´s usage, with the difference that it is transported by UDP so it can traverse across several routers to its destination, and that several handshakes occur at once depending on how many CAs are needed for tunnels or services.</p>
+<p>We will now briefly analyse the ANYsec KeepAlive, to see what it uses to maintain its connection.</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: ANYsec KeepAlive packet" src="../../images/ANYKEEPALIVE.png" />
+  </p>
+<figcaption>Figure 5: ANYsec KeepAlive packet</figcaption>
+</figure>
+<p>As we can see in Figure 5, the KeepAlive for ANYsec is identical to the one used by MACsec, sharing the same details in its parameters to prove it is still up and ready to communicate.</p>
+<h2 id="end-to-end-encryption-vs-hop-by-hop-encryption">End-to-End encryption vs Hop-by-Hop encryption</h2>
+<h2 id="tunnel-encryption-and-slicing">Tunnel Encryption and Slicing</h2>
+<h2 id="service-encryption">Service Encryption</h2>
 
 
 
