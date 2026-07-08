@@ -852,12 +852,13 @@ And finally we configure the services that we will be using:
 /configure service sdp 2222 delivery-type mpls
 /configure service sdp 2222 sr-isis true
 /configure service sdp 2222 far-end ip-address 10.0.0.22
-/configure service vpls "1002" admin-state enable
-/configure service vpls "1002" description "SERV using ISIS 2 best IGP metric on Bottom"
-/configure service vpls "1002" customer "1"
-/configure service vpls "1002" service-mtu 8100
-/configure service vpls "1002" spoke-sdp 2222:1002 admin-state enable
-/configure service vpls "1002" sap 1/1/c3/1:1002 admin-state enable
+/configure service epipe "1002" admin-state enable
+/configure service epipe "1002" description "SERV using ISIS 2 best IGP metric on Bottom"
+/configure service epipe "1002" customer "1"
+/configure service epipe "1002" service-mtu 8100
+/configure service epipe "1002" spoke-sdp 2222:1002 admin-state enable
+/configure service epipe "1002" spoke-sdp 2222:1002 anysec-encryption-group "EG_SERV-1002"
+/configure service epipe "1002" sap 1/1/c3/1:1002 admin-state enable
 /configure service vprn "1003" admin-state enable
 /configure service vprn "1003" description "VPRN using ISIS 0 with Flex-Algo"
 /configure service vprn "1003" customer "1"
@@ -1188,12 +1189,13 @@ The configuration for PE2 is the following, and it is very similar to PE1 with m
 /configure service sdp 2111 delivery-type mpls
 /configure service sdp 2111 sr-isis true
 /configure service sdp 2111 far-end ip-address 10.0.0.12
-/configure service vpls "1002" admin-state enable
-/configure service vpls "1002" description "SERV using ISIS 2 best IGP metric on Bottom"
-/configure service vpls "1002" customer "1"
-/configure service vpls "1002" service-mtu 8100
-/configure service vpls "1002" spoke-sdp 2111:1002 admin-state enable
-/configure service vpls "1002" sap 1/1/c3/1:1002 admin-state enable
+/configure service epipe "1002" admin-state enable
+/configure service epipe "1002" description "SERV using ISIS 2 best IGP metric on Bottom"
+/configure service epipe "1002" customer "1"
+/configure service epipe "1002" service-mtu 8100
+/configure service epipe "1002" spoke-sdp 2111:1002 admin-state enable
+/configure service epipe "1002" spoke-sdp 2111:1002 anysec-encryption-group "EG_SERV-1002"
+/configure service epipe "1002" sap 1/1/c3/1:1002 admin-state enable
 /configure service vprn "1003" admin-state enable
 /configure service vprn "1003" description "VPRN using ISIS 0 with Flex-Algo"
 /configure service vprn "1003" customer "1"
