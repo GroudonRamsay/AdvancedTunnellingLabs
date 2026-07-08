@@ -131,4 +131,189 @@ And finally, in Figures 10 and 11, we can see that the service 1003, identified 
 
 For this experiment, we will be exploring one of ANYsec´s ways of encrypting its traffic, through Tunnel Encryption and one of its main features, Tunnel Slicing.
 
+Tunnel Encryption was the first method of encryption developed for ANYsec. Its objective was to create a tunnel where all ANYsec traffic would pass through, encrypted with the same CA. Paired with this feature, came Tunnel Slicing, which allowed services that use Tunnel Encryption, to use different CAs for encryption, effectively allowing to separate sections of the tunnel for different services and keys.
+
+This allowed for more flexibility when choosing how and what to protect with ANYsec. Additionaly, slicing the tunnel allows for several different SAKs to be used in the encryption of all the different services, ensuring that if one key is compromised, all the other services are secure.
+
+Despite this feature interesting capabilities, verifying its actual functioning with practical means, such as packet capture is not viable, since it looks virtually the same for Tunnel Encryption and Service Encryption.
+
+As such, this experiment will focus on explaining the configurations of Tunnel Encryption and how to analyse and obtain information about it with router commands.
+
+Firstly, to encrypt a service through Tunnel Encryption, it is necessary to create its Security Termination Policy and Encryption Group.
+
+The Security Termination policy is essentialy a way to define the identity and the endpoint of the tunnel. It includes:
+
+- Local Address
+- Routing Protocol
+- IGP Instance
+
+And its configuration, for example for service 1001, is the following:
+
+```srl
+/configure anysec security-termination-policies policy "STP_VLL-1001" admin-state enable
+/configure anysec security-termination-policies policy "STP_VLL-1001" local-address 10.0.0.11
+/configure anysec security-termination-policies policy "STP_VLL-1001" rx-must-be-encrypted false
+/configure anysec security-termination-policies policy "STP_VLL-1001" protocol sr-isis
+/configure anysec security-termination-policies policy "STP_VLL-1001" igp-instance-id 1
+```
+
+The Encryption Group on the other hand, is used to define what is going to be encrypted and who the other endpoint is. It includes:
+
+- Security Termination Policy
+- Peer
+- Peer tunnel information
+- Encryption Label
+- CA that will be used
+
+Its configuration for service 1001 follows:
+
+```srl
+/configure anysec tunnel-encryption encryption-group "EG_VLL-1001" admin-state enable
+/configure anysec tunnel-encryption encryption-group "EG_VLL-1001" security-termination-policy "STP_VLL-1001"
+/configure anysec tunnel-encryption encryption-group "EG_VLL-1001" encryption-label 2101
+/configure anysec tunnel-encryption encryption-group "EG_VLL-1001" ca-name "CA_VLL-1001"
+/configure anysec tunnel-encryption encryption-group "EG_VLL-1001" peer-tunnel-attributes protocol sr-isis
+/configure anysec tunnel-encryption encryption-group "EG_VLL-1001" peer-tunnel-attributes igp-instance-id 1
+/configure anysec tunnel-encryption encryption-group "EG_VLL-1001" peer 10.0.0.21 admin-state enable
+```
+
+These two elements can be seen in the routers using the command:
+
+```srl
+show anysec tunnel-encryption encryption-group "EG_VLL-1001"
+```
+
+This command will display information regarding the Encryption Group associated with service 1001, including the Security Termination Policy, as we can see in Figure 12:
+
+<figure markdown id="figure-12">
+  ![Figure 12: ANYsec EG and STP](../images/ANYEGSTP.png)
+  <figcaption>Figure 12: ANYsec EG and STP</figcaption>
+</figure>
+
+We can see that all the information we configured is present here, including configurations regarding this router peer.
+
+Another important part of the configuration is the Tunnel Slicing. How do we configure the tunnel to have different slices?
+
+To do that, we configure the router to create several MACsec CAs, one for each slice we want, and configure it with the ANYsec flag on true, so that it knows it is using these for ANYsec and not MACsec.
+
+With several CAs configured and assigned through the Encryption Group, the router will know which CAs to assign to which services, and each one will have its own set of keys, effectively slicing the ANYsec tunnel into several small services.
+
+The CA configuration can be seen below:
+
+```srl
+/configure macsec connectivity-association "CA_VLL-1001" admin-state enable
+/configure macsec connectivity-association "CA_VLL-1001" description "Anysec ISIS 1"
+/configure macsec connectivity-association "CA_VLL-1001" clear-tag-mode none
+/configure macsec connectivity-association "CA_VLL-1001" cipher-suite gcm-aes-xpn-128
+/configure macsec connectivity-association "CA_VLL-1001" anysec true
+/configure macsec connectivity-association "CA_VLL-1001" static-cak active-psk 1
+/configure macsec connectivity-association "CA_VLL-1001" static-cak mka-hello-interval 5
+/configure macsec connectivity-association "CA_VLL-1001" static-cak pre-shared-key 1 encryption-type aes-128-cmac
+/configure macsec connectivity-association "CA_VLL-1001" static-cak pre-shared-key 1 cak "0123456789ABCDEF0123456789ABCDEF"
+/configure macsec connectivity-association "CA_VLL-1001" static-cak pre-shared-key 1 cak-name "AA0123456789ABCDEF"
+/configure macsec connectivity-association "CA_VLL-1001" static-cak pre-shared-key 2 encryption-type aes-128-cmac
+/configure macsec connectivity-association "CA_VLL-1001" static-cak pre-shared-key 2 cak "123456789ABCDEF0123456789ABCDEF0"
+/configure macsec connectivity-association "CA_VLL-1001" static-cak pre-shared-key 2 cak-name "AA123456789ABCDEF0"
+```
+
+We can also see this in the router, by checking the MACsec CAs, or by checking the MKA sessions details of the EG:
+
+```srl
+show macsec connectivity-association "CA_VLL-1001"
+show anysec tunnel-encryption encryption-group "EG_VLL-1001" mka-session
+```
+
+With the first command, we will see the details of the CA we just configured, and with the second command, we will see the status of the session that was established, as portrayed in Figures 13 and 14:
+
+<figure markdown id="figure-13">
+  ![Figure 13: ANYsec service 1001 CA](../images/ANYMACCA.png)
+  <figcaption>Figure 13: ANYsec service 1001 CA</figcaption>
+</figure>
+
+<figure markdown id="figure-14">
+  ![Figure 14: ANYsec service 1001 MKA session](../images/ANYMKASESS.png)
+  <figcaption>Figure 14: ANYsec service 1001 MKA session</figcaption>
+</figure>
+
+With all these configurations, our router is now ready to create an ANYsec tunnel, and slice it for the different services that we established.
+
 ## Service Encryption
+
+For our final experiment, we will briefly analyse a new feature recently added to ANYsec, Service Encryption.
+
+A simple way to describe Service Encryption, is to say it is essentially Tunnel Encryption with Slicing for every service encrypted. It has the same granularity and benefits.
+
+Whilst Tunnel Encryption can encrypt everything within its tunnel, or split into several slices with different rules, Service Encryption works only on a per-service basis.
+
+To configure a service to be protected through Service Encryption, the process is similar to the previous one. We create our STP, this time without peer tunnel attributes, since there is no tunnel:
+
+```srl
+/configure anysec security-termination-policies policy "STP_SERV-1002" admin-state enable
+/configure anysec security-termination-policies policy "STP_SERV-1002" local-address 10.0.0.12
+/configure anysec security-termination-policies policy "STP_SERV-1002" rx-must-be-encrypted false
+/configure anysec security-termination-policies policy "STP_SERV-1002" protocol sr-isis
+/configure anysec security-termination-policies policy "STP_SERV-1002" igp-instance-id 2
+```
+
+Then we create the EG, this time using the service encryption path:
+
+```srl
+/configure anysec service-encryption encryption-group "EG_SERV-1002" admin-state enable
+/configure anysec service-encryption encryption-group "EG_SERV-1002" security-termination-policy "STP_SERV-1002"
+/configure anysec service-encryption encryption-group "EG_SERV-1002" encryption-label 2201
+/configure anysec service-encryption encryption-group "EG_SERV-1002" ca-name "CA_SERV-1002"
+/configure anysec service-encryption encryption-group "EG_SERV-1002" peer 10.0.0.22 admin-state enable
+```
+
+Then, the MACsec CA, similar to the others:
+
+```srl
+/configure macsec connectivity-association "CA_SERV-1002" admin-state enable
+/configure macsec connectivity-association "CA_SERV-1002" description "Anysec ISIS 2"
+/configure macsec connectivity-association "CA_SERV-1002" clear-tag-mode none
+/configure macsec connectivity-association "CA_SERV-1002" cipher-suite gcm-aes-xpn-128
+/configure macsec connectivity-association "CA_SERV-1002" anysec true
+/configure macsec connectivity-association "CA_SERV-1002" static-cak active-psk 1
+/configure macsec connectivity-association "CA_SERV-1002" static-cak mka-hello-interval 5
+/configure macsec connectivity-association "CA_SERV-1002" static-cak pre-shared-key 1 encryption-type aes-128-cmac
+/configure macsec connectivity-association "CA_SERV-1002" static-cak pre-shared-key 1 cak "0123456789ABCDEF0123456789ABCDEF"
+/configure macsec connectivity-association "CA_SERV-1002" static-cak pre-shared-key 1 cak-name "BB0123456789ABCDEF"
+/configure macsec connectivity-association "CA_SERV-1002" static-cak pre-shared-key 2 encryption-type aes-128-cmac
+/configure macsec connectivity-association "CA_SERV-1002" static-cak pre-shared-key 2 cak "123456789ABCDEF0123456789ABCDEF0"
+/configure macsec connectivity-association "CA_SERV-1002" static-cak pre-shared-key 2 cak-name "BB123456789ABCDEF0"
+```
+
+And finally, when configuring the service, we assign the EG to the spoke we are using for that service, in order for the actual encryption to occur and traffic for this service to really be encrypted:
+
+```srl
+/configure service epipe "1002" admin-state enable
+/configure service epipe "1002" description "SERV using ISIS 2 best IGP metric on Bottom"
+/configure service epipe "1002" customer "1"
+/configure service epipe "1002" service-mtu 8100
+/configure service epipe "1002" spoke-sdp 2222:1002 admin-state enable
+/configure service epipe "1002" spoke-sdp 2222:1002 anysec-encryption-group "EG_SERV-1002"
+/configure service epipe "1002" sap 1/1/c3/1:1002 admin-state enable
+```
+
+This additional step is necessary compared to Tunnel Encryption, otherwise this service traffic would be in the clear throughout the network.
+
+The command to see the STP and EG is similar changing only from tunnel-encryption to service-encryption:
+
+```srl
+show anysec service-encryption encryption-group "EG_SERV-1002"
+```
+
+The same happens for the MKA session command:
+
+```srl
+show anysec service-encryption encryption-group "EG_SERV-1002" mka-session
+```
+
+And as we can see in Figure 15, the output for these commands regarding service encryption does not change in a meaningful manner, only what would be expected of a different EG and STP:
+
+<figure markdown id="figure-15">
+  ![Figure 15: ANYsec Service Encryption EG](../images/ANYSEEG.png)
+  <figcaption>Figure 15: ANYsec Service Encryption EG</figcaption>
+</figure>
+
+We hope that these experiments helped you understand ANYsec sligthly better, both in its differences and similarities to MACsec and other similar solutions, but also to its fundamental features, and that it may help you configure and understand your own ANYsec protected networks!
