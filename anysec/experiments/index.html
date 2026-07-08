@@ -1936,7 +1936,141 @@
 <p>And finally, in Figures 10 and 11, we can see that the service 1003, identified by the MPLS label 2001, also follows the same pattern of the other two services, and the packets fully match.</p>
 <h2 id="tunnel-encryption-and-slicing">Tunnel Encryption and Slicing</h2>
 <p>For this experiment, we will be exploring one of ANYsec´s ways of encrypting its traffic, through Tunnel Encryption and one of its main features, Tunnel Slicing.</p>
+<p>Tunnel Encryption was the first method of encryption developed for ANYsec. Its objective was to create a tunnel where all ANYsec traffic would pass through, encrypted with the same CA. Paired with this feature, came Tunnel Slicing, which allowed services that use Tunnel Encryption, to use different CAs for encryption, effectively allowing to separate sections of the tunnel for different services and keys.</p>
+<p>This allowed for more flexibility when choosing how and what to protect with ANYsec. Additionaly, slicing the tunnel allows for several different SAKs to be used in the encryption of all the different services, ensuring that if one key is compromised, all the other services are secure.</p>
+<p>Despite this feature interesting capabilities, verifying its actual functioning with practical means, such as packet capture is not viable, since it looks virtually the same for Tunnel Encryption and Service Encryption.</p>
+<p>As such, this experiment will focus on explaining the configurations of Tunnel Encryption and how to analyse and obtain information about it with router commands.</p>
+<p>Firstly, to encrypt a service through Tunnel Encryption, it is necessary to create its Security Termination Policy and Encryption Group.</p>
+<p>The Security Termination policy is essentialy a way to define the identity and the endpoint of the tunnel. It includes:</p>
+<ul>
+<li>Local Address</li>
+<li>Routing Protocol</li>
+<li>IGP Instance</li>
+</ul>
+<p>And its configuration, for example for service 1001, is the following:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>/configure anysec security-termination-policies policy &quot;STP_VLL-1001&quot; admin-state enable
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>/configure anysec security-termination-policies policy &quot;STP_VLL-1001&quot; local-address 10.0.0.11
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>/configure anysec security-termination-policies policy &quot;STP_VLL-1001&quot; rx-must-be-encrypted false
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>/configure anysec security-termination-policies policy &quot;STP_VLL-1001&quot; protocol sr-isis
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>/configure anysec security-termination-policies policy &quot;STP_VLL-1001&quot; igp-instance-id 1
+</span></code></pre></div>
+<p>The Encryption Group on the other hand, is used to define what is going to be encrypted and who the other endpoint is. It includes:</p>
+<ul>
+<li>Security Termination Policy</li>
+<li>Peer</li>
+<li>Peer tunnel information</li>
+<li>Encryption Label</li>
+<li>CA that will be used</li>
+</ul>
+<p>Its configuration for service 1001 follows:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>/configure anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; admin-state enable
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>/configure anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; security-termination-policy &quot;STP_VLL-1001&quot;
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>/configure anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; encryption-label 2101
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>/configure anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; ca-name &quot;CA_VLL-1001&quot;
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>/configure anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; peer-tunnel-attributes protocol sr-isis
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>/configure anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; peer-tunnel-attributes igp-instance-id 1
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>/configure anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; peer 10.0.0.21 admin-state enable
+</span></code></pre></div>
+<p>These two elements can be seen in the routers using the command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>show anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot;
+</span></code></pre></div>
+<p>This command will display information regarding the Encryption Group associated with service 1001, including the Security Termination Policy, as we can see in Figure 12:</p>
+<figure id="figure-12">
+<p><img alt="Figure 12: ANYsec EG and STP" src="../../images/ANYEGSTP.png" />
+  </p>
+<figcaption>Figure 12: ANYsec EG and STP</figcaption>
+</figure>
+<p>We can see that all the information we configured is present here, including configurations regarding this router peer.</p>
+<p>Another important part of the configuration is the Tunnel Slicing. How do we configure the tunnel to have different slices?</p>
+<p>To do that, we configure the router to create several MACsec CAs, one for each slice we want, and configure it with the ANYsec flag on true, so that it knows it is using these for ANYsec and not MACsec.</p>
+<p>With several CAs configured and assigned through the Encryption Group, the router will know which CAs to assign to which services, and each one will have its own set of keys, effectively slicing the ANYsec tunnel into several small services.</p>
+<p>The CA configuration can be seen below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; admin-state enable
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; description &quot;Anysec ISIS 1&quot;
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; clear-tag-mode none
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; cipher-suite gcm-aes-xpn-128
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; anysec true
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak active-psk 1
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak mka-hello-interval 5
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak pre-shared-key 1 encryption-type aes-128-cmac
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak pre-shared-key 1 cak &quot;0123456789ABCDEF0123456789ABCDEF&quot;
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak pre-shared-key 1 cak-name &quot;AA0123456789ABCDEF&quot;
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak pre-shared-key 2 encryption-type aes-128-cmac
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak pre-shared-key 2 cak &quot;123456789ABCDEF0123456789ABCDEF0&quot;
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; static-cak pre-shared-key 2 cak-name &quot;AA123456789ABCDEF0&quot;
+</span></code></pre></div>
+<p>We can also see this in the router, by checking the MACsec CAs, or by checking the MKA sessions details of the EG:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>show macsec connectivity-association &quot;CA_VLL-1001&quot;
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>show anysec tunnel-encryption encryption-group &quot;EG_VLL-1001&quot; mka-session
+</span></code></pre></div>
+<p>With the first command, we will see the details of the CA we just configured, and with the second command, we will see the status of the session that was established, as portrayed in Figures 13 and 14:</p>
+<figure id="figure-13">
+<p><img alt="Figure 13: ANYsec service 1001 CA" src="../../images/ANYMACCA.png" />
+  </p>
+<figcaption>Figure 13: ANYsec service 1001 CA</figcaption>
+</figure>
+<figure id="figure-14">
+<p><img alt="Figure 14: ANYsec service 1001 MKA session" src="../../images/ANYMKASESS.png" />
+  </p>
+<figcaption>Figure 14: ANYsec service 1001 MKA session</figcaption>
+</figure>
+<p>With all these configurations, our router is now ready to create an ANYsec tunnel, and slice it for the different services that we established.</p>
 <h2 id="service-encryption">Service Encryption</h2>
+<p>For our final experiment, we will briefly analyse a new feature recently added to ANYsec, Service Encryption.</p>
+<p>A simple way to describe Service Encryption, is to say it is essentially Tunnel Encryption with Slicing for every service encrypted. It has the same granularity and benefits.</p>
+<p>Whilst Tunnel Encryption can encrypt everything within its tunnel, or split into several slices with different rules, Service Encryption works only on a per-service basis.</p>
+<p>To configure a service to be protected through Service Encryption, the process is similar to the previous one. We create our STP, this time without peer tunnel attributes, since there is no tunnel:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; admin-state enable
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; local-address 10.0.0.12
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; rx-must-be-encrypted false
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; protocol sr-isis
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; igp-instance-id 2
+</span></code></pre></div>
+<p>Then we create the EG, this time using the service encryption path:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>/configure anysec service-encryption encryption-group &quot;EG_SERV-1002&quot; admin-state enable
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>/configure anysec service-encryption encryption-group &quot;EG_SERV-1002&quot; security-termination-policy &quot;STP_SERV-1002&quot;
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>/configure anysec service-encryption encryption-group &quot;EG_SERV-1002&quot; encryption-label 2201
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>/configure anysec service-encryption encryption-group &quot;EG_SERV-1002&quot; ca-name &quot;CA_SERV-1002&quot;
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>/configure anysec service-encryption encryption-group &quot;EG_SERV-1002&quot; peer 10.0.0.22 admin-state enable
+</span></code></pre></div>
+<p>Then, the MACsec CA, similar to the others:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; admin-state enable
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; description &quot;Anysec ISIS 2&quot;
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; clear-tag-mode none
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; cipher-suite gcm-aes-xpn-128
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; anysec true
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak active-psk 1
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak mka-hello-interval 5
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak pre-shared-key 1 encryption-type aes-128-cmac
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak pre-shared-key 1 cak &quot;0123456789ABCDEF0123456789ABCDEF&quot;
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak pre-shared-key 1 cak-name &quot;BB0123456789ABCDEF&quot;
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak pre-shared-key 2 encryption-type aes-128-cmac
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak pre-shared-key 2 cak &quot;123456789ABCDEF0123456789ABCDEF0&quot;
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>/configure macsec connectivity-association &quot;CA_SERV-1002&quot; static-cak pre-shared-key 2 cak-name &quot;BB123456789ABCDEF0&quot;
+</span></code></pre></div>
+<p>And finally, when configuring the service, we assign the EG to the spoke we are using for that service, in order for the actual encryption to occur and traffic for this service to really be encrypted:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/configure service epipe &quot;1002&quot; admin-state enable
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>/configure service epipe &quot;1002&quot; description &quot;SERV using ISIS 2 best IGP metric on Bottom&quot;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>/configure service epipe &quot;1002&quot; customer &quot;1&quot;
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>/configure service epipe &quot;1002&quot; service-mtu 8100
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>/configure service epipe &quot;1002&quot; spoke-sdp 2222:1002 admin-state enable
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>/configure service epipe &quot;1002&quot; spoke-sdp 2222:1002 anysec-encryption-group &quot;EG_SERV-1002&quot;
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>/configure service epipe &quot;1002&quot; sap 1/1/c3/1:1002 admin-state enable
+</span></code></pre></div>
+<p>This additional step is necessary compared to Tunnel Encryption, otherwise this service traffic would be in the clear throughout the network.</p>
+<p>The command to see the STP and EG is similar changing only from tunnel-encryption to service-encryption:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>show anysec service-encryption encryption-group &quot;EG_SERV-1002&quot;
+</span></code></pre></div>
+<p>The same happens for the MKA session command:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>show anysec service-encryption encryption-group &quot;EG_SERV-1002&quot; mka-session
+</span></code></pre></div>
+<p>And as we can see in Figure 15, the output for these commands regarding service encryption does not change in a meaningful manner, only what would be expected of a different EG and STP:</p>
+<figure id="figure-15">
+<p><img alt="Figure 15: ANYsec Service Encryption EG" src="../../images/ANYSEEG.png" />
+  </p>
+<figcaption>Figure 15: ANYsec Service Encryption EG</figcaption>
+</figure>
+<p>We hope that these experiments helped you understand ANYsec sligthly better, both in its differences and similarities to MACsec and other similar solutions, but also to its fundamental features, and that it may help you configure and understand your own ANYsec protected networks!</p>
 
 
 
