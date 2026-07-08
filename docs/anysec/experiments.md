@@ -59,6 +59,76 @@ As we can see in Figure 5, the KeepAlive for ANYsec is identical to the one used
 
 ## End-to-End encryption vs Hop-by-Hop encryption
 
+As we saw in the MACsec experiments, MACsec operates with Hop-by-Hop encryption, meaning that at every router a MACsec encrypted packet passes through, it must be decrypted and then encrypted again by a new SAK. This type of operation is valuable for added security, but it also adds challenges, mainly around performance.
+
+ANYsec differs from MACsec in this regard, operating with End-to-End encryption, meaning that it encrypts a packet at the starting point of ANYsec, crossing several networks and routers, and only decrypts when it reaches the ending router of ANYsec.
+
+This is possible due to ANYsec capability to operate above Layer 2, namely Layer 2.5 and 3, making it possible to be routed all the way to its destination without having to be decrypted.
+
+With this experiment we will see this behaviour in action, sending packets across ANYsec, capturing them in routers P3 and P4, and comparing them to what we see arriving in routers PE1 and PE2, to confirm if it truly displays End-to-End encryption.
+
+To begin, we will use Host 1 to send the pings, therefore we only need to place WireShark probes at port 1/1/c2/1 of P3 and P4 and at both ports of PE2.
+
+After placing the probes and ensuring everything is running correctly, we will perform the same three pings we did to test the laboratory configuration:
+
+```bash
+ping 192.168.51.8
+ping 192.168.52.8
+ping 192.168.63.8
+```
+
+Let each ping run for some time, in order to capture several packets in every step of the way.
+
+After all pings are done, use your WireShark capable of dissecting ANYsec packets to look at the captures.
+
+In theory, the packets related to the service in 192.168.51.8 should have travelled through P3 to reach PE2 in port 1/1/c1/1, the packets related to the service in 192.18.52.8 should have travelled through P4 to reach PE2 in 1/1/c2/1, and the packets related to the service in 192.168.63.8 should have travelled through P4, then to P3, and finally arrived to PE2 in port 1/1/c1/1.
+
+Let´s analyse the packets captured and see if our End-to-End theory is correct.
+
+We will start by looking at the packets sent by pinging 192.168.51.8. These should be related to service 1001, meaning they should have the label 2101.
+
+<figure markdown id="figure-6">
+  ![Figure 6: ANYsec Service 1001 P3 Capture](../images/ANY1001P3.png)
+  <figcaption>Figure 6: ANYsec Service 1001 P3 Capture</figcaption>
+</figure>
+
+As we can see in Figure 6, the packet in P3 does have the expected 2101 label in MPLS, meaning it is one of the pings from the first address. Let´s now compare it to the packet received in PE2, and see if the information within MPLS, 802.1AE Security Tag and Data remains the same.
+
+<figure markdown id="figure-7">
+  ![Figure 7: ANYsec Service 1001 PE2 Capture](../images/ANY1001PE2.png)
+  <figcaption>Figure 7: ANYsec Service 1001 PE2 Capture</figcaption>
+</figure>
+
+We can observe in Figure 7 that the packet reached PE2 shortly after P3. We can confirm it is the same from its 2101 label. Furthermore, we can see absolutely no changes in any piece of information on the headers or in the data, proving that the packet crossed through the network untouched and arrived in PE2 in the same state as when it left PE1.
+
+Now that we have proved our assumption, let´s look at the other two pings to confirm it follows the same pattern.
+
+<figure markdown id="figure-8">
+  ![Figure 8: ANYsec Service 1002 P4 Capture](../images/ANY1002P4.png)
+  <figcaption>Figure 8: ANYsec Service 1002 P4 Capture</figcaption>
+</figure>
+
+<figure markdown id="figure-9">
+  ![Figure 9: ANYsec Service 1002 PE2 Capture](../images/ANY1002PE2.png)
+  <figcaption>Figure 9: ANYsec Service 1002 PE2 Capture</figcaption>
+</figure>
+
+As we can see in Figures 8 and 9, this packet belongs to service 1002, due to its 2201 MPLS label, and all the headers and data related to ANYsec remain the same, further proving the End-to-End encryption of ANYsec.
+
+<figure markdown id="figure-10">
+  ![Figure 10: ANYsec Service 1003 P4 Capture](../images/ANY1003P4.png)
+  <figcaption>Figure 10: ANYsec Service 1003 P4 Capture</figcaption>
+</figure>
+
+<figure markdown id="figure-11">
+  ![Figure 11: ANYsec Service 1003 PE2 Capture](../images/ANY1003PE2.png)
+  <figcaption>Figure 11: ANYsec Service 1003 PE2 Capture</figcaption>
+</figure>
+
+And finally, in Figures 10 and 11, we can see that the service 1003, identified by the MPLS label 2001, also follows the same pattern of the other two services, and the packets fully match.
+
 ## Tunnel Encryption and Slicing
+
+For this experiment, we will be exploring one of ANYsec´s ways of encrypting its traffic, through Tunnel Encryption and one of its main features, Tunnel Slicing.
 
 ## Service Encryption
