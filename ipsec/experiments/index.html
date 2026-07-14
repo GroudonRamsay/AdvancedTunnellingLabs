@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#laboratory-experiments" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1146,6 +1151,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1162,6 +1185,78 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-ikev1-handshake-keepalive-and-regular-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify IKEv1 Handshake, KeepAlive and Regular Operation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ah-vs-esp-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AH vs ESP in practice
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ikev2-configuration-and-comparison-with-ikev1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IKEv2 configuration and comparison with IKEv1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ikev2-with-digital-signatures-and-certificates-as-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IKEv2 with Digital Signatures and Certificates as Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1661,6 +1756,69 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-ikev1-handshake-keepalive-and-regular-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify IKEv1 Handshake, KeepAlive and Regular Operation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ah-vs-esp-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AH vs ESP in practice
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ikev2-configuration-and-comparison-with-ikev1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IKEv2 configuration and comparison with IKEv1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ikev2-with-digital-signatures-and-certificates-as-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IKEv2 with Digital Signatures and Certificates as Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1681,7 +1839,231 @@
 
   <h1>Experiments</h1>
 
-
+<h2 id="laboratory-experiments">Laboratory Experiments</h2>
+<p>With the laboratory setup complete, we shall now perform our experiences, in order to better understand and use IPsec. We will see IKEv1 and IKEv2 in action, see the operating differences of AH and ESP, and understand how certificates and signatures can be used in the authnetication process of Tunnelling protocols.</p>
+<h2 id="verify-ikev1-handshake-keepalive-and-regular-operation">Verify IKEv1 Handshake, KeepAlive and Regular Operation</h2>
+<p>For our first experiment, we will observe the handshake performed by IKEv1, which we saw theoretically in Figure 1 of the Overview page, comparing our diagram with the one we will observe in the simulation.</p>
+<p>To perform this observation, we need to see the handshake occuring. To this end, we will first set up a WireShark probe between R1 and RA. Afterwards, we will access R1, and use the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>clear<span class="w"> </span>crypto<span class="w"> </span>session
+</span></code></pre></div>
+<p>This will clear the current tunnel they have formed, and trigger IKE into performing its handshake to form a new tunnel.</p>
+<p>The handshake packets in WireShark should look like this:</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: IKEv1 Handshake Packets" src="../../images/IPSECHANDPACKETS.png" />
+  </p>
+<figcaption>Figure 1: IKEv1 Handshake Packets</figcaption>
+</figure>
+<p>As we can see, the theory matches reality. After the Informational packets trying to start a tunnel, IKEv1 enters into Main Mode, needing 6 messages, 2 to negotiate their Policy, 2 to exchange keys and 2 to authenticate both peers, followed by 3 messages, in Quick Mode, to create the tunnel and acknowledge its creation.</p>
+<p>Let´s look more closely at each set of messages.</p>
+<p>The first two Main Mode packets refer to the negotiation of policy for IPsec. As such the packets must include the elements we configured in our policy, such as AES with 256 bits for encryption, SHA for hash, group 5 for Diffie-Hellman, pre-shared key as the authentication method and 86400 seconds for lifetime.</p>
+<p>Let´s look at the payload of the first message to see if it matches our expectations.</p>
+<figure id="figure-2">
+<p><img alt="Figure 2: IKEv1 Policy Negotiation" src="../../images/IPSECHANDPOLICY.png" />
+  </p>
+<figcaption>Figure 2: IKEv1 Policy Negotiation</figcaption>
+</figure>
+<p>As we can see in Figure 2, the policy negotiation packets follow the policy we configured to the letter, including all expected elements in the proposed transform set and policy.</p>
+<p>Moving forward, let´s look at the second set, which handles the Key Exchange. In this packets, we expect to find a Nonce, the key being exchanged and then some information regarding Vendor IDs.</p>
+<figure id="figure-3">
+<p><img alt="Figure 3: IKEv1 Key Exchange" src="../../images/IPSECHANDKEY.png" />
+  </p>
+<figcaption>Figure 3: IKEv1 Key Exchange</figcaption>
+</figure>
+<p>As we can see from Figure 3, the Key Exchange packets also match what we expected, possessing the Nonce, the Vendor ID and most importantly, the Key Exchange payload, with the key data within.</p>
+<p>From this point, all messages in the exchange become encrypted, as we have seen in the diagram, which makes it impossible to further analyse the remaining packets. But from our configuration, we know that for the final Main Mode set, the peers will exchange their Pre-Shared key, authenticating themselves, moving forward to Quick Mode to create the tunnel.</p>
+<p>We know this has happened, because the handshake continued and the packets to form the tunnel and acknowledge it were sent, proving the authentication was a success.</p>
+<p>IPsec also includes a KeepAlive, in order to maintain the SA and the tunnel running. However, it is usually disabled by default, and we have not enabled it, since we have a long duration tunnel for test purposes only.</p>
+<p>Finally, for the regular operation, we can repeat the ping we performed to test the setup, and quickly see that our packets are encrypted by IPsec, only being able to see the IPv4 header before reaching the ESP protected section, as seen in Figure 4.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: IKEv1 Regular Operation" src="../../images/IPSECREGOP.png" />
+  </p>
+<figcaption>Figure 4: IKEv1 Regular Operation</figcaption>
+</figure>
+<h2 id="ah-vs-esp-in-practice">AH vs ESP in practice</h2>
+<p>For this experiment, we will switch our IPsec to use AH instead of ESP, to see the practical differences between the two.</p>
+<p>For this to happen, run the following commands on the routers in configuration mode:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>int<span class="w"> </span>Tunnel0
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>no<span class="w"> </span>tunnel<span class="w"> </span>protection<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>no<span class="w"> </span>crypto<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>no<span class="w"> </span>crypto<span class="w"> </span>ipsec<span class="w"> </span>transform-set<span class="w"> </span>myTSet
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>crypto<span class="w"> </span>ipsec<span class="w"> </span>transform-set<span class="w"> </span>myTSet<span class="w"> </span>ah-sha-hmac
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>crypto<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nb">set</span><span class="w"> </span>transform-set<span class="w"> </span>myTSet
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>int<span class="w"> </span>Tunnel0
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>tunnel<span class="w"> </span>protection<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nb">exit</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">exit</span>
+</span></code></pre></div>
+<p>When this is done in both sides, the tunnel will reform with our new Transform Set, which dictates to only perform authentication of the packets.</p>
+<p>First of all, let´s look into the handshake process, and see if there is any change:</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: IKEv1 AH Handshake" src="../../images/IPSECAHHAND.png" />
+  </p>
+<figcaption>Figure 5: IKEv1 AH Handshake</figcaption>
+</figure>
+<p>As we can see, not only is the handshake order unaffected, but the encrypted sections remain encrypted. This is what we expected, since IKE operates with its own rules, and only sets the policy for IPsec. As such, the changes to encryption only occur to traffic within the newly formed IPsec tunnel.</p>
+<p>However, the regular traffic within the tunnel is bound to have suffered some changes. Let´s perform a ping again and see what is different:</p>
+<figure id="figure-6">
+<p><img alt="Figure 6: IKEv1 AH Regular Operation" src="../../images/IPSECAHREGOP.png" />
+  </p>
+<figcaption>Figure 6: IKEv1 AH Regular Operation</figcaption>
+</figure>
+<p>As we can see in Figure 6, the traffic is now passing in the clear. We can now see it is ICMP, and the real source and destination of the packets. We can also see the Authentication Header, which includes an ICV to guarantee the integrity of this message.</p>
+<p>In conclusion, we can see that the difference between AH and ESP only exists in the actual operation of the protocol. Whilst IKE is unaffected, the regular operation of IPsec changes, with packets now crossing in the clear, with only their integrity and authenticity assured, unlike ESP, which secures the packets integrity, authenticity and confidentiality.</p>
+<h2 id="ikev2-configuration-and-comparison-with-ikev1">IKEv2 configuration and comparison with IKEv1</h2>
+<p>We will now analyse IKEv2, comparing it to its predecessor IKEv1, seeing the changes in the handshake and in available modes, cryptographic algorithms and other factors.</p>
+<p>To clear the routers for the new configuration, use the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>write<span class="w"> </span>erase
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>reload
+</span></code></pre></div>
+<p>By accepting both commands and choosing not to save the configuration when reloading, the router will be factory reset.</p>
+<p>When this is done, we will begin setting up the new configuration.</p>
+<p>Starting with R1, the configuration is the following:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>hostname<span class="w"> </span>R1
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>interface<span class="w"> </span>g0/0
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w"> </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">200</span>.1.1.1<span class="w"> </span><span class="m">255</span>.255.255.0
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">1</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w"> </span>no<span class="w"> </span>shutdown
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>interface<span class="w"> </span>g0/1
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w"> </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.2.1<span class="w"> </span><span class="m">255</span>.255.255.0
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w"> </span>no<span class="w"> </span>shutdown
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>interface<span class="w"> </span>l0
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w"> </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span><span class="m">255</span>.255.255.255
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">1</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>proposal<span class="w"> </span>myProposal
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w"> </span>encryption<span class="w"> </span>aes-cbc-256
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w"> </span>integrity<span class="w"> </span>sha512
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w"> </span>prf<span class="w"> </span>sha512
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w"> </span>group<span class="w"> </span><span class="m">16</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>policy<span class="w"> </span>myIKEv2Policy
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w"> </span>proposal<span class="w"> </span>myProposal
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>keyring<span class="w"> </span>myKeyring
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w"> </span>peer<span class="w"> </span>R2
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">  </span>address<span class="w"> </span><span class="m">2</span>.2.2.2
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">  </span>pre-shared-key<span class="w"> </span>ipsec
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>profile<span class="w"> </span>myIKEv2Profile
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w"> </span>match<span class="w"> </span>identity<span class="w"> </span>remote<span class="w"> </span>address<span class="w"> </span><span class="m">2</span>.2.2.2<span class="w"> </span><span class="m">255</span>.255.255.255
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w"> </span>authentication<span class="w"> </span><span class="nb">local</span><span class="w"> </span>pre-share
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="w"> </span>authentication<span class="w"> </span>remote<span class="w"> </span>pre-share
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="w"> </span>keyring<span class="w"> </span><span class="nb">local</span><span class="w"> </span>myKeyring
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>crypto<span class="w"> </span>ipsec<span class="w"> </span>transform-set<span class="w"> </span>myTSet<span class="w"> </span>esp-aes<span class="w"> </span>esp-sha-hmac
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>crypto<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="w"> </span><span class="nb">set</span><span class="w"> </span>transform-set<span class="w"> </span>myTSet
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="w"> </span><span class="nb">set</span><span class="w"> </span>ikev2-profile<span class="w"> </span>myIKEv2Profile
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>interface<span class="w"> </span>Tunnel0
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a><span class="w"> </span>ip<span class="w"> </span>unnumbered<span class="w"> </span>g0/1
+</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a><span class="w"> </span>tunnel<span class="w"> </span><span class="nb">source</span><span class="w"> </span>l0
+</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a><span class="w"> </span>tunnel<span class="w"> </span>destination<span class="w"> </span><span class="m">2</span>.2.2.2
+</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a><span class="w"> </span>tunnel<span class="w"> </span>mode<span class="w"> </span>ipsec<span class="w"> </span>ipv4
+</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a><span class="w"> </span>tunnel<span class="w"> </span>protection<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a>
+</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>router<span class="w"> </span>ospf<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-3-52"><a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a><span class="w"> </span>router-id<span class="w"> </span><span class="m">1</span>.1.1.1
+</span><span id="__span-3-53"><a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>
+</span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>router<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a><span class="w"> </span>router-id<span class="w"> </span><span class="m">11</span>.11.11.11
+</span></code></pre></div>
+<p>We can see some changes in the configurations used for IKEv2. Namely, stronger encryption and hash algorithms, a Pseudo Random function for added security, larger Diffie-Hellman groups, a Keyring with the peer address and key and an IKEv2 profile that goes within the IPsec profile.</p>
+<p>Now for R2:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hostname<span class="w"> </span>R2
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>interface<span class="w"> </span>g0/0
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w"> </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">200</span>.2.2.2<span class="w"> </span><span class="m">255</span>.255.255.0
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">1</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w"> </span>no<span class="w"> </span>shutdown
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>interface<span class="w"> </span>g0/1
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w"> </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.3.2<span class="w"> </span><span class="m">255</span>.255.255.0
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w"> </span>no<span class="w"> </span>shutdown
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>interface<span class="w"> </span>l0
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w"> </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">2</span>.2.2.2<span class="w"> </span><span class="m">255</span>.255.255.255
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">1</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>proposal<span class="w"> </span>myProposal
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w"> </span>encryption<span class="w"> </span>aes-cbc-256
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w"> </span>integrity<span class="w"> </span>sha512
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w"> </span>prf<span class="w"> </span>sha512
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w"> </span>group<span class="w"> </span><span class="m">16</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>policy<span class="w"> </span>myIKEv2Policy
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w"> </span>proposal<span class="w"> </span>myProposal
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>keyring<span class="w"> </span>myKeyring
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w"> </span>peer<span class="w"> </span>R1
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">  </span>address<span class="w"> </span><span class="m">1</span>.1.1.1
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">  </span>pre-shared-key<span class="w"> </span>ipsec
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>crypto<span class="w"> </span>ikev2<span class="w"> </span>profile<span class="w"> </span>myIKEv2Profile
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w"> </span>match<span class="w"> </span>identity<span class="w"> </span>remote<span class="w"> </span>address<span class="w"> </span><span class="m">1</span>.1.1.1<span class="w"> </span><span class="m">255</span>.255.255.255
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w"> </span>authentication<span class="w"> </span><span class="nb">local</span><span class="w"> </span>pre-share
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w"> </span>authentication<span class="w"> </span>remote<span class="w"> </span>pre-share
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="w"> </span>keyring<span class="w"> </span><span class="nb">local</span><span class="w"> </span>myKeyring
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a>crypto<span class="w"> </span>ipsec<span class="w"> </span>transform-set<span class="w"> </span>myTSet<span class="w"> </span>esp-aes<span class="w"> </span>esp-sha-hmac
+</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a>
+</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>crypto<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="w"> </span><span class="nb">set</span><span class="w"> </span>transform-set<span class="w"> </span>myTSet
+</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="w"> </span><span class="nb">set</span><span class="w"> </span>ikev2-profile<span class="w"> </span>myIKEv2Profile
+</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>
+</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>interface<span class="w"> </span>Tunnel0
+</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="w"> </span>ip<span class="w"> </span>unnumbered<span class="w"> </span>g0/1
+</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="w"> </span>tunnel<span class="w"> </span><span class="nb">source</span><span class="w"> </span>l0
+</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="w"> </span>tunnel<span class="w"> </span>destination<span class="w"> </span><span class="m">1</span>.1.1.1
+</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a><span class="w"> </span>tunnel<span class="w"> </span>mode<span class="w"> </span>ipsec<span class="w"> </span>ipv4
+</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="w"> </span>tunnel<span class="w"> </span>protection<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
+</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
+</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>
+</span><span id="__span-4-51"><a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>router<span class="w"> </span>ospf<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-4-52"><a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a><span class="w"> </span>router-id<span class="w"> </span><span class="m">2</span>.2.2.2
+</span><span id="__span-4-53"><a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>
+</span><span id="__span-4-54"><a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a>router<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-4-55"><a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a><span class="w"> </span>router-id<span class="w"> </span><span class="m">22</span>.22.22.22
+</span></code></pre></div>
+<p>After configuring, it might be needed to save the configuration and reload the routers again for it to take full effect.</p>
+<p>A simple ping afterwards will confirm that everything is running as expected.</p>
+<p>With the configurations successfully altered, let´s proceed to the experiment part and see what the IKEv2 handshake consists of.</p>
+<p>To do this, reactivate the WireShark probe between R1 and RA, and run the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>clear<span class="w"> </span>crypto<span class="w"> </span>session
+</span></code></pre></div>
+<p>We will be able to see the following handshake:</p>
+<figure id="figure-7">
+<p><img alt="Figure 7: IKEv2 Handshake" src="../../images/IPSECIKEV2HAND.png" />
+  </p>
+<figcaption>Figure 7: IKEv2 Handshake</figcaption>
+</figure>
+<p>As we can see in Figure 7, the handshake matches what we had seen before in the diagram, starting with two IKE_SA_INIT messages, that handle both policy negotiation and key exchange, followed by two IKE_AUTH messages, already encrypted and responsible for authenticating the two peers.</p>
+<p>One of the major differences between both IKE, is the number of handshake messages. IKEv2 can do in 4 messages what IKEv1 needs 6 to do, improving overall performance.</p>
+<p>Another important difference lies in IKEv1 several operating modes for several scenarios, while IKEv2 only has IKE_SA_INIT and IKE_AUTH, simplifying the handshake process and reducing the room for misconfigurations and attacks.</p>
+<p>Another important detail, is the fact that IKEv2 has a reduced and updated algorithm list, meaning that the algorithms used for encryption and integrity are stronger, more secure, leaving behind outdated algorithms that could invite easy attacks.</p>
+<p>We can see some of these updated algorithms in Figures 8 and 9:</p>
+<figure id="figure-8">
+<p><img alt="Figure 8: IKEv2 Handshake First Part" src="../../images/IPSECIKEV2FIRSTHAND.png" />
+  </p>
+<figcaption>Figure 8: IKEv2 Handshake First Part</figcaption>
+</figure>
+<p>In Figure 8, we can see that there are some changes from IKEv1, namely, a stronger encryption algorithm, in the form of AES_CBC with 256 bits and a Pseudo-random function, in the form of SHA with 512 bits, used for stronger key generation.</p>
+<figure id="figure-9">
+<p><img alt="Figure 9: IKEv2 Handshake Second Part" src="../../images/IPSECIKEV2SECONDHAND.png" />
+  </p>
+<figcaption>Figure 9: IKEv2 Handshake Second Part</figcaption>
+</figure>
+<p>Following those, we can see in Figure 9, the hash algorithm, SHA with 512 bits again, group 16 for Diffie-Hellman offering extra key security, and finally the Key Exchange payload aswell.</p>
+<p>As we could see from our experiment, IKEv2 is the evolution of IKEv1 in every aspect. It is more efficient in messages transmited and in their usage, with less operating modes, with a more robust and shorter list of cryptographic algorithms, and overall more secure both in generating session keys and in exchanging them.</p>
+<h2 id="ikev2-with-digital-signatures-and-certificates-as-authentication">IKEv2 with Digital Signatures and Certificates as Authentication</h2>
 
 
 
