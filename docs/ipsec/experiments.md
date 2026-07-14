@@ -100,9 +100,9 @@ As we can see in Figure 6, the traffic is now passing in the clear. We can now s
 
 In conclusion, we can see that the difference between AH and ESP only exists in the actual operation of the protocol. Whilst IKE is unaffected, the regular operation of IPsec changes, with packets now crossing in the clear, with only their integrity and authenticity assured, unlike ESP, which secures the packets integrity, authenticity and confidentiality.
 
-## Verify IKEv2 Handshake and Regular Operation
+## IKEv2 configuration and comparison with IKEv1
 
-We will now analyse IKEv2, comparing it to its predecessor IKEv1, seeing the changes in the handshake, and if there are any changes in its regular operation.
+We will now analyse IKEv2, comparing it to its predecessor IKEv1, seeing the changes in the handshake and in available modes, cryptographic algorithms and other factors.
 
 To clear the routers for the new configuration, use the following commands:
 
@@ -112,5 +112,174 @@ reload
 ```
 
 By accepting both commands and choosing not to save the configuration when reloading, the router will be factory reset.
+
+When this is done, we will begin setting up the new configuration.
+
+Starting with R1, the configuration is the following:
+
+```bash
+hostname R1
+
+interface g0/0
+ ip address 200.1.1.1 255.255.255.0
+ ip ospf 1 area 0
+ no shutdown
+
+interface g0/1
+ ip address 192.168.2.1 255.255.255.0
+ ip ospf 2 area 0
+ no shutdown
+
+interface l0
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
+
+crypto ikev2 proposal myProposal
+ encryption aes-cbc-256
+ integrity sha512
+ prf sha512
+ group 16
+
+crypto ikev2 policy myIKEv2Policy
+ proposal myProposal
+
+crypto ikev2 keyring myKeyring
+ peer R2
+  address 2.2.2.2
+  pre-shared-key ipsec
+
+crypto ikev2 profile myIKEv2Profile
+ match identity remote address 2.2.2.2 255.255.255.255
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local myKeyring
+
+crypto ipsec transform-set myTSet esp-aes esp-sha-hmac
+
+crypto ipsec profile myIPSecProfile
+ set transform-set myTSet
+ set ikev2-profile myIKEv2Profile
+
+interface Tunnel0
+ ip unnumbered g0/1
+ tunnel source l0
+ tunnel destination 2.2.2.2
+ tunnel mode ipsec ipv4
+ tunnel protection ipsec profile myIPSecProfile
+ ip ospf 2 area 0
+
+router ospf 1
+ router-id 1.1.1.1
+
+router ospf 2
+ router-id 11.11.11.11
+```
+
+We can see some changes in the configurations used for IKEv2. Namely, stronger encryption and hash algorithms, a Pseudo Random function for added security, larger Diffie-Hellman groups, a Keyring with the peer address and key and an IKEv2 profile that goes within the IPsec profile.
+
+Now for R2:
+
+```bash
+hostname R2
+
+interface g0/0
+ ip address 200.2.2.2 255.255.255.0
+ ip ospf 1 area 0
+ no shutdown
+
+interface g0/1
+ ip address 192.168.3.2 255.255.255.0
+ ip ospf 2 area 0
+ no shutdown
+
+interface l0
+ ip address 2.2.2.2 255.255.255.255
+ ip ospf 1 area 0
+
+crypto ikev2 proposal myProposal
+ encryption aes-cbc-256
+ integrity sha512
+ prf sha512
+ group 16
+
+crypto ikev2 policy myIKEv2Policy
+ proposal myProposal
+
+crypto ikev2 keyring myKeyring
+ peer R1
+  address 1.1.1.1
+  pre-shared-key ipsec
+
+crypto ikev2 profile myIKEv2Profile
+ match identity remote address 1.1.1.1 255.255.255.255
+ authentication local pre-share
+ authentication remote pre-share
+ keyring local myKeyring
+
+crypto ipsec transform-set myTSet esp-aes esp-sha-hmac
+
+crypto ipsec profile myIPSecProfile
+ set transform-set myTSet
+ set ikev2-profile myIKEv2Profile
+
+interface Tunnel0
+ ip unnumbered g0/1
+ tunnel source l0
+ tunnel destination 1.1.1.1
+ tunnel mode ipsec ipv4
+ tunnel protection ipsec profile myIPSecProfile
+ ip ospf 2 area 0
+
+router ospf 1
+ router-id 2.2.2.2
+
+router ospf 2
+ router-id 22.22.22.22
+```
+
+After configuring, it might be needed to save the configuration and reload the routers again for it to take full effect.
+
+A simple ping afterwards will confirm that everything is running as expected.
+
+With the configurations successfully altered, let´s proceed to the experiment part and see what the IKEv2 handshake consists of.
+
+To do this, reactivate the WireShark probe between R1 and RA, and run the command:
+
+```bash
+clear crypto session
+```
+
+We will be able to see the following handshake:
+
+<figure markdown id="figure-7">
+  ![Figure 7: IKEv2 Handshake](../images/IPSECIKEV2HAND.png)
+  <figcaption>Figure 7: IKEv2 Handshake</figcaption>
+</figure>
+
+As we can see in Figure 7, the handshake matches what we had seen before in the diagram, starting with two IKE_SA_INIT messages, that handle both policy negotiation and key exchange, followed by two IKE_AUTH messages, already encrypted and responsible for authenticating the two peers.
+
+One of the major differences between both IKE, is the number of handshake messages. IKEv2 can do in 4 messages what IKEv1 needs 6 to do, improving overall performance.
+
+Another important difference lies in IKEv1 several operating modes for several scenarios, while IKEv2 only has IKE_SA_INIT and IKE_AUTH, simplifying the handshake process and reducing the room for misconfigurations and attacks.
+
+Another important detail, is the fact that IKEv2 has a reduced and updated algorithm list, meaning that the algorithms used for encryption and integrity are stronger, more secure, leaving behind outdated algorithms that could invite easy attacks.
+
+We can see some of these updated algorithms in Figures 8 and 9:
+
+<figure markdown id="figure-8">
+  ![Figure 8: IKEv2 Handshake First Part](../images/IPSECIKEV2FIRSTHAND.png)
+  <figcaption>Figure 8: IKEv2 Handshake First Part</figcaption>
+</figure>
+
+In Figure 8, we can see that there are some changes from IKEv1, namely, a stronger encryption algorithm, in the form of AES_CBC with 256 bits and a Pseudo-random function, in the form of SHA with 512 bits, used for stronger key generation.
+
+<figure markdown id="figure-9">
+  ![Figure 9: IKEv2 Handshake Second Part](../images/IPSECIKEV2SECONDHAND.png)
+  <figcaption>Figure 9: IKEv2 Handshake Second Part</figcaption>
+</figure>
+
+Following those, we can see in Figure 9, the hash algorithm, SHA with 512 bits again, group 16 for Diffie-Hellman offering extra key security, and finally the Key Exchange payload aswell.
+
+As we could see from our experiment, IKEv2 is the evolution of IKEv1 in every aspect. It is more efficient in messages transmited and in their usage, with less operating modes, with a more robust and shorter list of cryptographic algorithms, and overall more secure both in generating session keys and in exchanging them.
 
 ## IKEv2 with Digital Signatures and Certificates as Authentication
