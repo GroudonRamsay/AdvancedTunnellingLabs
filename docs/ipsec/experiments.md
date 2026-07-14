@@ -1,0 +1,116 @@
+## Laboratory Experiments
+
+With the laboratory setup complete, we shall now perform our experiences, in order to better understand and use IPsec. We will see IKEv1 and IKEv2 in action, see the operating differences of AH and ESP, and understand how certificates and signatures can be used in the authnetication process of Tunnelling protocols.
+
+## Verify IKEv1 Handshake, KeepAlive and Regular Operation
+
+For our first experiment, we will observe the handshake performed by IKEv1, which we saw theoretically in Figure 1 of the Overview page, comparing our diagram with the one we will observe in the simulation.
+
+To perform this observation, we need to see the handshake occuring. To this end, we will first set up a WireShark probe between R1 and RA. Afterwards, we will access R1, and use the command:
+
+```bash
+clear crypto session
+```
+
+This will clear the current tunnel they have formed, and trigger IKE into performing its handshake to form a new tunnel.
+
+The handshake packets in WireShark should look like this:
+
+<figure markdown id="figure-1">
+  ![Figure 1: IKEv1 Handshake Packets](../images/IPSECHANDPACKETS.png)
+  <figcaption>Figure 1: IKEv1 Handshake Packets</figcaption>
+</figure>
+
+As we can see, the theory matches reality. After the Informational packets trying to start a tunnel, IKEv1 enters into Main Mode, needing 6 messages, 2 to negotiate their Policy, 2 to exchange keys and 2 to authenticate both peers, followed by 3 messages, in Quick Mode, to create the tunnel and acknowledge its creation.
+
+Let´s look more closely at each set of messages.
+
+The first two Main Mode packets refer to the negotiation of policy for IPsec. As such the packets must include the elements we configured in our policy, such as AES with 256 bits for encryption, SHA for hash, group 5 for Diffie-Hellman, pre-shared key as the authentication method and 86400 seconds for lifetime.
+
+Let´s look at the payload of the first message to see if it matches our expectations.
+
+<figure markdown id="figure-2">
+  ![Figure 2: IKEv1 Policy Negotiation](../images/IPSECHANDPOLICY.png)
+  <figcaption>Figure 2: IKEv1 Policy Negotiation</figcaption>
+</figure>
+
+As we can see in Figure 2, the policy negotiation packets follow the policy we configured to the letter, including all expected elements in the proposed transform set and policy.
+
+Moving forward, let´s look at the second set, which handles the Key Exchange. In this packets, we expect to find a Nonce, the key being exchanged and then some information regarding Vendor IDs.
+
+<figure markdown id="figure-3">
+  ![Figure 3: IKEv1 Key Exchange](../images/IPSECHANDKEY.png)
+  <figcaption>Figure 3: IKEv1 Key Exchange</figcaption>
+</figure>
+
+As we can see from Figure 3, the Key Exchange packets also match what we expected, possessing the Nonce, the Vendor ID and most importantly, the Key Exchange payload, with the key data within.
+
+From this point, all messages in the exchange become encrypted, as we have seen in the diagram, which makes it impossible to further analyse the remaining packets. But from our configuration, we know that for the final Main Mode set, the peers will exchange their Pre-Shared key, authenticating themselves, moving forward to Quick Mode to create the tunnel.
+
+We know this has happened, because the handshake continued and the packets to form the tunnel and acknowledge it were sent, proving the authentication was a success.
+
+IPsec also includes a KeepAlive, in order to maintain the SA and the tunnel running. However, it is usually disabled by default, and we have not enabled it, since we have a long duration tunnel for test purposes only.
+
+Finally, for the regular operation, we can repeat the ping we performed to test the setup, and quickly see that our packets are encrypted by IPsec, only being able to see the IPv4 header before reaching the ESP protected section, as seen in Figure 4.
+
+<figure markdown id="figure-4">
+  ![Figure 4: IKEv1 Regular Operation](../images/IPSECREGOP.png)
+  <figcaption>Figure 4: IKEv1 Regular Operation</figcaption>
+</figure>
+
+## AH vs ESP in practice
+
+For this experiment, we will switch our IPsec to use AH instead of ESP, to see the practical differences between the two.
+
+For this to happen, run the following commands on the routers in configuration mode:
+
+```bash
+int Tunnel0
+no tunnel protection ipsec profile myIPSecProfile
+no crypto ipsec profile myIPSecProfile
+no crypto ipsec transform-set myTSet
+crypto ipsec transform-set myTSet ah-sha-hmac
+crypto ipsec profile myIPSecProfile
+set transform-set myTSet
+int Tunnel0
+tunnel protection ipsec profile myIPSecProfile
+exit
+exit
+```
+
+When this is done in both sides, the tunnel will reform with our new Transform Set, which dictates to only perform authentication of the packets.
+
+First of all, let´s look into the handshake process, and see if there is any change:
+
+<figure markdown id="figure-5">
+  ![Figure 5: IKEv1 AH Handshake](../images/IPSECAHHAND.png)
+  <figcaption>Figure 5: IKEv1 AH Handshake</figcaption>
+</figure>
+
+As we can see, not only is the handshake order unaffected, but the encrypted sections remain encrypted. This is what we expected, since IKE operates with its own rules, and only sets the policy for IPsec. As such, the changes to encryption only occur to traffic within the newly formed IPsec tunnel.
+
+However, the regular traffic within the tunnel is bound to have suffered some changes. Let´s perform a ping again and see what is different:
+
+<figure markdown id="figure-6">
+  ![Figure 6: IKEv1 AH Regular Operation](../images/IPSECAHREGOP.png)
+  <figcaption>Figure 6: IKEv1 AH Regular Operation</figcaption>
+</figure>
+
+As we can see in Figure 6, the traffic is now passing in the clear. We can now see it is ICMP, and the real source and destination of the packets. We can also see the Authentication Header, which includes an ICV to guarantee the integrity of this message.
+
+In conclusion, we can see that the difference between AH and ESP only exists in the actual operation of the protocol. Whilst IKE is unaffected, the regular operation of IPsec changes, with packets now crossing in the clear, with only their integrity and authenticity assured, unlike ESP, which secures the packets integrity, authenticity and confidentiality.
+
+## Verify IKEv2 Handshake and Regular Operation
+
+We will now analyse IKEv2, comparing it to its predecessor IKEv1, seeing the changes in the handshake, and if there are any changes in its regular operation.
+
+To clear the routers for the new configuration, use the following commands:
+
+```bash
+write erase
+reload
+```
+
+By accepting both commands and choosing not to save the configuration when reloading, the router will be factory reset.
+
+## IKEv2 with Digital Signatures and Certificates as Authentication
