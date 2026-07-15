@@ -283,3 +283,215 @@ Following those, we can see in Figure 9, the hash algorithm, SHA with 512 bits a
 As we could see from our experiment, IKEv2 is the evolution of IKEv1 in every aspect. It is more efficient in messages transmited and in their usage, with less operating modes, with a more robust and shorter list of cryptographic algorithms, and overall more secure both in generating session keys and in exchanging them.
 
 ## IKEv2 with Digital Signatures and Certificates as Authentication
+
+For our final IPsec experiment, we will be analysing how a tunnelling protocol interacts with PKI-based authentication. Namely, we will see how IPsec, especially IKEv2, interact with authentication through certificates and not PSK.
+
+For this experiment, we will have to change some configurations in our IPsec routers, and in RA.
+
+Firstly, we need to add some configuration to RA, which will be acting as the Certificate Authority, which will provide the Certificates R1 and R2 will use to authenticate themselves during the IKEv2 handshake.
+
+The configuration is the following:
+
+```bash
+ntp master
+
+ip http server
+
+crypto pki server myCA
+ issuer-name cn=ipsecCA
+ lifetime certificate 365
+ grant auto
+ no shutdown
+```
+
+When asked for a password, input a password with at least 8 characters that you can easily remember.
+
+With this configuration we add a clock to the router with ntp, necessary for certificate signing. We also set a PKI in this router, named myCA, self-issued by ipsecCA and it automatically grants all certificates that are requested. This behaviour is not recommended for real world implementations, but it is a useful simplification for our experiment.
+
+Then, we need to modify R1 and R2 to, use the ntp clock in RA, and to start using certificates as their authentication method.
+
+To do this, reset the routers as before, with:
+
+```bash
+wr erase
+reload
+```
+
+Then, enter configuration mode and use the following configuration:
+
+```bash
+hostname R1
+
+interface g0/0
+ ip address 200.1.1.1 255.255.255.0
+ ip ospf 1 area 0
+ no shutdown
+
+interface g0/1
+ ip address 192.168.2.1 255.255.255.0
+ ip ospf 2 area 0
+ no shutdown
+
+interface l0
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 0
+
+ntp server 200.1.1.10
+
+crypto pki trustpoint myTrustpoint
+ enrollment url http://200.1.1.10:80
+ revocation-check none
+
+crypto ikev2 proposal myProposal
+ encryption aes-cbc-256
+ integrity sha512
+ prf sha512
+ group 16
+
+crypto ikev2 policy myPolicy
+ proposal myProposal
+
+crypto ikev2 profile myProfile
+
+ match identity remote any
+
+ authentication local rsa-sig
+ authentication remote rsa-sig
+
+ pki trustpoint myTrustpoint
+
+crypto ipsec transform-set myTSet esp-aes esp-sha-hmac
+
+crypto ipsec profile myIPSecProfile
+ set transform-set myTSet
+ set ikev2-profile myProfile
+
+interface Tunnel0
+ ip unnumbered g0/1
+
+ tunnel source l0
+ tunnel destination 2.2.2.2
+
+ tunnel mode ipsec ipv4
+
+ tunnel protection ipsec profile myIPSecProfile
+
+ ip ospf 2 area 0
+
+router ospf 1
+ router-id 1.1.1.1
+
+router ospf 2
+ router-id 11.11.11.11
+```
+
+This configuration follows mostly what was done before for IKEv2, with some important changes.
+
+Firstly, we are now using ntp to sync a clock with the Certificate Authority, in order for our certificates to function properly. Afterwards, we now create a PKI trustpoint, with the address of RA, which we assign to our IKEv2 profile, along with a change to the authentication method, to use RSA signatures.
+
+With these changes, R1 is ready to enroll for a certificate with RA, and then use it for authentication when forming a tunnel with R2.
+
+The configuration for R2 is the following:
+
+```bash
+hostname R2
+
+interface g0/0
+ ip address 200.2.2.2 255.255.255.0
+ ip ospf 1 area 0
+ no shutdown
+
+interface g0/1
+ ip address 192.168.3.2 255.255.255.0
+ ip ospf 2 area 0
+ no shutdown
+
+interface l0
+ ip address 2.2.2.2 255.255.255.255
+ ip ospf 1 area 0
+
+ntp server 200.1.1.10
+
+crypto pki trustpoint myTrustpoint
+ enrollment url http://200.1.1.10:80
+ revocation-check none
+
+crypto ikev2 proposal myProposal
+ encryption aes-cbc-256
+ integrity sha512
+ prf sha512
+ group 16
+
+crypto ikev2 policy myPolicy
+ proposal myProposal
+
+crypto ikev2 profile myProfile
+
+ match identity remote any
+
+ authentication local rsa-sig
+ authentication remote rsa-sig
+
+ pki trustpoint myTrustpoint
+
+crypto ipsec transform-set myTSet esp-aes esp-sha-hmac
+
+crypto ipsec profile myIPSecProfile
+ set transform-set myTSet
+ set ikev2-profile myProfile
+
+interface Tunnel0
+
+ ip unnumbered g0/1
+
+ tunnel source l0
+ tunnel destination 1.1.1.1
+
+ tunnel mode ipsec ipv4
+
+ tunnel protection ipsec profile myIPSecProfile
+
+ ip ospf 2 area 0
+
+router ospf 1
+ router-id 2.2.2.2
+
+router ospf 2
+ router-id 22.22.22.22
+```
+
+When both configurations are set and saved into the startup configuration, reload both routers for the changes to take effect.
+
+With this done, the final step of the setup, is to ask the Certificate Authority for a certificate. To do this use the following commands on R1 and R2, in configuration mode:
+
+```bash
+crypto pki authenticate myTrustpoint
+crypto pki enroll myTrustpoint
+```
+
+Answer the questions to receive CA´s certificate first, and then to enroll and receive your own certificate.
+
+When this is done in both routers, IKE should start, the tunnel should form and a ping should be possible to do, protected by the tunnel.
+
+After confirming that the ping is indeed protected, we can reset the crypto session in order to see IKEv2 occuring. Although the IKE_AUTH step will still be protected, and we won´t be able to see the certificates being used there, we can still see that certificates are being used in IKE_SA_INIT, in the response:
+
+<figure markdown id="figure-10">
+  ![Figure 10: IKEv2 Certificate Request](../images/IPSECIKEV2CERT.png)
+  <figcaption>Figure 10: IKEv2 Certificate Request</figcaption>
+</figure>
+
+We can see in Figure 10, that in the IKE_SA_INIT response, R2 requests that in the following message, IKE_AUTH Initiator Request, a certificate is sent for authentication, which R1 will send, and then ask for R2´s certificate, sucessfully authenticating each other and forming the tunnel.
+
+To finish this experiment, we can see the information that each certificate contains, by using:
+
+```bash
+show crypto pki certificate
+```
+
+This command will display both certificates stored in R1, its own and the trustpoint certificate.
+
+??? question "What are the informations stored in each certificate? Are they important for identification and authentication purposes?"
+
+With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell.
+
+Thank you for finishing our laboratory, and we hope to see you in the next protocol!
