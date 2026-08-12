@@ -8,7 +8,7 @@ In this laboratory, we will create a ContainerLab topology, that uses both ANYse
 
 ## Laboratory Topology
 
-The laboratory topology uses as its source the topology for Nokia´s own laboratory, [SR OS FP5 ANYSec and MACSec Demo](https://github.com/srl-labs/sros-anysec-macsec-lab/tree/main), although with important simplifications and modifications. The focus of our laboratory will be on the tunnelling side of ANYsec and its comparison with similar protocols like MACsec and IPsec. If you want to further investigate ANYsec´s functionalities beyond this we strongly suggest Nokia´s laboratories.
+The laboratory topology uses as its source the topology for Nokia´s public laboratory, [SR OS FP5 ANYSec and MACSec Demo](https://github.com/srl-labs/sros-anysec-macsec-lab/tree/main), although with important simplifications and modifications. The focus of our laboratory will be on the tunnelling side of ANYsec and its comparison with similar protocols like MACsec and IPsec. If you want to further investigate ANYsec´s functionalities beyond this we strongly suggest Nokia´s public laboratories.
 
 <figure markdown id="figure-1">
   ![Figure 1: Laboratory Topology](../images/ANYTOPO.png)
@@ -575,7 +575,7 @@ The next configuration is the following:
 
 In this step, we create the encryption group that each service will use within ANYsec, associating the security policy, the CA it will use, the encryption label and its peer.
 
-We can also see that two of the services will be using tunnel encryption with tunnel slicing, which means that within a tunnel, two distinct sections are created for each service to have its own encryption, and then on a third slice of the tunnel, we can see that EG_SERV-1002 is using service encryption, which means that the encryption targets the service itself instead of all the content within the tunnel.
+We can also see that two of the services will be using tunnel encryption, which means that these two services will be protected the same way by the same tunnel, and then we can see that EG_SERV-1002 is using service encryption, which means that the encryption targets the service itself instead of all the content within the tunnel.
 
 Afterwards, the next step is:
 
