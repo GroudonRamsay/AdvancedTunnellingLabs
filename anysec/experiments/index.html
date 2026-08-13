@@ -999,10 +999,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tunnel-encryption-and-slicing" class="md-nav__link">
+  <a href="#tunnel-encryption" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tunnel Encryption and Slicing
+        Tunnel Encryption
       
     </span>
   </a>
@@ -1796,10 +1796,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tunnel-encryption-and-slicing" class="md-nav__link">
+  <a href="#tunnel-encryption" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tunnel Encryption and Slicing
+        Tunnel Encryption
       
     </span>
   </a>
@@ -1934,12 +1934,10 @@
 <figcaption>Figure 11: ANYsec Service 1003 PE2 Capture</figcaption>
 </figure>
 <p>And finally, in Figures 10 and 11, we can see that the service 1003, identified by the MPLS label 2001, also follows the same pattern of the other two services, and the packets fully match.</p>
-<h2 id="tunnel-encryption-and-slicing">Tunnel Encryption and Slicing</h2>
-<p>For this experiment, we will be exploring one of ANYsec´s ways of encrypting its traffic, through Tunnel Encryption and one of its main features, Tunnel Slicing.</p>
-<p>Tunnel Encryption was the first method of encryption developed for ANYsec. Its objective was to create a tunnel where all ANYsec traffic would pass through, encrypted with the same CA. Paired with this feature, came Tunnel Slicing, which allowed services that use Tunnel Encryption, to use different CAs for encryption, effectively allowing to separate sections of the tunnel for different services and keys.</p>
-<p>This allowed for more flexibility when choosing how and what to protect with ANYsec. Additionaly, slicing the tunnel allows for several different SAKs to be used in the encryption of all the different services, ensuring that if one key is compromised, all the other services are secure.</p>
-<p>Despite this feature interesting capabilities, verifying its actual functioning with practical means, such as packet capture is not viable, since it looks virtually the same for Tunnel Encryption and Service Encryption.</p>
-<p>As such, this experiment will focus on explaining the configurations of Tunnel Encryption and how to analyse and obtain information about it with router commands.</p>
+<h2 id="tunnel-encryption">Tunnel Encryption</h2>
+<p>For this experiment, we will be exploring one of ANYsec´s ways of encrypting its traffic, through Tunnel Encryption.</p>
+<p>Tunnel Encryption was the first method of encryption developed for ANYsec. Its objective was to create a tunnel where all ANYsec traffic would pass through, encrypted with the same CA.</p>
+<p>This experiment will focus on explaining the configurations of Tunnel Encryption and how to analyse and obtain information about it with router commands.</p>
 <p>Firstly, to encrypt a service through Tunnel Encryption, it is necessary to create its Security Termination Policy and Encryption Group.</p>
 <p>The Security Termination policy is essentialy a way to define the identity and the endpoint of the tunnel. It includes:</p>
 <ul>
@@ -1981,9 +1979,9 @@
 <figcaption>Figure 12: ANYsec EG and STP</figcaption>
 </figure>
 <p>We can see that all the information we configured is present here, including configurations regarding this router peer.</p>
-<p>Another important part of the configuration is the Tunnel Slicing. How do we configure the tunnel to have different slices?</p>
-<p>To do that, we configure the router to create several MACsec CAs, one for each slice we want, and configure it with the ANYsec flag on true, so that it knows it is using these for ANYsec and not MACsec.</p>
-<p>With several CAs configured and assigned through the Encryption Group, the router will know which CAs to assign to which services, and each one will have its own set of keys, effectively slicing the ANYsec tunnel into several small services.</p>
+<p>Another important part of the configuration is the CAs used by ANYsec.</p>
+<p>To configure those, we configure the router to create several MACsec CAs, and configure it with the ANYsec flag on true, so that it knows it is using these for ANYsec and not MACsec.</p>
+<p>With several CAs configured and assigned through the Encryption Group, the router will know which CAs to assign to which services, and each one will have its own set of keys.</p>
 <p>The CA configuration can be seen below:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; admin-state enable
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>/configure macsec connectivity-association &quot;CA_VLL-1001&quot; description &quot;Anysec ISIS 1&quot;
@@ -2014,12 +2012,12 @@
   </p>
 <figcaption>Figure 14: ANYsec service 1001 MKA session</figcaption>
 </figure>
-<p>With all these configurations, our router is now ready to create an ANYsec tunnel, and slice it for the different services that we established.</p>
+<p>With all these configurations, our router is now ready to create an ANYsec tunnel.</p>
 <h2 id="service-encryption">Service Encryption</h2>
 <p>For our final experiment, we will briefly analyse a new feature recently added to ANYsec, Service Encryption.</p>
-<p>A simple way to describe Service Encryption, is to say it is essentially Tunnel Encryption with Slicing for every service encrypted. It has the same granularity and benefits.</p>
-<p>Whilst Tunnel Encryption can encrypt everything within its tunnel, or split into several slices with different rules, Service Encryption works only on a per-service basis.</p>
-<p>To configure a service to be protected through Service Encryption, the process is similar to the previous one. We create our STP, this time without peer tunnel attributes, since there is no tunnel:</p>
+<p>A simple way to describe Service Encryption, is to say it is essentially a targeted way of protecting services, focusing on individual services instead of entire tunnels. It offers a higher degree of granularity.</p>
+<p>Whilst Tunnel Encryption can encrypt everything within its tunnel, Service Encryption works only on a per-service basis.</p>
+<p>To configure a service to be protected through Service Encryption, the process is similar to the previous one. We create our STP, this time without peer tunnel attributes:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; admin-state enable
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; local-address 10.0.0.12
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; rx-must-be-encrypted false

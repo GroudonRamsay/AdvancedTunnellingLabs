@@ -1254,6 +1254,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#replay-protection-and-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Protection and Attack
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1817,6 +1828,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#replay-protection-and-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Protection and Attack
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2064,7 +2086,7 @@
 <p>Following those, we can see in Figure 9, the hash algorithm, SHA with 512 bits again, group 16 for Diffie-Hellman offering extra key security, and finally the Key Exchange payload aswell.</p>
 <p>As we could see from our experiment, IKEv2 is the evolution of IKEv1 in every aspect. It is more efficient in messages transmited and in their usage, with less operating modes, with a more robust and shorter list of cryptographic algorithms, and overall more secure both in generating session keys and in exchanging them.</p>
 <h2 id="ikev2-with-digital-signatures-and-certificates-as-authentication">IKEv2 with Digital Signatures and Certificates as Authentication</h2>
-<p>For our final IPsec experiment, we will be analysing how a tunnelling protocol interacts with PKI-based authentication. Namely, we will see how IPsec, especially IKEv2, interact with authentication through certificates and not PSK.</p>
+<p>For our next experiment, we will be analysing how a tunnelling protocol interacts with PKI-based authentication. Namely, we will see how IPsec, especially IKEv2, interact with authentication through certificates and not PSK.</p>
 <p>For this experiment, we will have to change some configurations in our IPsec routers, and in RA.</p>
 <p>Firstly, we need to add some configuration to RA, which will be acting as the Certificate Authority, which will provide the Certificates R1 and R2 will use to authenticate themselves during the IKEv2 handshake.</p>
 <p>The configuration is the following:</p>
@@ -2240,7 +2262,60 @@
 <details class="question">
 <summary>What are the informations stored in each certificate? Are they important for identification and authentication purposes?</summary>
 </details>
-<p>With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell.</p>
+<h2 id="replay-protection-and-attack">Replay Protection and Attack</h2>
+<p>Our final experiment will focus on testing the capability of IPsec to withstand replay attacks. One of IPsec´s features is its replay protection, using sequence numbers to detect messages out of order, discarding them, in order to keep the users safe.</p>
+<p>For our experiment, we will place a new device between R1 and RA, which we will use to capture traffic crossing the tunnel, and then replay it to R1, hoping to see the packets get dropped by IPsec.</p>
+<p>To begin, we will delete the connection between R1 and RA, and we will create a new Docker container with two adapaters. The name of the image is:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ghcr.io/groudonramsay/ipsec-replay:latest
+</span></code></pre></div>
+<p>And the envirnoment variables used are:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>--cap-add<span class="o">=</span>NET_RAW
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>--cap-add<span class="o">=</span>NET_ADMIN
+</span></code></pre></div>
+<p>This device contains tcpdump and tcpreplay, used to capture packets and replay them, and the necessary tools to turn this device into an L2 Switch, making it transparent to traffic, allowing us to place it between the routers without interfering with their operation.</p>
+<p>To setup this device, we first need to turn it into a bridge, using the commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth1<span class="w"> </span>up
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>ip<span class="w"> </span>link<span class="w"> </span>add<span class="w"> </span>name<span class="w"> </span>br0<span class="w"> </span><span class="nb">type</span><span class="w"> </span>bridge
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>master<span class="w"> </span>br0
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth1<span class="w"> </span>master<span class="w"> </span>br0
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>br0<span class="w"> </span>up
+</span></code></pre></div>
+<p>With this done, the device is ready to listen and replay, without interfering with traffic.</p>
+<p>For the experiment itself, we will set two WireShark probes, one between the device and R1, and one between R1 and R3, to see if the replayed traffic crosses through.</p>
+<p>With this done, begin capturing ESP packets with the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>tcpdump<span class="w"> </span>-ni<span class="w"> </span>eth0<span class="w"> </span>esp<span class="w"> </span>-w<span class="w"> </span>/pcaps/replay-capture.pcap
+</span></code></pre></div>
+<p>This will capture ESP packets coming from R1 and saves them in the replay-capture.pcap file.</p>
+<p>We can inspect the contents with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>tcpdump<span class="w"> </span>-nn<span class="w"> </span>-r<span class="w"> </span>/pcaps/replay-capture.pcap
+</span></code></pre></div>
+<p>Which allows us to see the captured ESP packets.</p>
+<p>To generate more packets for capture, run simultaneously a ping from PC1 to PC2.</p>
+<p>When you have enough packets, stop the capture and begin the attack against R1 with the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>tcpreplay<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>/pcaps/replay-capture.pcap
+</span></code></pre></div>
+<p>During the attack, you will see several packets appear in WireShark between the device and R1, with a warning for out of order sequence numbers, as we expected and can confirm in Figure 11:</p>
+<figure id="figure-11">
+<p><img alt="Figure 11: Out of Order ESP packets" src="../../images/IPSECREPATK.png" />
+  </p>
+<figcaption>Figure 11: Out of Order ESP packets</figcaption>
+</figure>
+<p>And we will see in the second probe, that no packets are appearing, which means that R1 is correctly applying the rules that IPsec is setting for replay protection.</p>
+<p>We can also confirm this in the router by running the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>show<span class="w"> </span>crypto<span class="w"> </span>ipsec<span class="w"> </span>sa<span class="w"> </span>detail
+</span></code></pre></div>
+<p>Which will show all the information regarding that IPsec SA, including rejected packets, where we should see some, similar to Figure 12:</p>
+<figure id="figure-12">
+<p><img alt="Figure 12: Rejected packets by IPsec" src="../../images/IPSECREPREJ.png" />
+  </p>
+<figcaption>Figure 12: Rejected packets by IPsec</figcaption>
+</figure>
+<p>As we can see in the last line, 24 packets were rejected for being part of our replay attack, confirming that our attack happened, and that it was sucessfully defended by IPsec.</p>
+<p>With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell, or through its several security features, namely Replay Protection.</p>
 <p>Thank you for finishing our laboratory, and we hope to see you in the next protocol!</p>
 
 

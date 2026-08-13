@@ -1800,7 +1800,7 @@
 <p>Based on MACSec standards as the foundation, it introduces the flexibility to offset the authentication and encryption to allow L2, L2.5 and L3 encryption.</p>
 <p>In this laboratory, we will create a ContainerLab topology, that uses both ANYsec and MACsec, in order to compare them in terms of functioning, similarities, differences and available features.</p>
 <h2 id="laboratory-topology">Laboratory Topology</h2>
-<p>The laboratory topology uses as its source the topology for Nokia´s own laboratory, <a href="https://github.com/srl-labs/sros-anysec-macsec-lab/tree/main">SR OS FP5 ANYSec and MACSec Demo</a>, although with important simplifications and modifications. The focus of our laboratory will be on the tunnelling side of ANYsec and its comparison with similar protocols like MACsec and IPsec. If you want to further investigate ANYsec´s functionalities beyond this we strongly suggest Nokia´s laboratories.</p>
+<p>The laboratory topology uses as its source the topology for Nokia´s public laboratory, <a href="https://github.com/srl-labs/sros-anysec-macsec-lab/tree/main">SR OS FP5 ANYSec and MACSec Demo</a>, although with important simplifications and modifications. The focus of our laboratory will be on the tunnelling side of ANYsec and its comparison with similar protocols like MACsec and IPsec. If you want to further investigate ANYsec´s functionalities beyond this we strongly suggest Nokia´s public laboratories.</p>
 <figure id="figure-1">
 <p><img alt="Figure 1: Laboratory Topology" src="../images/ANYTOPO.png" />
   </p>
@@ -2340,7 +2340,7 @@
 </span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>/configure anysec service-encryption encryption-group &quot;EG_SERV-1002&quot; peer 10.0.0.22 admin-state enable
 </span></code></pre></div>
 <p>In this step, we create the encryption group that each service will use within ANYsec, associating the security policy, the CA it will use, the encryption label and its peer.</p>
-<p>We can also see that two of the services will be using tunnel encryption with tunnel slicing, which means that within a tunnel, two distinct sections are created for each service to have its own encryption, and then on a third slice of the tunnel, we can see that EG_SERV-1002 is using service encryption, which means that the encryption targets the service itself instead of all the content within the tunnel.</p>
+<p>We can also see that two of the services will be using tunnel encryption, which means that these two services will be protected the same way by the same tunnel, and then we can see that EG_SERV-1002 is using service encryption, which means that the encryption targets the service itself instead of all the content within the tunnel.</p>
 <p>Afterwards, the next step is:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/configure macsec connectivity-association &quot;CA_VPRN-1003&quot; admin-state enable
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>/configure macsec connectivity-association &quot;CA_VPRN-1003&quot; description &quot;Anysec ISIS 0&quot;
