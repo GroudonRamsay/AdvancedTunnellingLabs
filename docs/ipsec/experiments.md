@@ -284,7 +284,7 @@ As we could see from our experiment, IKEv2 is the evolution of IKEv1 in every as
 
 ## IKEv2 with Digital Signatures and Certificates as Authentication
 
-For our final IPsec experiment, we will be analysing how a tunnelling protocol interacts with PKI-based authentication. Namely, we will see how IPsec, especially IKEv2, interact with authentication through certificates and not PSK.
+For our next experiment, we will be analysing how a tunnelling protocol interacts with PKI-based authentication. Namely, we will see how IPsec, especially IKEv2, interact with authentication through certificates and not PSK.
 
 For this experiment, we will have to change some configurations in our IPsec routers, and in RA.
 
@@ -492,6 +492,93 @@ This command will display both certificates stored in R1, its own and the trustp
 
 ??? question "What are the informations stored in each certificate? Are they important for identification and authentication purposes?"
 
-With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell.
+## Replay Protection and Attack
+
+Our final experiment will focus on testing the capability of IPsec to withstand replay attacks. One of IPsec´s features is its replay protection, using sequence numbers to detect messages out of order, discarding them, in order to keep the users safe.
+
+For our experiment, we will place a new device between R1 and RA, which we will use to capture traffic crossing the tunnel, and then replay it to R1, hoping to see the packets get dropped by IPsec.
+
+To begin, we will delete the connection between R1 and RA, and we will create a new Docker container with two adapaters. The name of the image is:
+
+```bash
+ghcr.io/groudonramsay/ipsec-replay:latest
+```
+
+And the envirnoment variables used are:
+
+```bash
+--cap-add=NET_RAW
+--cap-add=NET_ADMIN
+```
+
+This device contains tcpdump and tcpreplay, used to capture packets and replay them, and the necessary tools to turn this device into an L2 Switch, making it transparent to traffic, allowing us to place it between the routers without interfering with their operation.
+
+To setup this device, we first need to turn it into a bridge, using the commands:
+
+```bash
+ip link set eth0 up
+ip link set eth1 up
+
+ip link add name br0 type bridge
+
+ip link set eth0 master br0
+ip link set eth1 master br0
+
+ip link set br0 up
+```
+
+With this done, the device is ready to listen and replay, without interfering with traffic.
+
+For the experiment itself, we will set two WireShark probes, one between the device and R1, and one between R1 and R3, to see if the replayed traffic crosses through.
+
+With this done, begin capturing ESP packets with the command:
+
+```bash
+tcpdump -ni eth0 esp -w /pcaps/replay-capture.pcap
+```
+
+This will capture ESP packets coming from R1 and saves them in the replay-capture.pcap file.
+
+We can inspect the contents with:
+
+```bash
+tcpdump -nn -r /pcaps/replay-capture.pcap
+```
+
+Which allows us to see the captured ESP packets.
+
+To generate more packets for capture, run simultaneously a ping from PC1 to PC2.
+
+When you have enough packets, stop the capture and begin the attack against R1 with the command:
+
+```bash
+tcpreplay -i eth0 /pcaps/replay-capture.pcap
+```
+
+During the attack, you will see several packets appear in WireShark between the device and R1, with a warning for out of order sequence numbers, as we expected and can confirm in Figure 11:
+
+<figure markdown id="figure-11">
+  ![Figure 11: Out of Order ESP packets](../images/IPSECREPATK.png)
+  <figcaption>Figure 11: Out of Order ESP packets</figcaption>
+</figure>
+
+And we will see in the second probe, that no packets are appearing, which means that R1 is correctly applying the rules that IPsec is setting for replay protection.
+
+We can also confirm this in the router by running the command:
+
+```bash
+show crypto ipsec sa detail
+```
+
+Which will show all the information regarding that IPsec SA, including rejected packets, where we should see some, similar to Figure 12:
+
+<figure markdown id="figure-12">
+  ![Figure 12: Rejected packets by IPsec](../images/IPSECREPREJ.png)
+  <figcaption>Figure 12: Rejected packets by IPsec</figcaption>
+</figure>
+
+As we can see in the last line, 24 packets were rejected for being part of our replay attack, confirming that our attack happened, and that it was sucessfully defended by IPsec.
+
+With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell, or through its several security features, namely Replay Protection.
 
 Thank you for finishing our laboratory, and we hope to see you in the next protocol!
