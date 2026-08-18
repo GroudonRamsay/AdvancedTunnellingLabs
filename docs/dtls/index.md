@@ -1,72 +1,40 @@
-# DTLS
+## DTLS LAboratory
 
-DTLS (Datagram Transport Layer Security) extends TLS to UDP-based applications while maintaining encryption and integrity protection.
+Datagram Transport Layer Security (DTLS) is the datagram-based analogue of TLS, designed to provide authentication, confidentiality, and integrity over the unreliable transports of UDP.
 
----
+Unlike TLS, which requires a reliable, ordered byte stream, DTLS preserves the essential properties of datagram communication, allowing applications to maintain low latency and tolerate packet loss without the overhead of TCP’s connection management.
 
-## Features
+As a result, DTLS is widely adopted in scenarios such as VoIP, WebRTC media channels, online gaming, IoT protocols, and real-time telemetry, where strict ordering or retransmission could degrade application performance.
 
-- UDP support
-- TLS-based security
-- Packet loss tolerance
-- Replay protection
-- Low-latency encryption
+## DTLS Handshake
 
----
+DTLS 1.3, defined in RFC 9147, introduces major improvements that align the protocol closely with TLS 1.3 while addressing datagram-specific challenges.
 
-## Common Use Cases
+Like TLS 1.3, DTLS 1.3 provides a simplified handshake, seen in Figure 1, which reduces round-trip time and handshake complexity, compared with previous versions, benefiting performance in high-latency and low-power environments.
 
-=== "VoIP"
+<figure markdown id="figure-1">
+  ![Figure 1: DTLS 1.3 Handshake](../images/DTLSHAND.png)
+  <figcaption>Figure 1: DTLS 1.3 Handshake</figcaption>
+</figure>
 
-    Secure SIP and RTP communications.
+## Laboratory Topology
 
-=== "WebRTC"
+The topology of this laboratory consists in:
 
-    Browser real-time communications.
+- Three docker containers, using the container in ghcr.io-groudonramsay-tls, labeled as DTLSClient, DTLSServer and MitM.
 
-=== "IoT"
+The topology is visible in Figure 2:
 
-    Lightweight secure UDP traffic.
+<figure markdown id="figure-2">
+  ![Figure 2: TLS Topology](../images/DTLSTOPO.png)
+  <figcaption>Figure 2: TLS Topology</figcaption>
+</figure>
 
-=== "VPNs"
-
-    DTLS-based VPN tunnels.
-
----
-
-## DTLS Architecture
-
-```mermaid
-graph LR
-    A[Client] --> B[UDP Network]
-    B --> C[DTLS Server]
-```
-
----
-
-## Topics Covered
-
-- OpenSSL DTLS
-- DTLS handshakes
-- UDP encryption
-- Replay protection
-- Packet loss handling
-- DTLS troubleshooting
-
----
-
-## Example DTLS Server
+When adding the container to your templates, use 2 adapters and the following environment variables:
 
 ```bash
-openssl s_server -dtls -accept 4444 -cert cert.pem -key key.pem
+--cap-add NET_ADMIN
+--cap-add NET_RAW
 ```
 
-## Example DTLS Client
-
-```bash
-openssl s_client -dtls -connect 127.0.0.1:4444
-```
-
-!!! note
-
-    DTLS is specifically designed to handle unreliable UDP transport.
+## Device Configuration
