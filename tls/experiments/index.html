@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#laboratory-experiments" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1263,6 +1268,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1279,6 +1302,78 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-session-establishment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TCP Session Establishment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-12-handshake-vs-tls-13-handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS 1.2 Handshake vs TLS 1.3 Handshake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attack-on-session-establishment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attack on Session Establishment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attack-through-forced-reordering-duplication-and-loss-of-packets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attack through forced reordering, duplication and loss of packets
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1661,6 +1756,69 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-session-establishment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TCP Session Establishment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-12-handshake-vs-tls-13-handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS 1.2 Handshake vs TLS 1.3 Handshake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attack-on-session-establishment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attack on Session Establishment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attack-through-forced-reordering-duplication-and-loss-of-packets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attack through forced reordering, duplication and loss of packets
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1681,7 +1839,149 @@
 
   <h1>Experiments</h1>
 
-
+<h2 id="laboratory-experiments">Laboratory Experiments</h2>
+<p>With our topology ready and devices configured, we will now begin our experiments to better understand how TLS works, from its TCP session establishment, handshake comparison between TLS 1.2 and 1.3, study of the components of its protected packets and attacks against the establishment of a session and reordering, retransmission and loss of packets during operation.</p>
+<h2 id="tcp-session-establishment">TCP Session Establishment</h2>
+<p>To begin our experiments, we will briefly analyse the establishment of the TCP session, prior to the TLS handshake, since we will attack this further ahead.</p>
+<p>This handshake is composed by three messages, the TCP SYN message, sent by the client, which begins the handshake process.</p>
+<p>The response to this message comes from the server, in the shape of a TCP SYN ACK message, acknowledging the reception of the SYN and beggining the connection.</p>
+<p>Finally, the client acknowledges the reception of the SYN ACK with its own ACK message, and from this point forward, TLS will begin its handshake through the newly established TCP connection.</p>
+<p>We can easily see this in practice by starting a WireShark probe in the connection between the client and server. Then we restart the TLS server, and begin a connection with the client.</p>
+<p>The capture should look like Figure 1:</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: TCP Handshake Capture" src="../../images/TLSTCPHAND.png" />
+  </p>
+<figcaption>Figure 1: TCP Handshake Capture</figcaption>
+</figure>
+<p>We can see that the client initiated the contact with a TCP packet with the SYN flag active. This was the answered by the server with a TCP packet with the flags SYN and ACK active. To conclude the handshake the client answers with a TCP packet only with the ACK flag active, following to the letter what was the theory of this connection.</p>
+<p>These messages are absolutely necessary for the creation of a TCP connection, and any interference with this process will result in a failed connection, as we will see with our attacks.</p>
+<h2 id="tls-12-handshake-vs-tls-13-handshake">TLS 1.2 Handshake vs TLS 1.3 Handshake</h2>
+<p>For this experiment, our focus will be on the second handshake that we captured, the TLS handshake.</p>
+<figure id="figure-2">
+<p><img alt="Figure 2: TLS 1.3 Handshake Capture" src="../../images/TLS13HAND.png" />
+  </p>
+<figcaption>Figure 2: TLS 1.3 Handshake Capture</figcaption>
+</figure>
+<p>With the commands we used to create the server and client, we used TLS 1.3, since it is the default version. We can compare the handshake in WireShark with the one we saw in the Overview section, and we can see that it matches what we expected. It begins with a Client Hello, seen in Figure 3, which contains what we saw before, such as the Cypher suites available, the Key Exchange methods available as extensions, the session ID and a random number associated to the Client.</p>
+<figure id="figure-3">
+<p><img alt="Figure 3: TLS 1.3 Handshake Client Hello" src="../../images/TLS13HANDHELLO.png" />
+  </p>
+<figcaption>Figure 3: TLS 1.3 Handshake Client Hello</figcaption>
+</figure>
+<p>Then, in Figure 4, we can see the server response. This response contains the cypher suite chosen by the server, which is AES_256_GCM_SHA384, the key exchange method chosen, x25519mlkem768, which is a hybrid method, combining x25519 elliptic curve method with MLKEM 768, which is a post-quantum key exchange method. It also includes the session ID, the server random, and already encrypted goes the server certificate, just like we expceted from theory.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: TLS 1.3 Handshake Server Hello" src="../../images/TLS13HANDSERVERHELLO.png" />
+  </p>
+<figcaption>Figure 4: TLS 1.3 Handshake Server Hello</figcaption>
+</figure>
+<p>As we could see, in two compact messages we were able to begin a secure session, including a key exchange prepared for the quantum era of computing, and now all messages are secure by TLS.</p>
+<p>But this is the most advanced version of TLS. TLS 1.2 is still present despite not being the standard anymore, due to its larger handshake, exchange of authentication and key material in the clear, and overall outdated and insecure cyphers and key exchange methods. We will now study it, to see if it also matches the theory and to prove why TLS 1.3 became the standard.</p>
+<p>To do this shut down the client and server, and use the following command to start a new server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>openssl<span class="w"> </span>s_server<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>-accept<span class="w"> </span><span class="m">4433</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span>-cert<span class="w"> </span>server.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span>-key<span class="w"> </span>server.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span>-tls1_2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span>-www
+</span></code></pre></div>
+<p>This command orders the server to use TLS 1.2. Now, in the client use the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>openssl<span class="w"> </span>s_client<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span>-connect<span class="w"> </span><span class="m">10</span>.0.2.10:4433<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span>-tls1_2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span>-state
+</span></code></pre></div>
+<p>With these commands, we now have a TLS 1.2 client connected to a TLS 1.2 server, and should be able to see in WireShark the handshake that occured.</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: TLS 1.2 Handshake" src="../../images/TLS12HAND.png" />
+  </p>
+<figcaption>Figure 5: TLS 1.2 Handshake</figcaption>
+</figure>
+<p>We can see that the handshake´s structure is different, starting the same way with a Client Hello, containing the session ID, the random, the available cypher suites, which are weaker than the previous ones, but we can see that no information regarding key exchange is in this message.</p>
+<figure id="figure-6">
+<p><img alt="Figure 6: TLS 1.2 Handshake Client Hello" src="../../images/TLS12HANDHELLO.png" />
+  </p>
+<figcaption>Figure 6: TLS 1.2 Handshake Client Hello</figcaption>
+</figure>
+<p>Following this message, comes the Server Hello, containing the same session ID, the server random, the chosen cypher suite, the server certificate in the clear and a possible key exchange method for the client to accept. This differs a lot from the previous handshake, which was resolved at this stage, with all methods chosen and a key already created and in use.</p>
+<figure id="figure-7">
+<p><img alt="Figure 7: TLS 1.2 Handshake Server Hello" src="../../images/TLS12HANDSERVERHELLO.png" />
+  </p>
+<figcaption>Figure 7: TLS 1.2 Handshake Server Hello</figcaption>
+</figure>
+<p>Afterwards, the client answers by choosing the key exchange method that the server proposed, and then sends a Change Cipher Spec message, which marks the point where its messages will now be encrypted.</p>
+<figure id="figure-8">
+<p><img alt="Figure 8: TLS 1.2 Handshake Client Key Exchange" src="../../images/TLS12HANDCLIENTKEY.png" />
+  </p>
+<figcaption>Figure 8: TLS 1.2 Handshake Client Key Exchange</figcaption>
+</figure>
+<p>This process ends with the server marking the beggining of the new session and changing its own cypher spec, which makes it so that all messages beyond this point are protected by the TLS tunnel.</p>
+<figure id="figure-9">
+<p><img alt="Figure 9: TLS 1.2 Handshake Server New Session" src="../../images/TLS12HANDSERVERNEW.png" />
+  </p>
+<figcaption>Figure 9: TLS 1.2 Handshake Server New Session</figcaption>
+</figure>
+<p>As we could see, TLS 1.3 was a clear evolution of its predecessor, performing its handshake in half the messages, with better cyphers, KEM and authentication.</p>
+<h2 id="attack-on-session-establishment">Attack on Session Establishment</h2>
+<p>With the experiments related to the establishment of the TCP and TLS handshakes complete, we will now begin attacking the foundations of TLS, and see what it is our is not prepared to protect.</p>
+<p>We will begin by targeting the establishment of the TCP connection required by TLS to communicate between client and server.</p>
+<p>To do this we will prepare a special firewall rule in the attacker, which will prevent any SYN , SYN ACK or ACK messages to go through it, replacing them with RST messages, forcing the connection to drop.</p>
+<p>To configure it, use the following command in MitM:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>iptables<span class="w"> </span>-I<span class="w"> </span>FORWARD<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>-p<span class="w"> </span>tcp<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>--tcp-flags<span class="w"> </span>SYN,ACK<span class="w"> </span>SYN,ACK<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>tcp-reset
+</span></code></pre></div>
+<p>This rule ensures that any packet related to the handshake of TCP will be dropped, trapping the client in a cycle of retransmissions.</p>
+<p>When looking at WireShark, this should be the result:</p>
+<figure id="figure-10">
+<p><img alt="Figure 10: TCP Retransmissions" src="../../images/TLSTCPATTACK.png" />
+  </p>
+<figcaption>Figure 10: TCP Retransmissions</figcaption>
+</figure>
+<p>It will send the first SYN as usual, and then a string of unsuccessful retransmissions before stopping and giving an error message. Although TLS is a very secure protocol, it is not immune to attacks, especially at the transport layer.</p>
+<p>To clear the rule, use the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>iptables<span class="w"> </span>-D<span class="w"> </span>FORWARD<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>-p<span class="w"> </span>tcp<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>--tcp-flags<span class="w"> </span>SYN,ACK<span class="w"> </span>SYN,ACK<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>-j<span class="w"> </span>REJECT<span class="w"> </span>--reject-with<span class="w"> </span>tcp-reset
+</span></code></pre></div>
+<h2 id="attack-through-forced-reordering-duplication-and-loss-of-packets">Attack through forced reordering, duplication and loss of packets</h2>
+<p>For our final experiment and attack, we will now test TLS´s capability to withstand the loss, reordering or duplication of its packets. Although this attacks TLS indirectly, due to the separation between transport and application layers, or TCP from TLS, it is still interesting to see what happens when TLS comes under attack from this vector.</p>
+<p>We will begin with a packet loss attack, hoping to see some behaviour signaling it is working or it is being sucessfully prevented.</p>
+<p>To do this attack, use the following command on MitM:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span>loss<span class="w"> </span><span class="m">20</span>%
+</span></code></pre></div>
+<p>This will make 20% of the packets going through eth1 to be dropped by MitM. Now we will resume the client process and see what appears in WireShark:</p>
+<figure id="figure-11">
+<p><img alt="Figure 11: Packet Loss Attack" src="../../images/TLSPACATK.png" />
+  </p>
+<figcaption>Figure 11: Packet Loss Attack</figcaption>
+</figure>
+<p>We can see that in the handshakle alone we already had a retransmission due to packet loss, but TLS still received an ordered byte stream thanks to the guarantees that TCP is providing in this area. We could even make the percentage of loss higher, and would still see the same result, the protocol will still function.</p>
+<p>To clear the attack, use the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>del<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root
+</span></code></pre></div>
+<p>For our next attack, we will be taking packets out of order, to test the capabilites of TLS, and the underlying TCP to reorder its packets back into the ordered byte stream that TLS requires.</p>
+<p>To perform this attack, use the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>delay<span class="w"> </span>100ms<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>reorder<span class="w"> </span><span class="m">50</span>%<span class="w"> </span><span class="m">50</span>%
+</span></code></pre></div>
+<p>With this not only are we introducing some delay, but are also reordering the packets that arrive at the server. If we restart the client, we can see that barely any effect can be noticed, since the packets are numbered when they leave the peers, they are automatically placed back in order upon reaching the destination.</p>
+<p>With this test complete, let´s perform the final attack, duplication of packets.</p>
+<p>Clear the command used for the previous attack, and use the following command for the new one:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>duplicate<span class="w"> </span><span class="m">25</span>%
+</span></code></pre></div>
+<p>This will make it so that there is a 25% chance of every packet to be duplicated. We expect that TLS follows the same trend as before, and it works normally, thanks to the reliability of TCP.</p>
+<figure id="figure-12">
+<p><img alt="Figure 12: Duplication Attack" src="../../images/TLSDUPATK.png" />
+  </p>
+<figcaption>Figure 12: Duplication Attack</figcaption>
+</figure>
+<p>As we can see in Figure 12, there are several duplicated packets in the TLS handshake, but TCP detects them all and prevents them from affecting TLS, allowing it to finish its handshake and function without an issue.</p>
+<p>From this experiments, we understood what is underneath TLS, in the form of TCP, we saw the evolution of TLS to reach its modern form, including better cyphers, handshakes, and even post-quantum KEMs to future proof TLS, and performed some attacks to the transport foundations of TLS to test its resilience.</p>
+<p>We hope that these experiments allowed you to understand TLS slightly better, and gave you the tools to further experiment and improve. We hope to see you in DTLS!</p>
 
 
 
