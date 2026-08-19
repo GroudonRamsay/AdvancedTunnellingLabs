@@ -1,72 +1,25 @@
-# SSH
+## SSH Laboratory
 
-SSH (Secure Shell) is a secure remote access and tunnelling protocol widely used for Linux administration, automation, and secure transport.
+Secure Shell (SSH) is a protocol for secure remote access, encrypted command execution and file transfer. Standardised by IETF in RFCs 4251 through 4254, SSH provides confidentiality, integrity, and peer authentication through a flexible layered architecture.
 
----
+Operating at the application layer and running over TCP, SSH offers user-centric access control, key-based authentication, and session multiplexing. These properties make it well suited for administrative access, secure management of remote hosts and port forwarding.
 
-## Features
+SSH is commonly used to create local, remote, or dynamic tunnels that protect otherwise insecure application flows. Typical use cases include secure system administration, tunnelling database
+connections across untrusted networks and enabling secure file transfer through SFTP.
 
-- Encrypted remote access
-- Public key authentication
-- Secure file transfer
-- Port forwarding
-- Tunnelling support
+## SSH Architecture and Handshake
 
----
+SSH is divided into three logical layers: the transport layer, the authentication layer, and the connection layer.
 
-## Common SSH Services
+The transport layer, described in RFC 4253, establishes a secure channel, with its handshake present in Figure 1, providing confidentiality and integrity for subsequent protocol layers, negotiating encryption algorithms, for example AES-GCM or ChaCha20-Poly1305, MACs, compression, and key exchange algorithms such as Curve25519 or ECDH.
 
-| Service    | Purpose              |
-| ---------- | -------------------- |
-| SSH        | Remote shell         |
-| SCP        | Secure copy          |
-| SFTP       | Secure file transfer |
-| SSH Tunnel | Encrypted forwarding |
+The authentication layer supports mechanisms such as public-key authentication, with RSA, Ed25519 or ECDSA and password, while the connection layer multiplexes multiple logical channels, like, shell, exec, subsystem and portforwarding, over a single transport connection as defined by RFC 4254.
 
----
+<figure markdown id="figure-1">
+  ![Figure 1: SSH Handshake](../images/SSHHAND.png)
+  <figcaption>Figure 1: SSH Handshake</figcaption>
+</figure>
 
-## SSH Architecture
+## Laboratory Topology
 
-```mermaid
-graph LR
-    A[SSH Client] --> B[Encrypted Session]
-    B --> C[SSH Server]
-```
-
----
-
-## Topics Covered
-
-- SSH key authentication
-- SSH hardening
-- SCP and SFTP
-- Port forwarding
-- SSH tunnelling
-- Linux administration
-- Troubleshooting
-
----
-
-## Generate SSH Keys
-
-```bash
-ssh-keygen -t ed25519
-```
-
-## Connect to a Server
-
-```bash
-ssh user@192.168.1.10
-```
-
----
-
-## Example SSH Tunnel
-
-```bash
-ssh -L 8080:localhost:80 user@server
-```
-
-!!! warning
-
-    Password authentication should be disabled in production environments whenever possible.
+## Device Configuration
