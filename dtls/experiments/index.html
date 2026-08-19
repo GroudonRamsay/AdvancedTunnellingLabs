@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#laboratory-experiments" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1380,6 +1385,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1396,6 +1419,78 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-handshake-vs-tls-handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS Handshake vs TLS Handshake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-tolerance-to-loss-duplication-and-reordering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS tolerance to loss, duplication and reordering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-fragmentation-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS Fragmentation Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-replay-protection-and-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS Replay Protection and Attack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1661,6 +1756,69 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-handshake-vs-tls-handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS Handshake vs TLS Handshake
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-tolerance-to-loss-duplication-and-reordering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS tolerance to loss, duplication and reordering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-fragmentation-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS Fragmentation Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dtls-replay-protection-and-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DTLS Replay Protection and Attack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1681,7 +1839,169 @@
 
   <h1>Experiments</h1>
 
-
+<h2 id="laboratory-experiments">Laboratory Experiments</h2>
+<p>We will now begin our DTLS experiments, with the aim of deepening or knowledge of it, and to better understand what makes it different and similar to TLS. We will be comparing the handshakes and transport layer differences of the two, how their packets are built, how DTLS handles the tests on loss, duplication and reordering that we subjected TLS to, how DTLS handles the innate fragmentation of UDP and how it handles a replay attack.</p>
+<h2 id="dtls-handshake-vs-tls-handshake">DTLS Handshake vs TLS Handshake</h2>
+<p>For our first experiment, we will be comparing the handshake of DTLS with what we saw in TLS.</p>
+<p>An important note is that OpenSSL only has DTLS 1.2 available in this version, so we will be comparing DTLS 1.2 with TLS 1.2.</p>
+<p>If you have tested DTLS in the Overview section, you should already have a complete handshake to analyse, if not, start a WireShark probe between the two DTLS peers and connect the client to the server. The handshake should look identical or similar to this:</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: DTLS Handshake" src="../../images/DTLSLIVEHAND.png" />
+  </p>
+<figcaption>Figure 1: DTLS Handshake</figcaption>
+</figure>
+<p>This handshake bears some similarity to the TLS 1.2 handshake, but it also has its differences.</p>
+<p>Although the structure is relatively the same, we can right from the start identify a change, there is no transport layer session establishment. Since DTLS uses UDP, which does not require a connection to communicate, the first packets are already part of th DTLS handshake.</p>
+<p>The first two packets are related to another innovation for DTLS, a stateless cookie, which is used by the server to ensure that the cleint trying to connect is real and can respond, saving valuable resources from being spent on fake requests.</p>
+<p>We can see in Figure 2 the cookie being sent by the server, and in Figure 3 the second Client Hello now has added a cookie to its request.</p>
+<figure id="figure-2">
+<p><img alt="Figure 2: DTLS Server sends a Cookie" src="../../images/DTLSCOOKIE1.png" />
+  </p>
+<figcaption>Figure 2: DTLS Server sends a Cookie</figcaption>
+</figure>
+<figure id="figure-3">
+<p><img alt="Figure 3: DTLS Client sends request with Cookie" src="../../images/DTLSCOOKIE2.png" />
+  </p>
+<figcaption>Figure 3: DTLS Client sends request with Cookie</figcaption>
+</figure>
+<p>We can now also identify what the Client sends in its Hello packet with Figure 3. We can see the similarities with TLS in the form of, the session ID, the random, the sharing of cypher suites and other necessary negotiated extensions.</p>
+<p>But we can also identify some differences in the form of sequence number and epoch, used to prevent duplication and reordering, message sequence and fragment offset and length, which are used by DTLS to handle the reordering and fragmentation added by UDP, and the cookie sent by the server, used to ensure real connections to the server.</p>
+<p>Moving forward we can see the Server Hello, and notice another sign of the usage of UDP, which is the fragmentation of the Server Hello into multiple packets due to the datagram format of UDP.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: DTLS fragmented Server Hello" src="../../images/DTLSSERVERHELLO.png" />
+  </p>
+<figcaption>Figure 4: DTLS fragmented Server Hello</figcaption>
+</figure>
+<p>This is expected from the usage of UDP, and does not interfere with the handshake, thanks to the safeguards that DTLS has in place to give some reliability to UDP.</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: DTLS Server Hello" src="../../images/DTLSSERVERHELLO2.png" />
+  </p>
+<figcaption>Figure 5: DTLS Server Hello</figcaption>
+</figure>
+<p>Looking at Figure 5, we can see that the structure from TLS 1.2 does not change by much, maintaing the same elements from the Client Hello, like session ID, random, choosing the cypher suite and sending the certificate, which is fragmented in this case.</p>
+<p>It also includes the new DTLS additions, sequence number and epoch, message sequence and fragment offset and length, which are mainly used by the certificate.</p>
+<figure id="figure-6">
+<p><img alt="Figure 6: DTLS Server Hello Key Exchange and End" src="../../images/DTLSSERVERHELLO3.png" />
+  </p>
+<figcaption>Figure 6: DTLS Server Hello Key Exchange and End</figcaption>
+</figure>
+<p>After reassembling the certificate, we can see that the server finishes its Hello, by sending its proposed Key Exchange method and its Done flag, which include all the reliability upgrades introduced by DTLS.</p>
+<figure id="figure-7">
+<p><img alt="Figure 7: DTLS Client Response" src="../../images/DTLSCLIENTRESPONSE.png" />
+  </p>
+<figcaption>Figure 7: DTLS Client Response</figcaption>
+</figure>
+<p>Finally, through Figure 7, we can see that the client responds to the server, choosing the KEM, changing cypher spec and beggining encrypted communication, which alters its Epoch, from 0 to 1. The server responds by starting a session and beggining encrypted communication as well.</p>
+<p>From this experiment, we were able to compare the handshakes between DTLS 1.2 and TLS 1.2, seeing that the main points remain similar, with the addition of some safeguards to ensure some reliability from the underlying UDP, so that a tunnel can be formed and used for secure communication without reliability issues.</p>
+<h2 id="dtls-tolerance-to-loss-duplication-and-reordering">DTLS tolerance to loss, duplication and reordering</h2>
+<p>For this experience, we will be testing how DTLS handles the same traffic problems we tested TLS against. We will be analyzing DTLS´s response to the loss of packets, duplication of packets and reordering, expecting to see how its reliability safeguards help in keeping the protocol functional.</p>
+<p>We will begin by testing its tolerance to the loss of packets. To do so, we will access the MitM machine, and use the following command to introduce loss:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span>loss<span class="w"> </span><span class="m">80</span>%
+</span></code></pre></div>
+<p>This command provides a 80% chance that a packet is dropped while crossing MitM. This value is high to ensure loss during the handshake process, to truly see how it is handled. We will now restart the client and see how the handshake is processed with this kind of loss.</p>
+<figure id="figure-8">
+<p><img alt="Figure 8: DTLS Loss Response Part 1" src="../../images/DTLSCLIENTRESPONSE.png" />
+  </p>
+<figcaption>Figure 8: DTLS Loss Response Part 1</figcaption>
+</figure>
+<figure id="figure-9">
+<p><img alt="Figure 9: DTLS Loss Response Part 2" src="../../images/DTLSCLIENTRESPONSE.png" />
+  </p>
+<figcaption>Figure 9: DTLS Loss Response Part 2</figcaption>
+</figure>
+<p>As we can see from Figures 8 and 9, the high loss rate lead to a high retransmission rate from DTLS, since when no response is detected in a certain timeframe, DTLS repeats its message hoping it will reach its destination. Even with this abnormally high loss, DTLS was capable of finishing its handshake and establish a session, with a lot more messages and time to do so.</p>
+<p>Now, we will be testing its duplication safeguards, to see how this is handled. To do so, first clear the last rule with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>del<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root
+</span></code></pre></div>
+<p>Then apply the duplciation rule with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>duplicate<span class="w"> </span><span class="m">50</span>%
+</span></code></pre></div>
+<p>This will give a 50% chance to duplicate any packet crossing MitM. Restart the server and client and let´s see in a probe between MitM and DTLSServer what DTLS does.</p>
+<figure id="figure-10">
+<p><img alt="Figure 10: DTLS Duplication Response" src="../../images/DTLSDUPE.png" />
+  </p>
+<figcaption>Figure 10: DTLS Duplication Response</figcaption>
+</figure>
+<p>As we can see from Figure 10, despite the duplication of some packets in the handshake, DTLS uses its epoch and sequence number together, to track duplicate packets, and simply ignores them and proceeds with the normal course of the handshake. We could even send repeated messages from client to server, and see that the number of messages is the same in both sides, even with duplicated packets, thanks to the added protections from DTLS.</p>
+<p>For the final test of this section, we will be reordering the packets that arrive at the server, and see if it changes the handshake process.</p>
+<p>Firstly, clear the previous command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>del<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root
+</span></code></pre></div>
+<p>Then, place the new reorder rule with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>tc<span class="w"> </span>qdisc<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth1<span class="w"> </span>root<span class="w"> </span>netem<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>delay<span class="w"> </span>100ms<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>reorder<span class="w"> </span><span class="m">50</span>%<span class="w"> </span><span class="m">50</span>%
+</span></code></pre></div>
+<p>Restart the connection, and search the captures for any anomalies. In this particular case, we could not detect any anomalies in WireShark, and the handshake occured without any delays or other problems, marking yet another potential issue that DTLS is capable of resolving, through the usage of sequence numbers, message sequence and fragment offset and length.</p>
+<h2 id="dtls-fragmentation-handling">DTLS Fragmentation Handling</h2>
+<p>For this experiment, we will be looking more closely at how DTLS handles fragmentation and how to alter its MTU to change how many fragments are sent.</p>
+<p>From previous experiments, we could already see what DTLS has implemented to be able to handle the native fragmentation of datagram-based transport. Through the usage of message sequence numbers DTLS can keep track from which part of a message a fragment belongs, and then through the fragment offset and length it knows if there are more fragments left, and what composes each fragment, in order to reassemble it when all parts arrive.</p>
+<figure id="figure-11">
+<p><img alt="Figure 11: DTLS Fragmentation" src="../../images/DTLSFRAG.png" />
+  </p>
+<figcaption>Figure 11: DTLS Fragmentation</figcaption>
+</figure>
+<p>To change the MTU, or Maximum Transmission Unit, we add the flag -mtu to the server and client command. With a higher MTU we can reduce the number of fragments sent and with a lower MTU we can increase the number of fragments and the messages that need to be fragmented.</p>
+<p>An example of a higher MTU is the following:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>openssl<span class="w"> </span>s_server<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>-dtls1_2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>-accept<span class="w"> </span><span class="m">4444</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>-cert<span class="w"> </span>server.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span>-key<span class="w"> </span>server.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span>-mtu<span class="w"> </span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span>-timeout<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span>-msg
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>openssl<span class="w"> </span>s_client<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>-dtls1_2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>-connect<span class="w"> </span><span class="m">10</span>.0.2.10:4444<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>-mtu<span class="w"> </span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span>-timeout<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span>-msg
+</span></code></pre></div>
+<p>If we look at WireShark with this MTU, we can see a reduction in the fragmented messages, and the amount of fragments for the ones still fragmented, like the certificate, as we can see in Figure 11</p>
+<figure id="figure-12">
+<p><img alt="Figure 12: DTLS Fragmentation reduced" src="../../images/DTLSMTUHIGH.png" />
+  </p>
+<figcaption>Figure 12: DTLS Fragmentation reduced</figcaption>
+</figure>
+<p>And when we use the lowest MTU possible, 256, we go back to more fragmented messages and fragments, seen in Figure 13.</p>
+<figure id="figure-13">
+<p><img alt="Figure 13: DTLS Fragmentation increased" src="../../images/DTLSMTULOW.png" />
+  </p>
+<figcaption>Figure 13: DTLS Fragmentation increased</figcaption>
+</figure>
+<p>From this experience we now have a better understanding how DTLS handles fragmentation and how we can influence it when creating its servers and clients.</p>
+<h2 id="dtls-replay-protection-and-attack">DTLS Replay Protection and Attack</h2>
+<p>For our final experiment, we will be testing the replay protection that DTLS offers. To do this, we will use a new MitM device, the one used in the IPsec labs, ghcr.io/groudonramsay/ipsec-replay:latest, which will replace the one we have been using.</p>
+<p>We will be using this machine for its capture and replay capabilities, with tcpdump and tcpreplay. Firstly, configure the new machine with the necessary configurations for traffic to flow through:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.1.1/24<span class="w"> </span>dev<span class="w"> </span>eth0
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.2.1/24<span class="w"> </span>dev<span class="w"> </span>eth1
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth1<span class="w"> </span>up
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
+</span></code></pre></div>
+<p>With this done, we will now begin capturing traffic with the MitM device, using the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>tcpdump<span class="w"> </span>-ni<span class="w"> </span>eth0<span class="w"> </span>-w<span class="w"> </span>/pcaps/replay-capture.pcap
+</span></code></pre></div>
+<p>This will capture traffic sent by the client. Now, restart the client and the server and then send some messages through the DTLS tunnel. After sending the handshake and some messages, stop the capture in MitM. We now have a .pcap file with a few packets within, this is what we will replay to test DTLS´s security capabilities.</p>
+<p>To execute this attack, we will use the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>tcpreplay<span class="w"> </span>-i<span class="w"> </span>eth1<span class="w"> </span>/pcaps/replay-capture.pcap
+</span></code></pre></div>
+<figure id="figure-14">
+<p><img alt="Figure 14: DTLS Replay Attack" src="../../images/DTLSREPLAYSHARK.png" />
+  </p>
+<figcaption>Figure 14: DTLS Replay Attack</figcaption>
+</figure>
+<p>You will be able to see between MitM and DTLSServer, in Figure 14, the messages appear in WireShark, with sequence numbers and epochs that are outdated, and as such, we will see no change in either device, since when they receive these messages, DTLS checks them, detects past sequence numbers and epochs and discards them for being replayed packets, as we can see in Figure 15, following exactly what we expected it to do.</p>
+<figure id="figure-15">
+<p><img alt="Figure 15: DTLS Replay Attack unsuccessful" src="../../images/DTLSREPLAYTERM.png" />
+  </p>
+<figcaption>Figure 15: DTLS Replay Attack unsuccessful</figcaption>
+</figure>
+<p>With these experiments, we hope that your understanding of DTLS´s inner workings has improved. Not only have we studied how these tunnels form, use UDP and compare to their TLS and TCP counterparts, but we have also tested them pratically through traffic control, fragmentation support and replay attacks.</p>
+<p>We hope to see you in the next lab: SSH!</p>
 
 
 
