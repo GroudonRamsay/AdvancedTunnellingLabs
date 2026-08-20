@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#laboratory-experiments" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1497,6 +1502,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1513,6 +1536,78 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssh-handshake-and-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSH Handshake and Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#host-key-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host-key Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#password-authentication-vs-public-key-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Password Authentication vs Public Key Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replay-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Attack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1661,6 +1756,69 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ssh-handshake-and-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSH Handshake and Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#host-key-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Host-key Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#password-authentication-vs-public-key-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Password Authentication vs Public Key Authentication
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replay-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replay Attack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1681,7 +1839,205 @@
 
   <h1>Experiments</h1>
 
-
+<h2 id="laboratory-experiments">Laboratory Experiments</h2>
+<p>We will now begin the SSH experiments, studying its handshake, algorithms used for key exchange, host-key generation and as cyphers, the authentication of the server´s host-key, the differences in configuration and in practice between password and public key authentication, and how SSH can handle a replay attack, like the one we tested other protocols with.</p>
+<h2 id="ssh-handshake-and-algorithms">SSH Handshake and Algorithms</h2>
+<p>We will begin our experiments by studying the handshake that SSH uses to establish a tunnel between a client and a server and verifying if it matches what we saw in the Overview.</p>
+<p>To do this, begin by setting a WireShark probe between SSHClient and MitM, then establish a connection between SSHClient and SSHServer1.</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: SSH Handshake" src="../../images/SSHHANDLIVE.png" />
+  </p>
+<figcaption>Figure 1: SSH Handshake</figcaption>
+</figure>
+<p>As we can see in Figure 1, the SSH handshake is quite extensive, as we expected from the previous example.</p>
+<p>The first three packets are used to establish the TCP connection that will be used by SSH to continue the handshake.</p>
+<p>Following those, we will use a filter in WireShark, ssh, to reduce the clutter in the handshake and to see each step more clearly.</p>
+<figure id="figure-2">
+<p><img alt="Figure 2: SSH Version identification" src="../../images/SSHVERS.png" />
+  </p>
+<figcaption>Figure 2: SSH Version identification</figcaption>
+</figure>
+<p>In the first two SSH messages, displayed in Figure 2, we can see that the only information exchanged is the SSH version and the OS version used by both devices. Although a simple step, it is vital to prevent any mismatches that could affect future steps in the handshake.</p>
+<figure id="figure-3">
+<p><img alt="Figure 3: SSH Key Exchange negotiation" src="../../images/SSHKEX.png" />
+  </p>
+<figcaption>Figure 3: SSH Key Exchange negotiation</figcaption>
+</figure>
+<p>Following those messages, the next two, seen in Figure 3, demonstrate the Key Exchange negotiation between the server and client, where the client sends its list of Key Exchange, Encryption, Compression and HMAC algorithms, and then receives an answer from the server with its own list of algorithms.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: SSH Client Diffie-Hellman public key shared" src="../../images/SSHDH.png" />
+  </p>
+<figcaption>Figure 4: SSH Client Diffie-Hellman public key shared</figcaption>
+</figure>
+<p>The next message is sent by the client, seen in Figure 4, which contains the public key generated by the Diffie-Hellman group that was chosen for the key exchange. The server answers with the message in Figure 5, replying with its own generated host key, Diffie-Hellman public key and the hash used to authenticate its host key and shared key. Lastly, it sends the information that it will begin using the session key to encrypt the messages sent afterwards.</p>
+<figure id="figure-5">
+<p><img alt="Figure 5: SSH Server begins encrypted exchange" src="../../images/SSHNEWKEYS.png" />
+  </p>
+<figcaption>Figure 5: SSH Server begins encrypted exchange</figcaption>
+</figure>
+<p>The client answers with the message in Figure 6, informing it will also begin using the session key, and the remaining traffic is now encrypted, although we know it is the password authentication of the user using SSH to access the server.</p>
+<figure id="figure-6">
+<p><img alt="Figure 6: SSH Client begins encrypted exchange" src="../../images/SSHCLIENTNEWKEYS.png" />
+  </p>
+<figcaption>Figure 6: SSH Client begins encrypted exchange</figcaption>
+</figure>
+<p>With this, we have analysed the live handshake done by our SSHClient and SSHServer1, and we can confirm that it followed exactly what our handshake example had set.</p>
+<p>We will now briefly analyse what algorithms SSH has at its disposal for its several functions, such as, Key Exchange, Encryption, Compression and HMAC and how to choose them instead of letting the two devices negotiate.</p>
+<p>We will begin by analysing the algorithms available for Key Exchange, using the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ssh<span class="w"> </span>-Q<span class="w"> </span>kex
+</span></code></pre></div>
+<p>This will provide us with the list of algorithms available, which should be:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>diffie-hellman-group1-sha1
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>diffie-hellman-group14-sha1
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>diffie-hellman-group14-sha256
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>diffie-hellman-group16-sha512
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>diffie-hellman-group18-sha512
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>diffie-hellman-group-exchange-sha1
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>diffie-hellman-group-exchange-sha256
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>ecdh-sha2-nistp256
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>ecdh-sha2-nistp384
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>ecdh-sha2-nistp521
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>curve25519-sha256
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>curve25519-sha256@libssh.org
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>sntrup761x25519-sha512@openssh.com
+</span></code></pre></div>
+<p>Some of these algorithms, namely the first four, are already old or very close to it, being already insecure and considered legacy. The remaining algorithms are relatively modern and secure, although none are prepared for the post-qauntum era, except for the last one, sntrup761x25519-sha512@openssh.com, which is a hybrid key exchange algorithm, which mixes the classical X25519 elliptic-curve Diffie-Hellman key exchange with Streamlined NTRU Prime post-quantum encapsulation method to guarantee confidentiality even when a quantum computer would try to break it.</p>
+<p>For the next list, Encryption, we will use the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ssh<span class="w"> </span>-Q<span class="w"> </span>cipher
+</span></code></pre></div>
+<p>The list of algorithms available is:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>3des-cbc
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>aes128-cbc
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>aes192-cbc
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>aes256-cbc
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>aes128-ctr
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>aes192-ctr
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>aes256-ctr
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>aes128-gcm@openssh.com
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>aes256-gcm@openssh.com
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>chacha20-poly1305@openssh.com
+</span></code></pre></div>
+<p>For the following list, HMAC, we will use the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ssh<span class="w"> </span>-Q<span class="w"> </span>mac
+</span></code></pre></div>
+<p>The list of algorithms available is:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>hmac-sha1
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>hmac-sha1-96
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>hmac-sha2-256
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>hmac-sha2-512
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>hmac-md5
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>hmac-md5-96
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>umac-64@openssh.com
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>umac-128@openssh.com
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>hmac-sha1-etm@openssh.com
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>hmac-sha1-96-etm@openssh.com
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>hmac-sha2-256-etm@openssh.com
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>hmac-sha2-512-etm@openssh.com
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>hmac-md5-etm@openssh.com
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>hmac-md5-96-etm@openssh.com
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>umac-64-etm@openssh.com
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>umac-128-etm@openssh.com
+</span></code></pre></div>
+<p>For the final list, Host Key Algorithms, we will use the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ssh<span class="w"> </span>-Q<span class="w"> </span>key
+</span></code></pre></div>
+<p>The list of algorithms available is:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ssh-ed25519
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ssh-ed25519-cert-v01@openssh.com
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sk-ssh-ed25519@openssh.com
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>sk-ssh-ed25519-cert-v01@openssh.com
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>ecdsa-sha2-nistp256
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>ecdsa-sha2-nistp256-cert-v01@openssh.com
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>ecdsa-sha2-nistp384
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>ecdsa-sha2-nistp384-cert-v01@openssh.com
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>ecdsa-sha2-nistp521
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>ecdsa-sha2-nistp521-cert-v01@openssh.com
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>sk-ecdsa-sha2-nistp256@openssh.com
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>sk-ecdsa-sha2-nistp256-cert-v01@openssh.com
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>ssh-dss
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>ssh-dss-cert-v01@openssh.com
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>ssh-rsa
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>ssh-rsa-cert-v01@openssh.com
+</span></code></pre></div>
+<p>For these last three lists, we invite you to study them, learn more about the algorithms in it, their age, the security they offer or offered before being obsolete and what each of them offers to SSH.</p>
+<p>Finally, if you want to force a certain algorithm to be used, you can use a command similar to the following:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ssh<span class="w"> </span>-o<span class="w"> </span><span class="nv">KexAlgorithms</span><span class="o">=</span>curve25519-sha256<span class="w"> </span>user@10.10.2.10
+</span></code></pre></div>
+<p>In this case, the KEX algorithm will curve25519-sha25 without negotiation, but you can try different combinations and commands to find more ways to change the negotiation during the handshake.</p>
+<h2 id="host-key-authentication">Host-key Authentication</h2>
+<p>For this experiment, we will be analysing the Client-side authentication of a server Host Key, which is used to identify servers we have previously communicated with and to prevent Server Impersonation attacks.</p>
+<p>We can begin by inspecting all the key host files that the server stores with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ls<span class="w"> </span>-l<span class="w"> </span>/etc/ssh/ssh_host_*
+</span></code></pre></div>
+<p>From this list, let´s inspect the public key that the server used on its first connection with our client with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ssh-keygen<span class="w"> </span>-lf<span class="w"> </span>/etc/ssh/ssh_host_ed25519_key.pub
+</span></code></pre></div>
+<p>With the result being:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="m">256</span><span class="w"> </span>SHA256:FbflQZqRspzFr6G9b3Q3/wZrWem0ECAIybM7wK3aqGE<span class="w"> </span>root@buildkitsandbox<span class="w"> </span><span class="o">(</span>ED25519<span class="o">)</span>
+</span></code></pre></div>
+<p>This is what a server can use to authenticate itself with a client.
+In the first connection, a client must accept the server host key to begin a connection, but further attempts will no longer ask for this, since for the client, the server is now a known entity.</p>
+<p>This helps protect against server impersonation attacks, since if we try to connect to a server, and there is a mismatch between the host key that is sent and the one that is stored, SSH knows that there is a problem with that server and does not allow the connection to move forward.</p>
+<p>To reset the host key of a server, for example to see the first connection again, you can use the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ssh-keygen<span class="w"> </span>-R<span class="w"> </span><span class="m">10</span>.0.2.10
+</span></code></pre></div>
+<h2 id="password-authentication-vs-public-key-authentication">Password Authentication vs Public Key Authentication</h2>
+<p>For this experiment we will be looking at the different configurations needed for Password and Public Key Authentication, and what are the practical and security differences between the two.</p>
+<p>Starting with the configurations, we can see from what we used in the Device Configuration section, that there are two very distinct ways of preparing a SSH server for a user using a password and a user using a public key.</p>
+<p>Firstly, the authentication through password is the default method for this distribution of SSH, and as such we did not have to modify the configurations.</p>
+<p>What we did was create a user, sshuser, and associate a password to it, ssh1234.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>useradd<span class="w"> </span>-m<span class="w"> </span>-s<span class="w"> </span>/bin/bash<span class="w"> </span>sshuser
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>passwd<span class="w"> </span>sshuser
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>ssh1234
+</span></code></pre></div>
+<p>This way, when that user connects to the server, the server automatically asks for a password, which is stored in its files.</p>
+<figure id="figure-7">
+<p><img alt="Figure 7: SSH Client password login" src="../../images/SSHPASS.png" />
+  </p>
+<figcaption>Figure 7: SSH Client password login</figcaption>
+</figure>
+<p>While straightforward to implement and use, this method allows attackers that obtained the password in some way to simply log into the server and perform any action within.</p>
+<p>Our second method, despite needing some more preparation, is more secure in the sense that the client device attempting to login must have the key stored within, otherwise it will fail the login.</p>
+<p>To configure this method, we began by creating the user, sshuser, but without password, and altered the SSH configurations to use Public Key authentication, instead of Password authentication.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>useradd<span class="w"> </span>-m<span class="w"> </span>-s<span class="w"> </span>/bin/bash<span class="w"> </span>sshuser
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nano<span class="w"> </span>/etc/ssh/sshd_config
+</span></code></pre></div>
+<figure id="figure-8">
+<p><img alt="Figure 8: SSH Server 2 configuration" src="../../images/SSHPBK.png" />
+  </p>
+<figcaption>Figure 8: SSH Server 2 configuration</figcaption>
+</figure>
+<p>With this done, we then generated a key pair for the client to use, and copied that key into the authorized keys file in the server.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>cat<span class="w"> </span>~/.ssh/id_ed25519.pub
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/sshuser/.ssh
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>nano<span class="w"> </span>/home/sshuser/.ssh/authorized_keys
+</span></code></pre></div>
+<figure id="figure-9">
+<p><img alt="Figure 9: SSH Server 2 authorized keys" src="../../images/SSHKEYSTR.png" />
+  </p>
+<figcaption>Figure 9: SSH Server 2 authorized keys</figcaption>
+</figure>
+<p>With all this configured, when logging in to SSHServer 2, we are immediately logged into the server, since our key pair was what handled authentication.</p>
+<figure id="figure-10">
+<p><img alt="Figure 10: SSH Client authenticated through key pair" src="../../images/SSHKEYLOG.png" />
+  </p>
+<figcaption>Figure 10: SSH Client authenticated through key pair</figcaption>
+</figure>
+<p>Despite the additional steps necessary to configure, this method offers a more streamlined login experience, and more secure, since for an attacker to login with this method, they would need either to gain access to the server in some other way and add its own key, or it would need to steal the key pair from the client, which should prove more difficult than guessing or stealing a password.</p>
+<h2 id="replay-attack">Replay Attack</h2>
+<p>For our final experiment, we will be subjecting SSH to our now, well-known Replay Attack, to see if this protocol is vulnerable to this kind of attack.</p>
+<p>To do this, prepare the MitM device to listen in on traffic with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>tcpdump<span class="w"> </span>-ni<span class="w"> </span>eth0<span class="w"> </span>-w<span class="w"> </span>/pcaps/replay-capture.pcap
+</span></code></pre></div>
+<p>With the recording ongoing, go to the client, and connect to SSHServer1, and then write some text on the console to generate traffic.</p>
+<p>Now that we have captured some packets, let´s replay them towards SSHServer1, and see if there is any response or signs that the attack is working:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>tcpreplay<span class="w"> </span>-i<span class="w"> </span>eth1<span class="w"> </span>/pcaps/replay-capture.pcap
+</span></code></pre></div>
+<p>Although we sent a replayed handshake, and several packets of captured messages to the server, there has been no response by SSHServer1, as we can see in SSHClient since the session is still intact and with no responses to the replayed messages from MitM.</p>
+<p>SSH achieves its replay protection in two layers. Firstly, through TCP, which has its own mechanism to detect duplicate and out-of-order packets and discards them. Then at SSH itself, the MAC used in the messages also contain a sequence number within that tells SSH which packet it should be expecting next.</p>
+<p>From this experiments we hope that your knowledge of SSH has improved, understanding better what happens in its handshake, how its layers perform different jobs at different levels, what its algorithms are, how it a server authenticates itself to a user and vice-versa, and how SSH can protect itself from attacks, namely a replay attack.</p>
+<p>We hope you have enjoyed our SSH lab, and hope to see you in the final lab regarding PKI!</p>
 
 
 

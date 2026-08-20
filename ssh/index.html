@@ -1832,7 +1832,102 @@ connections across untrusted networks and enabling secure file transfer through 
 <figcaption>Figure 1: SSH Handshake</figcaption>
 </figure>
 <h2 id="laboratory-topology">Laboratory Topology</h2>
+<p>The topology of this laboratory consists in:</p>
+<ul>
+<li>Three docker containers, using the image ghcr.io/groudonramsay/ubuntu-ssh:latest, which are SSHClient, SSHServer 1 and SSHServer 2.</li>
+<li>One docker container acting as a MitM, using the image ghcr.io/groudonramsay/ipsec-replay:latest.</li>
+</ul>
+<p>The topology is visible in Figure 2:</p>
+<figure id="figure-2">
+<p><img alt="Figure 2: SSH Topology" src="../images/SSHTOPO.png" />
+  </p>
+<figcaption>Figure 2: SSH Topology</figcaption>
+</figure>
+<p>When adding the container to your templates, use 2 adapters and the following environment variables:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>--cap-add<span class="w"> </span>NET_ADMIN
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>--cap-add<span class="w"> </span>NET_RAW
+</span></code></pre></div>
+<p>Before beggining the configuration, modify the MitM machine to have 3 adapters.</p>
 <h2 id="device-configuration">Device Configuration</h2>
+<p>We will begin the configuration by setting up the IPs and routes necessary for communication between all devices.</p>
+<p>Use the following commands to configure SSHClient:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.1.10/24<span class="w"> </span>dev<span class="w"> </span>eth0
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.2.0/24<span class="w"> </span>via<span class="w"> </span><span class="m">10</span>.0.1.1
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.3.0/24<span class="w"> </span>via<span class="w"> </span><span class="m">10</span>.0.1.1
+</span></code></pre></div>
+<p>Use the following commands to configure SSHServer1:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.2.10/24<span class="w"> </span>dev<span class="w"> </span>eth0
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.1.0/24<span class="w"> </span>via<span class="w"> </span><span class="m">10</span>.0.2.1
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.3.0/24<span class="w"> </span>via<span class="w"> </span><span class="m">10</span>.0.2.1
+</span></code></pre></div>
+<p>Use the following commands to configure SSHServer2:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.3.10/24<span class="w"> </span>dev<span class="w"> </span>eth0
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.1.0/24<span class="w"> </span>via<span class="w"> </span><span class="m">10</span>.0.3.1
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.2.0/24<span class="w"> </span>via<span class="w"> </span><span class="m">10</span>.0.3.1
+</span></code></pre></div>
+<p>Use the following commands to configure MitM:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.1.1/24<span class="w"> </span>dev<span class="w"> </span>eth0
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.2.1/24<span class="w"> </span>dev<span class="w"> </span>eth1
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth1<span class="w"> </span>up
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.3.1/24<span class="w"> </span>dev<span class="w"> </span>eth2
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth2<span class="w"> </span>up
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>sysctl<span class="w"> </span>-w<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
+</span></code></pre></div>
+<p>You can test the configuration by pinging from SSHClient to both servers and ensuring there is a response.</p>
+<p>With the network setup and ready to go, we will now configure the two SSHServers, in order to be able to use them.</p>
+<p>We will beginwith SSHServer1, using the following commands to setup a user authorized to login through a password, and setting up the server itself:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>useradd<span class="w"> </span>-m<span class="w"> </span>-s<span class="w"> </span>/bin/bash<span class="w"> </span>sshuser
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>passwd<span class="w"> </span>sshuser
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>ssh1234
+</span></code></pre></div>
+<p>These commands create the user named, sshuser, and give it a password, ssh1234, which we will use in the client to login into the server.</p>
+<p>Now, use the following commands to setup the server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/run/sshd
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>/run/sshd
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>/usr/sbin/sshd
+</span></code></pre></div>
+<p>This creates the necessary folder and permissions to run the ssh server, and starts the server, which will be listening for connections, which we can see with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ss<span class="w"> </span>-lntp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;:22&#39;</span>
+</span></code></pre></div>
+<p>For the SSHServer 2, we will configure a Public Key based login. To do so, use these commands on SSHServer2:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>useradd<span class="w"> </span>-m<span class="w"> </span>-s<span class="w"> </span>/bin/bash<span class="w"> </span>sshuser
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/run/sshd
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>chmod<span class="w"> </span><span class="m">755</span><span class="w"> </span>/run/sshd
+</span></code></pre></div>
+<p>Then access the configuration file with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nano<span class="w"> </span>/etc/ssh/sshd_config
+</span></code></pre></div>
+<p>And change the line with #PubkeyAuthentication no to PubkeyAuthentication yes, and the line #PasswordAuthentication yes to PasswordAuthentication no.</p>
+<p>This will change this server´s expected login method from password usage to public key usage.</p>
+<p>Now, we will generate the key pair in SSHClient, and copy the public key to the SSHServer2. First, create the key with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519
+</span></code></pre></div>
+<p>Simply press enter 3 times to complete the process.</p>
+<p>Then copy the public key shown using the command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>cat<span class="w"> </span>~/.ssh/id_ed25519.pub
+</span></code></pre></div>
+<p>Ensure that you copy the whole line, and then back on SSHServer 2, create a folder to store and authorized keys, and paste what you copied in the file that will open:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/home/sshuser/.ssh
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>nano<span class="w"> </span>/home/sshuser/.ssh/authorized_keys
+</span></code></pre></div>
+<p>Then secure the file with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>chown<span class="w"> </span>-R<span class="w"> </span>sshuser:sshuser<span class="w"> </span>/home/sshuser/.ssh
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>/home/sshuser/.ssh
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/home/sshuser/.ssh/authorized_keys
+</span></code></pre></div>
+<p>Now you can start SSHServer 2 and ensure it is working with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>/usr/sbin/sshd
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>ss<span class="w"> </span>-lntp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;:22&#39;</span>
+</span></code></pre></div>
+<p>And finally, try logging in with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ssh<span class="w"> </span>sshuser@10.0.3.10
+</span></code></pre></div>
+<p>After accepting the server, you will see that no password was required, since we used our public key to authenticate ourselves.</p>
+<p>With all these setups, your client and servers should now be ready for the following <a href="experiments/">Experiments</a>.</p>
 
 
 
