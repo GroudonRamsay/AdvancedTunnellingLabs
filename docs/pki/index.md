@@ -44,7 +44,7 @@ When adding the container to your templates, use 2 adapters and the following en
 --cap-add NET_RAW
 ```
 
-Before beggining the configuration, modify all machines to persist the folder /root/pki, in order to keep the PKI setup. Further modify IntermediateCA1 and IntermediateCA2 to have 3 adapters.
+Before beggining the configuration, modify all machines to persist the folder /root/pki, in order to keep the PKI setup. Furthermore, modify IntermediateCA1 and IntermediateCA2 to have 3 adapters.
 
 ## Device Configuration
 
@@ -714,6 +714,6 @@ openssl s_client \
     -verify_return_error
 ```
 
-You should see the same authentication process occur and suceed in your DTLS connection.
+You should see the same authentication process occur and succeed in your DTLS connection.
 
 With all these configurations implemented and successfully tested, we can now move forward to the [Experiments](experiments.md).

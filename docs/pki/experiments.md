@@ -1,6 +1,6 @@
 ## Laboratory Experiments
 
-We will now begin the PKI experiments, where our focus will be on seeing, how the hierarchy of a PKI works and how the certificates of an entire chain are used to validate an end-entity certificate, how TLS and DTLS change their own handshake and authentication processes when both devices have certificates from a CA, and some cases of what occurs when wrong or invalid certificates are generated and used.
+We will now begin the PKI experiments, where our focus will be on seeing how the hierarchy of a PKI works and how the certificates of an entire chain are used to validate an end-entity certificate, how TLS and DTLS change their own handshake and authentication processes when both devices have certificates from a CA, and some cases of what occurs when wrong or invalid certificates are used.
 
 ## PKI Hierarchy and Certificate Chain Validation
 
@@ -8,7 +8,7 @@ For this experiment, we will be studying how a PKI is organized, how that organi
 
 As we can see from our topology, a PKI is a hierarchical structure. This hierarchy consists of a root CA, which is the final step in any certificate chain, since it signs the certificates used to then sign more certificates, Any device that wants to use certificate-based authentication must have its own certificate, and the whole hierarchy of certificates from its own to the root.
 
-This certificate chain that the device stores is an important feature of PKI, as it allows to track the source of a certificate, checking if it is trustworthy and signed by a trusted root and intermediate CAs. After confirming the chain is correct and trusted our certificate can then be used to authenticate our own device, and open a tunnel.
+This certificate chain that the device stores is an important feature of PKI, as it allows to track the source of a certificate, checking if it is trustworthy and signed by a trusted root and intermediate CAs. After confirming the chain is correct and trusted, our certificate can then be used to authenticate our own device, and open a tunnel.
 
 We will now see this in practice, by first verifying the chain of our TLS certificates, and then performing a TLS connection, to see these chains in practice.
 
@@ -190,11 +190,11 @@ Secondly, we can see in WireShark, in Figure 9, that with mutual authentication,
   <figcaption>Figure 9: Server and Client certificate in WireShark</figcaption>
 </figure>
 
-We could see from these experiments that the changes between these two authentication methods, Server only and Mutual, are not only in how the connection is more secure and reliable between two trustworthy peers, but that there are also changes to how the handshake itself is performed, both in TLS and DTLS.
+We could see from these experiments that the changes between these two authentication methods, Server only and Mutual, are not only present in how the connection is more secure and reliable between two trustworthy peers, but that there are also changes to how the handshake itself is performed, both in TLS and DTLS.
 
 ## Usage of wrong or invalid certificates in authentication
 
-For our final experiment, we will be using some out of place certificates and CAs to experiment in how authentication is affected by this, namely the one performed by TLS.
+For our final experiment, we will be using some out of place certificates and CAs to experiment on how authentication is affected by this, namely the one performed by TLS.
 
 For the first part, we will be using the certificate from another device, in this case DTLSServer, as the certificate used by TLSClient, and see how TLSServer responds to this.
 
