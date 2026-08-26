@@ -1,6 +1,6 @@
 ## Laboratory Experiments
 
-We will now begin the SSH experiments, studying its handshake, algorithms used for key exchange, host-key generation and as cyphers, the authentication of the server´s host-key, the differences in configuration and in practice between password and public key authentication, and how SSH can handle a replay attack, like the one we tested other protocols with.
+We will now begin the SSH experiments, studying its handshake, algorithms used for key exchange, host-key generation and cyphers, the authentication of the server´s host-key, the differences in configuration and in practice between password and public key authentication, and how SSH can handle a replay attack, like the one we tested other protocols with.
 
 ## SSH Handshake and Algorithms
 
@@ -190,7 +190,7 @@ With the result being:
 ```
 
 This is what a server can use to authenticate itself with a client.
-In the first connection, a client must accept the server host key to begin a connection, but further attempts will no longer ask for this, since for the client, the server is now a known entity.
+In the first connection, a client must accept the server host key to begin a connection, but further attempts will no longer ask for this, since for the client, the server is now a trusted entity.
 
 This helps protect against server impersonation attacks, since if we try to connect to a server, and there is a mismatch between the host key that is sent and the one that is stored, SSH knows that there is a problem with that server and does not allow the connection to move forward.
 
@@ -260,7 +260,7 @@ With all this configured, when logging in to SSHServer 2, we are immediately log
   <figcaption>Figure 10: SSH Client authenticated through key pair</figcaption>
 </figure>
 
-Despite the additional steps necessary to configure, this method offers a more streamlined login experience, and more secure, since for an attacker to login with this method, they would need either to gain access to the server in some other way and add its own key, or it would need to steal the key pair from the client, which should prove more difficult than guessing or stealing a password.
+Despite the additional steps necessary to configure, this method offers a more streamlined login experience, and more secure, since for an attacker to login with this method, they would need either to gain access to the server in some other way and add its own key, or they would need to steal the key pair from the client, which should prove more difficult than guessing or stealing a password.
 
 ## Replay Attack
 
@@ -282,8 +282,8 @@ tcpreplay -i eth1 /pcaps/replay-capture.pcap
 
 Although we sent a replayed handshake, and several packets of captured messages to the server, there has been no response by SSHServer1, as we can see in SSHClient since the session is still intact and with no responses to the replayed messages from MitM.
 
-SSH achieves its replay protection in two layers. Firstly, through TCP, which has its own mechanism to detect duplicate and out-of-order packets and discards them. Then at SSH itself, the MAC used in the messages also contain a sequence number within that tells SSH which packet it should be expecting next.
+SSH achieves its replay protection in two layers. Firstly, through TCP, which has its own mechanism to detect duplicate and out-of-order packets and discards them. Then at SSH itself, the MAC used in the messages also contains a sequence number within that tells SSH which packet it should be expecting next.
 
-From this experiments we hope that your knowledge of SSH has improved, understanding better what happens in its handshake, how its layers perform different jobs at different levels, what its algorithms are, how it a server authenticates itself to a user and vice-versa, and how SSH can protect itself from attacks, namely a replay attack.
+From these experiments we hope that your knowledge of SSH has improved, understanding better what happens in its handshake, how its layers perform different jobs at different levels, what its algorithms are, how a server authenticates itself to a user and vice-versa, and how SSH can protect itself from attacks, namely a replay attack.
 
 We hope you have enjoyed our SSH lab, and hope to see you in the final lab regarding PKI!

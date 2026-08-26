@@ -90,7 +90,7 @@ You can test the configuration by pinging from SSHClient to both servers and ens
 
 With the network setup and ready to go, we will now configure the two SSHServers, in order to be able to use them.
 
-We will beginwith SSHServer1, using the following commands to setup a user authorized to login through a password, and setting up the server itself:
+We will begin with SSHServer1, using the following commands to setup a user authorized to login through a password, and setting up the server itself:
 
 ```bash
 useradd -m -s /bin/bash sshuser
@@ -146,7 +146,7 @@ Then copy the public key shown using the command:
 cat ~/.ssh/id_ed25519.pub
 ```
 
-Ensure that you copy the whole line, and then back on SSHServer 2, create a folder to store and authorized keys, and paste what you copied in the file that will open:
+Ensure that you copy the whole line, and then back on SSHServer 2, create a folder to store any authorized keys, and paste what you copied in the file that will open:
 
 ```bash
 mkdir -p /home/sshuser/.ssh
