@@ -25,7 +25,7 @@ The result will be similar to what we have seen in MACsec, a sudden break from t
   <figcaption>Figure 1: MKA Handshake from the Key Server view</figcaption>
 </figure>
 
-From this Figure we can identify some interesting aspects. First of all, the MKA process is identical to the one we see in MACsec, and secondly, we can see two handshakes occuring at once, due to the two services using tunnel encryption.
+From Figure 1 we can identify some interesting aspects. First of all, the MKA process is identical to the one we see in MACsec, and secondly, we can see two handshakes occuring at once, due to the two services using tunnel encryption.
 
 <figure markdown id="figure-2">
   ![Figure 2: MKA Handshake First Key Name](../images/ANYMKAKEYNAME1.png)
@@ -44,7 +44,7 @@ We can see in Figures 2 and 3, that the CAK names for both packets are different
   <figcaption>Figure 4: MKA Handshake Second Key Name</figcaption>
 </figure>
 
-In Figure 4 we can see the final handshake packets, which distribute the two SAKs that will be used by the ANYsec tunnel, specifically the two slices using tunnel encryption. This way each slice has its own SAK, which means its own encryption, detached from the other slices.
+In Figure 4 we can see the final handshake packets, which distribute the two SAKs that will be used by the ANYsec tunnel, specifically the two services using tunnel encryption. This way each service has its own SAK, which means its own encryption, detached from the other services.
 
 Following the full handshake process, we can see that ANYsec uses MKA to the letter, following exactly MACsec´s usage, with the difference that it is transported by UDP so it can traverse across several routers to its destination, and that several handshakes occur at once depending on how many CAs are needed for tunnels or services.
 
@@ -59,7 +59,7 @@ As we can see in Figure 5, the KeepAlive for ANYsec is identical to the one used
 
 ## End-to-End encryption vs Hop-by-Hop encryption
 
-As we saw in the MACsec experiments, MACsec operates with Hop-by-Hop encryption, meaning that at every router a MACsec encrypted packet passes through, it must be decrypted and then encrypted again by a new SAK. This type of operation is valuable for added security, but it also adds challenges, mainly around performance.
+As we saw in the MACsec experiments, MACsec operates with Hop-by-Hop encryption, meaning that at every router a MACsec encrypted packet passes through, it must be decrypted and then encrypted again by a new SAK. This type of operation is valuable for added security, but it also adds challenges, mainly regarding performance.
 
 ANYsec differs from MACsec in this regard, operating with End-to-End encryption, meaning that it encrypts a packet at the starting point of ANYsec, crossing several networks and routers, and only decrypts when it reaches the ending router of ANYsec.
 
@@ -231,13 +231,13 @@ With the first command, we will see the details of the CA we just configured, an
   <figcaption>Figure 14: ANYsec service 1001 MKA session</figcaption>
 </figure>
 
-With all these configurations, our router is now ready to create an ANYsec tunnel.
+With all these configurations, our router is now ready to create an ANYsec tunnel with two services using it.
 
 ## Service Encryption
 
 For our final experiment, we will briefly analyse a new feature recently added to ANYsec, Service Encryption.
 
-A simple way to describe Service Encryption, is to say it is essentially a targeted way of protecting services, focusing on individual services instead of entire tunnels. It offers a higher degree of granularity.
+A simple way to describe Service Encryption, is to say it is a targeted way of protecting services, focusing on individual services instead of entire tunnels. It offers a higher degree of granularity regarding the protection and customization it offers.
 
 Whilst Tunnel Encryption can encrypt everything within its tunnel, Service Encryption works only on a per-service basis.
 
@@ -313,3 +313,5 @@ And as we can see in Figure 15, the output for these commands regarding service 
 </figure>
 
 We hope that these experiments helped you understand ANYsec sligthly better, both in its differences and similarities to MACsec and other similar solutions, but also to its fundamental features, and that it may help you configure and understand your own ANYsec protected networks!
+
+We hope to see you at our next laboratory regarding WireGuard!

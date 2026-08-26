@@ -22,7 +22,7 @@ Our laboratory topology includes:
 - Two Provider Edge routers, named PE1 and PE2, who receive the MACsec packets from the consumers, and then switch them for ANYsec packets to send through the network to the other provider.
 - Two routers acting as network between Provider Edges, P3 and P4.
 
-With this topology, we will be able to see both MACsec and ANYsec working and see some of ANYsec´s most important features related to tunnelling and security, such as MKA over UDP, End-to-End encryption, Tunnel Encryption and Tunnel Slicing and Service Encryption.
+With this topology, we will be able to see both MACsec and ANYsec working and see some of ANYsec´s most important features related to tunnelling and security, such as MKA over UDP, End-to-End encryption, Tunnel Encryption and Service Encryption.
 
 ## Router Configuration
 
@@ -883,7 +883,7 @@ And finally we configure the services that we will be using:
 /configure system name "pe1"
 ```
 
-In this final step, we configured each of the services, an EPIPE that will go through P3 to reach PE2, a VPRN that uses a flexible routing algorithm and a VPLS that goes through P4 to reach PE2.
+In this final step, we configured each of the services, an EPIPE that will go through P3 to reach PE2, a VPRN that uses a flexible routing algorithm and an EPIPE that goes through P4 to reach PE2.
 
 The configuration for PE2 is the following, and it is very similar to PE1 with minor changes to addresses and labels:
 
