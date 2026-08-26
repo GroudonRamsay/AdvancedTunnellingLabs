@@ -4,7 +4,7 @@ Now that our topology is setup and running smoothly, we will perform some experi
 
 ## WireGuard´s Handshake
 
-We will begin our experiments by studying WireGuard´s handshake. As we have seen from Figure 1, WireGuard´s handshake is a very simple, 1-RTT handshake, that forms a connection by sharing some elements like an ephemeral Diffie-Hellman key, its encrypted public key, sender index and timestamp for replay protection.
+We will begin our experiments by studying WireGuard´s handshake. As we have seen from the previous section, WireGuard´s handshake is a very simple, 1-RTT handshake, that forms a connection by sharing some elements like an ephemeral Diffie-Hellman key, its encrypted public key, sender index and timestamp for replay protection.
 
 Now lets evaluate if this correct and translates to the actual handshake performed.
 
@@ -139,3 +139,5 @@ wg
 As we can see from WireShark, a new session was formed, this time with a new IP address, and from the console command in WG1, we can see that the peer ID is still the same, but now the endpoint has changed, following exactly what we hoped to see happening.
 
 This feature provides WireGuard the capability of setting up peer-to-peer connections that only rely on one of the devices having a stationary address, with the other capable of changing addresses.
+
+With these experiments, we hope that you are now better at configuring and using WireGuard, understanding its features and capabilities. We hope to see you in our next laboratory, IPsec!

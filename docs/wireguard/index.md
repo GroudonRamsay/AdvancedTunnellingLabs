@@ -3,7 +3,7 @@
 WireGuard is a modern VPN protocol that prioritises simplicity, minimal attack surface, and high performance. Designed to be small and auditable, WireGuard contrasts with the complex, feature-rich
 designs of older VPN stacks by providing a concise codebase and a clear security model.
 
-At its core, WireGuard implements a lightweight network tunnel with strong cryptography, aiming to deliver nearkernel-space performance while remaining easy to configure and maintain.
+At its core, WireGuard implements a lightweight network tunnel with strong cryptography, aiming to deliver near kernel-space performance while remaining easy to configure and maintain.
 
 The protocol is built around a small set of cryptographic primitives chosen for performance and modern security characteristics: Curve25519 for ephemeral Diffie–Hellman, ChaCha20-Poly1305 for authenticated encryption, and Blake2s for hashing. Together these primitives provide robust perfect forward secrecy and resistance to common classes of attacks.
 
@@ -59,8 +59,6 @@ For the options use Telnet, 1 Adapter and for Envirnoment Variable use --cap-add
 With the Docker appliance created, it is just a matter of placing all three machines and an ethernet switch connecting them all together.
 
 Now that the hosts are in place and connected to the switch, start them all, and let´s begin the configuration.
-
-Now, we will generate the key pair for each host and setup their WireGuard configurations.
 
 Firstly, we will generate the private/public key pair for WG1 and WG2, using the following commands:
 
