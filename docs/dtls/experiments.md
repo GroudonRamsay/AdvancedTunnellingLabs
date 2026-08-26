@@ -1,6 +1,6 @@
 ## Laboratory Experiments
 
-We will now begin our DTLS experiments, with the aim of deepening or knowledge of it, and to better understand what makes it different and similar to TLS. We will be comparing the handshakes and transport layer differences of the two, how their packets are built, how DTLS handles the tests on loss, duplication and reordering that we subjected TLS to, how DTLS handles the innate fragmentation of UDP and how it handles a replay attack.
+We will now begin our DTLS experiments, with the aim of deepening our knowledge of it, and to better understand what makes it different and similar to TLS. We will be comparing the handshakes and transport layer differences of the two, how their packets are built, how DTLS handles the tests on loss, duplication and reordering that we subjected TLS to, how DTLS handles the innate fragmentation of UDP and how it handles a replay attack.
 
 ## DTLS Handshake vs TLS Handshake
 
@@ -19,7 +19,7 @@ This handshake bears some similarity to the TLS 1.2 handshake, but it also has i
 
 Although the structure is relatively the same, we can right from the start identify a change, there is no transport layer session establishment. Since DTLS uses UDP, which does not require a connection to communicate, the first packets are already part of th DTLS handshake.
 
-The first two packets are related to another innovation for DTLS, a stateless cookie, which is used by the server to ensure that the cleint trying to connect is real and can respond, saving valuable resources from being spent on fake requests.
+The first two packets are related to another innovation for DTLS, a stateless cookie, which is used by the server to ensure that the client trying to connect is real and can respond, saving valuable resources from being spent on fake requests.
 
 We can see in Figure 2 the cookie being sent by the server, and in Figure 3 the second Client Hello now has added a cookie to its request.
 
@@ -33,7 +33,7 @@ We can see in Figure 2 the cookie being sent by the server, and in Figure 3 the 
   <figcaption>Figure 3: DTLS Client sends request with Cookie</figcaption>
 </figure>
 
-We can now also identify what the Client sends in its Hello packet with Figure 3. We can see the similarities with TLS in the form of, the session ID, the random, the sharing of cypher suites and other necessary negotiated extensions.
+We can now also identify what the Client sends in its Hello packet with Figure 3. We can see the similarities with TLS in the form of the session ID, the random, the sharing of cypher suites and other necessary negotiated extensions.
 
 But we can also identify some differences in the form of sequence number and epoch, used to prevent duplication and reordering, message sequence and fragment offset and length, which are used by DTLS to handle the reordering and fragmentation added by UDP, and the cookie sent by the server, used to ensure real connections to the server.
 
@@ -84,12 +84,12 @@ tc qdisc add dev eth1 root netem loss 80%
 This command provides a 80% chance that a packet is dropped while crossing MitM. This value is high to ensure loss during the handshake process, to truly see how it is handled. We will now restart the client and see how the handshake is processed with this kind of loss.
 
 <figure markdown id="figure-8">
-  ![Figure 8: DTLS Loss Response Part 1](../images/DTLSCLIENTRESPONSE.png)
+  ![Figure 8: DTLS Loss Response Part 1](../images/DTLSLOSS1.png)
   <figcaption>Figure 8: DTLS Loss Response Part 1</figcaption>
 </figure>
 
 <figure markdown id="figure-9">
-  ![Figure 9: DTLS Loss Response Part 2](../images/DTLSCLIENTRESPONSE.png)
+  ![Figure 9: DTLS Loss Response Part 2](../images/DTLSLOSS2.png)
   <figcaption>Figure 9: DTLS Loss Response Part 2</figcaption>
 </figure>
 
@@ -139,7 +139,7 @@ Restart the connection, and search the captures for any anomalies. In this parti
 
 For this experiment, we will be looking more closely at how DTLS handles fragmentation and how to alter its MTU to change how many fragments are sent.
 
-From previous experiments, we could already see what DTLS has implemented to be able to handle the native fragmentation of datagram-based transport. Through the usage of message sequence numbers DTLS can keep track from which part of a message a fragment belongs, and then through the fragment offset and length it knows if there are more fragments left, and what composes each fragment, in order to reassemble it when all parts arrive.
+From previous experiments, we could already see what DTLS has implemented to be able to handle the native fragmentation of datagram-based transport. Through the usage of message sequence numbers, DTLS can keep track from which part of a message a fragment belongs, and then through the fragment offset and length it knows if there are more fragments left, and what composes each fragment, in order to reassemble it when all parts arrive.
 
 <figure markdown id="figure-11">
   ![Figure 11: DTLS Fragmentation](../images/DTLSFRAG.png)
@@ -226,6 +226,6 @@ You will be able to see between MitM and DTLSServer, in Figure 14, the messages 
   <figcaption>Figure 15: DTLS Replay Attack unsuccessful</figcaption>
 </figure>
 
-With these experiments, we hope that your understanding of DTLS´s inner workings has improved. Not only have we studied how these tunnels form, use UDP and compare to their TLS and TCP counterparts, but we have also tested them pratically through traffic control, fragmentation support and replay attacks.
+With these experiments, we hope that your understanding of DTLS´s inner workings has improved. Not only have we studied how these tunnels form, use UDP, and compare to their TLS and TCP counterparts, but we have also tested them pratically through traffic control, fragmentation support and replay attacks.
 
 We hope to see you in the next lab: SSH!

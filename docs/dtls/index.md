@@ -1,6 +1,6 @@
 ## DTLS Laboratory
 
-Datagram Transport Layer Security (DTLS) is the datagram-based analogue of TLS, designed to provide authentication, confidentiality, and integrity over the unreliable transports of UDP.
+Datagram Transport Layer Security (DTLS) is the datagram-based analogue of TLS, designed to provide authentication, confidentiality, and integrity over the unreliable transport of UDP.
 
 Unlike TLS, which requires a reliable, ordered byte stream, DTLS preserves the essential properties of datagram communication, allowing applications to maintain low latency and tolerate packet loss without the overhead of TCP’s connection management.
 
