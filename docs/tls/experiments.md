@@ -203,6 +203,6 @@ This will make it so that there is a 25% chance of every packet to be duplicated
 
 As we can see in Figure 12, there are several duplicated packets in the TLS handshake, but TCP detects them all and prevents them from affecting TLS, allowing it to finish its handshake and function without an issue.
 
-From this experiments, we understood what is underneath TLS, in the form of TCP, we saw the evolution of TLS to reach its modern form, including better cyphers, handshakes, and even post-quantum KEMs to future proof TLS, and performed some attacks to the transport foundations of TLS to test its resilience.
+From these experiments, we understood what is underneath TLS, in the form of TCP, we saw the evolution of TLS to reach its modern form, including better cyphers, handshakes, and even post-quantum KEMs to future proof TLS, and performed some attacks to the transport foundations of TLS to test its resilience.
 
 We hope that these experiments allowed you to understand TLS slightly better, and gave you the tools to further experiment and improve. We hope to see you in DTLS!

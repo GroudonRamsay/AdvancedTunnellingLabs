@@ -107,4 +107,4 @@ openssl s_client \
 
 You should see a successful connection, and if you have WireShark open, you will see the handshake occuring, and encrypted TLS traffic passing afterwards. You will also see TCP packets that are the KeepAlive packets.
 
-With this successful connection, we will now begin the experiments on TLS in the section [Experiments](experiments.md).
+With this successful connection, we will now begin the experiments on TLS in [Experiments](experiments.md).
