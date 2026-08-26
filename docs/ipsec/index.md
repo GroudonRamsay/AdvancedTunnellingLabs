@@ -1,16 +1,13 @@
 ## IPsec Laboratory
 
 IPsec is a widely deployed suite of protocols that provides confidentiality, integrity, authentication, and
-replay protection for IP communications, enabling secure tunnels over untrusted networks without
-modifying upper-layer applications.
+replay protection for IP communications, enabling secure tunnels over untrusted networks without modifying upper-layer applications.
 
-Its position at the network layer makes it suitable for a variety of
-scenarios, including enterprise site-to-site VPNs, remote access solutions, and backbone protection
-mechanisms.
+Its position at the network layer makes it suitable for a variety of scenarios, including enterprise site-to-site VPNs, remote access solutions, and backbone protection mechanisms.
 
-The focus of this laboratory shall be in understanding the configuration of IPsec, and observing its functioning, with both IKEv1 and IKEv2, seeing the differences and evolution between them. We will also analyse its functioning using the Authentication Header and the Encapsulating Security Payload.
+The focus of this laboratory shall be in understanding the configuration of IPsec, and observe it functioning, with both IKEv1 and IKEv2, seeing the differences and evolution between them. We will also analyse its functioning using the Authentication Header and the Encapsulating Security Payload.
 
-The experiments will focus on understanding the handshake of both IKEv1 and IKEv2, their KeepAlive, the operating difference, seeing the practical difference between AH and ESP, and seeing how this protocol can operate with Digital Signatures, instead of Pre Shared Keys.
+The experiments will focus on understanding the handshake of both IKEv1 and IKEv2, their KeepAlive, their operating difference, seeing the practical difference between AH and ESP, and seeing how this protocol can operate with Digital Signatures, instead of Pre Shared Keys.
 
 ## IKEv1 and IKEv2
 
@@ -30,7 +27,7 @@ During IKE_SA_INIT, present in the second half of Figure 1, peers negotiate cryp
 
 ## AH and ESP
 
-IPsec consists primarily of two protection mechanisms, the Authentication Header (AH), which is used to authenticate and guarantee the integrity of the messages that the IPsec tunnel protects, although it does not encrypt the messages, thus not providing confidentiality, and the Encapsulating Security Payload (ESP), which is an evolution of the AH, providing both integrity and confidentiality of the messages IPsec is protecting, not only ensuring these messages are authentic but also cryptographically protected.
+IPsec consists primarily of two protection mechanisms: the Authentication Header (AH), which is used to authenticate and guarantee the integrity of the messages that the IPsec tunnel protects, although it does not encrypt the messages, thus not providing confidentiality, and the Encapsulating Security Payload (ESP), which is an evolution of the AH, providing both integrity and confidentiality of the messages IPsec is protecting, not only ensuring these messages are authentic but also cryptographically protected.
 
 ## Laboratory Topology
 
@@ -112,7 +109,7 @@ interface Tunnel0
  ip ospf 2 area 0
 ```
 
-From the configuration we can observe that the key is "ipsec" and that the peer address is 2.2.2.2. We can see that the Transform set, named myTSet, will use ESP, with AES for encryption and SHA for integrity. We can also see the the profile we created, named myIPSecProfile will use this Transform set. Finally, we create the tunnel interface, Tunnel0, which will use g0/1 IP address, as its source the interface l0, as its peer 2.2.2.2, using IPsec with IPv4 and our profile, myIPSecProfile as its security policy, which in turn will use the Transform set we configured.
+From the configuration we can observe that the key is "ipsec" and that the peer address is 2.2.2.2. We can see that the Transform set, named myTSet, will use ESP, with AES for encryption and SHA for integrity. We can also see the the profile we created, named myIPSecProfile will use this Transform set. Finally, we create the tunnel interface, Tunnel0, which will use g0/1 IP address, as its source, the interface l0, as its peer 2.2.2.2, using IPsec with IPv4 and our profile, myIPSecProfile as its security policy, which in turn will use the Transform set we configured.
 
 For last, we add the final routing configurations needed for the network to function properly:
 

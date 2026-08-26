@@ -1,6 +1,6 @@
 ## Laboratory Experiments
 
-With the laboratory setup complete, we shall now perform our experiences, in order to better understand and use IPsec. We will see IKEv1 and IKEv2 in action, see the operating differences of AH and ESP, and understand how certificates and signatures can be used in the authnetication process of Tunnelling protocols.
+With the laboratory setup complete, we shall now perform our experiences, in order to better understand and use IPsec. We will see IKEv1 and IKEv2 in action, see the operating differences of AH and ESP, and understand how certificates and signatures can be used in the authentication process of Tunnelling protocols.
 
 ## Verify IKEv1 Handshake, KeepAlive and Regular Operation
 
@@ -36,7 +36,7 @@ Let´s look at the payload of the first message to see if it matches our expecta
 
 As we can see in Figure 2, the policy negotiation packets follow the policy we configured to the letter, including all expected elements in the proposed transform set and policy.
 
-Moving forward, let´s look at the second set, which handles the Key Exchange. In this packets, we expect to find a Nonce, the key being exchanged and then some information regarding Vendor IDs.
+Moving forward, let´s look at the second set, which handles the Key Exchange. In these packets, we expect to find a Nonce, the key being exchanged and then some information regarding Vendor IDs.
 
 <figure markdown id="figure-3">
   ![Figure 3: IKEv1 Key Exchange](../images/IPSECHANDKEY.png)
@@ -102,7 +102,7 @@ In conclusion, we can see that the difference between AH and ESP only exists in 
 
 ## IKEv2 configuration and comparison with IKEv1
 
-We will now analyse IKEv2, comparing it to its predecessor IKEv1, seeing the changes in the handshake and in available modes, cryptographic algorithms and other factors.
+We will now analyse IKEv2, comparing it to its predecessor, IKEv1, seeing the changes in the handshake and in available modes, cryptographic algorithms and other factors.
 
 To clear the routers for the new configuration, use the following commands:
 
@@ -175,7 +175,7 @@ router ospf 2
  router-id 11.11.11.11
 ```
 
-We can see some changes in the configurations used for IKEv2. Namely, stronger encryption and hash algorithms, a Pseudo Random function for added security, larger Diffie-Hellman groups, a Keyring with the peer address and key and an IKEv2 profile that goes within the IPsec profile.
+We can see some changes in the configurations used for IKEv2. Namely, stronger encryption and hash algorithms, a Pseudo Random function for added security, larger Diffie-Hellman groups, a Keyring with the peer address and key, and an IKEv2 profile that goes within the IPsec profile.
 
 Now for R2:
 
@@ -258,7 +258,7 @@ We will be able to see the following handshake:
 
 As we can see in Figure 7, the handshake matches what we had seen before in the diagram, starting with two IKE_SA_INIT messages, that handle both policy negotiation and key exchange, followed by two IKE_AUTH messages, already encrypted and responsible for authenticating the two peers.
 
-One of the major differences between both IKE, is the number of handshake messages. IKEv2 can do in 4 messages what IKEv1 needs 6 to do, improving overall performance.
+One of the major differences between both IKEs, is the number of handshake messages. IKEv2 can do in 4 messages what IKEv1 needs 6 to do, improving overall performance.
 
 Another important difference lies in IKEv1 several operating modes for several scenarios, while IKEv2 only has IKE_SA_INIT and IKE_AUTH, simplifying the handshake process and reducing the room for misconfigurations and attacks.
 
@@ -462,7 +462,7 @@ router ospf 2
 
 When both configurations are set and saved into the startup configuration, reload both routers for the changes to take effect.
 
-With this done, the final step of the setup, is to ask the Certificate Authority for a certificate. To do this use the following commands on R1 and R2, in configuration mode:
+With this done, the final step of the setup is to ask the Certificate Authority for a certificate. To do this use the following commands on R1 and R2, in configuration mode:
 
 ```bash
 crypto pki authenticate myTrustpoint
@@ -490,7 +490,7 @@ show crypto pki certificate
 
 This command will display both certificates stored in R1, its own and the trustpoint certificate.
 
-??? question "What are the informations stored in each certificate? Are they important for identification and authentication purposes?"
+!!! question "What are the informations stored in each certificate? Are they important for identification and authentication purposes?"
 
 ## Replay Protection and Attack
 
@@ -579,6 +579,6 @@ Which will show all the information regarding that IPsec SA, including rejected 
 
 As we can see in the last line, 24 packets were rejected for being part of our replay attack, confirming that our attack happened, and that it was sucessfully defended by IPsec.
 
-With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell, or through its several security features, namely Replay Protection.
+With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell.
 
-Thank you for finishing our laboratory, and we hope to see you in the next protocol!
+Thank you for finishing our laboratory, and we hope to see you in TLS!
