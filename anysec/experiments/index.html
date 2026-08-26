@@ -1857,7 +1857,7 @@
   </p>
 <figcaption>Figure 1: MKA Handshake from the Key Server view</figcaption>
 </figure>
-<p>From this Figure we can identify some interesting aspects. First of all, the MKA process is identical to the one we see in MACsec, and secondly, we can see two handshakes occuring at once, due to the two services using tunnel encryption.</p>
+<p>From Figure 1 we can identify some interesting aspects. First of all, the MKA process is identical to the one we see in MACsec, and secondly, we can see two handshakes occuring at once, due to the two services using tunnel encryption.</p>
 <figure id="figure-2">
 <p><img alt="Figure 2: MKA Handshake First Key Name" src="../../images/ANYMKAKEYNAME1.png" />
   </p>
@@ -1874,7 +1874,7 @@
   </p>
 <figcaption>Figure 4: MKA Handshake Second Key Name</figcaption>
 </figure>
-<p>In Figure 4 we can see the final handshake packets, which distribute the two SAKs that will be used by the ANYsec tunnel, specifically the two slices using tunnel encryption. This way each slice has its own SAK, which means its own encryption, detached from the other slices.</p>
+<p>In Figure 4 we can see the final handshake packets, which distribute the two SAKs that will be used by the ANYsec tunnel, specifically the two services using tunnel encryption. This way each service has its own SAK, which means its own encryption, detached from the other services.</p>
 <p>Following the full handshake process, we can see that ANYsec uses MKA to the letter, following exactly MACsec´s usage, with the difference that it is transported by UDP so it can traverse across several routers to its destination, and that several handshakes occur at once depending on how many CAs are needed for tunnels or services.</p>
 <p>We will now briefly analyse the ANYsec KeepAlive, to see what it uses to maintain its connection.</p>
 <figure id="figure-5">
@@ -1884,7 +1884,7 @@
 </figure>
 <p>As we can see in Figure 5, the KeepAlive for ANYsec is identical to the one used by MACsec, sharing the same details in its parameters to prove it is still up and ready to communicate.</p>
 <h2 id="end-to-end-encryption-vs-hop-by-hop-encryption">End-to-End encryption vs Hop-by-Hop encryption</h2>
-<p>As we saw in the MACsec experiments, MACsec operates with Hop-by-Hop encryption, meaning that at every router a MACsec encrypted packet passes through, it must be decrypted and then encrypted again by a new SAK. This type of operation is valuable for added security, but it also adds challenges, mainly around performance.</p>
+<p>As we saw in the MACsec experiments, MACsec operates with Hop-by-Hop encryption, meaning that at every router a MACsec encrypted packet passes through, it must be decrypted and then encrypted again by a new SAK. This type of operation is valuable for added security, but it also adds challenges, mainly regarding performance.</p>
 <p>ANYsec differs from MACsec in this regard, operating with End-to-End encryption, meaning that it encrypts a packet at the starting point of ANYsec, crossing several networks and routers, and only decrypts when it reaches the ending router of ANYsec.</p>
 <p>This is possible due to ANYsec capability to operate above Layer 2, namely Layer 2.5 and 3, making it possible to be routed all the way to its destination without having to be decrypted.</p>
 <p>With this experiment we will see this behaviour in action, sending packets across ANYsec, capturing them in routers P3 and P4, and comparing them to what we see arriving in routers PE1 and PE2, to confirm if it truly displays End-to-End encryption.</p>
@@ -2012,10 +2012,10 @@
   </p>
 <figcaption>Figure 14: ANYsec service 1001 MKA session</figcaption>
 </figure>
-<p>With all these configurations, our router is now ready to create an ANYsec tunnel.</p>
+<p>With all these configurations, our router is now ready to create an ANYsec tunnel with two services using it.</p>
 <h2 id="service-encryption">Service Encryption</h2>
 <p>For our final experiment, we will briefly analyse a new feature recently added to ANYsec, Service Encryption.</p>
-<p>A simple way to describe Service Encryption, is to say it is essentially a targeted way of protecting services, focusing on individual services instead of entire tunnels. It offers a higher degree of granularity.</p>
+<p>A simple way to describe Service Encryption, is to say it is a targeted way of protecting services, focusing on individual services instead of entire tunnels. It offers a higher degree of granularity regarding the protection and customization it offers.</p>
 <p>Whilst Tunnel Encryption can encrypt everything within its tunnel, Service Encryption works only on a per-service basis.</p>
 <p>To configure a service to be protected through Service Encryption, the process is similar to the previous one. We create our STP, this time without peer tunnel attributes:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/configure anysec security-termination-policies policy &quot;STP_SERV-1002&quot; admin-state enable
@@ -2069,6 +2069,7 @@
 <figcaption>Figure 15: ANYsec Service Encryption EG</figcaption>
 </figure>
 <p>We hope that these experiments helped you understand ANYsec sligthly better, both in its differences and similarities to MACsec and other similar solutions, but also to its fundamental features, and that it may help you configure and understand your own ANYsec protected networks!</p>
+<p>We hope to see you at our next laboratory regarding WireGuard!</p>
 
 
 

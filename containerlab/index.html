@@ -593,8 +593,24 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -612,6 +628,89 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#containerlab-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containerlab Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Capabilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vscode-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VSCode Extensions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1667,8 +1766,80 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#containerlab-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containerlab Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Capabilities
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vscode-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VSCode Extensions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1688,11 +1859,13 @@
   
 
 
-<h1 id="containerlab-setup">Containerlab Setup</h1>
+  <h1>Overview</h1>
+
+<h2 id="containerlab-setup">Containerlab Setup</h2>
 <p>Containerlab is a container-based network emulation framework designed for rapid deployment of virtual networking laboratories.</p>
-<p>It enables engineers to quickly build realistic network topologies using several router images, the most important for us being Nokia´s SR SIM.</p>
+<p>It enables users to quickly build realistic network topologies using several router images, the most important for us being Nokia´s SR SIM.</p>
 <p>Containerlab uses Docker and Linux networking primitives to interconnect virtual nodes with high performance and minimal resource consumption.</p>
-<h1 id="main-capabilities">Main Capabilities</h1>
+<h2 id="main-capabilities">Main Capabilities</h2>
 <ul>
 <li>
 <p>Fast Topology Deployment: Labs can be deployed in seconds using YAML topology definitions.</p>
@@ -1710,100 +1883,22 @@
 <p>Packet Captures: Packet captures can be performed directly through the CLI or through WireShark containers through ContainerLab´s VSCode extension.</p>
 </li>
 </ul>
-<h1 id="recommended-environment">Recommended Environment</h1>
+<h2 id="recommended-environment">Recommended Environment</h2>
 <p>Containerlab is native to Linux, as such, we recommend using it in a native Linux computer, or running it in an Ubuntu VM, using VMware or VirtualBox.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Beware that large ContainerLab deployments might consume significant resources. As such, ensure that your device has the necessary resources to run ContainerLab, especially if it is a Virtual Machine.</p>
 </div>
-<h1 id="prerequisites">Prerequisites</h1>
+<h2 id="prerequisites">Prerequisites</h2>
 <p>Before installing Containerlab, install:</p>
 <ul>
 <li>Docker</li>
 <li>VSCode</li>
 </ul>
-<h1 id="installation">Installation</h1>
-<p>The ContainerLab team has prepared a command that should install all necessary components:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-sL<span class="w"> </span>https://containerlab.dev/setup<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>-E<span class="w"> </span>bash<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;all&quot;</span>
-</span></code></pre></div>
-<h1 id="vscode-extensions">VSCode Extensions</h1>
-<p>ContainerLab has an extension that allows it to be fully run through a GUI in VSCode. This is very helpful to start working in ContainerLab and performing the laboratories as simply as possible.
-Besides the ContainerLab extension, we recommend others that help making its usage significantly better:</p>
-<table>
-<thead>
-<tr>
-<th>Extension</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Containerlab</td>
-<td>Topology support</td>
-</tr>
-<tr>
-<td>YAML</td>
-<td>YAML syntax</td>
-</tr>
-<tr>
-<td>Docker</td>
-<td>Docker integration</td>
-</tr>
-</tbody>
-</table>
-<h1 id="installing-the-containerlab-vscode-extension">Installing the ContainerLab VSCode Extension</h1>
-<p>Open VSCode.</p>
-<p>Navigate to:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Extensions → Search &quot;Containerlab&quot;
-</span></code></pre></div>
-<p>Install:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Containerlab
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>by srl-labs
-</span></code></pre></div>
-<h1 id="features-of-the-vscode-extension">Features of the VSCode Extension</h1>
-<p>The extension provides tools to visualize your topology and undeployed labs, deploy, destroy and redeploy your lab, access your devices through Shell and SSH and capture traffic between your devices with an in-built docker container with a WireShark image.</p>
-<h1 id="using-containerlab-with-vscode">Using Containerlab with VSCode</h1>
-<p>Create the folder where you want your lab to be in.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Explorer → New Folder → clab-test
-</span></code></pre></div>
-<p>Create a topology file:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>clab-test.clab.yml
-</span></code></pre></div>
-<p>A base topology for two Alpine devices connected to each other is as follows:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clab-test</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nt">topology</span><span class="p">:</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">nodes</span><span class="p">:</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">r1</span><span class="p">:</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linux</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="nt">r2</span><span class="p">:</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linux</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">  </span><span class="nt">links</span><span class="p">:</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">endpoints</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;r1:eth1&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;r2:eth1&quot;</span><span class="p p-Indicator">]</span>
-</span></code></pre></div>
-<p>The ContainerLab extension allows topology deployment directly from the editor.</p>
-<p>Right-click the topology file and select:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Deploy
-</span></code></pre></div>
-<p>To close your laboratory select the topology file again and select:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Destroy
-</span></code></pre></div>
-<p>Another way of using this, is by going directly to the ContainerLab tab in VSCode, choosing the undeployed lab, and deploying it from there.</p>
-<p>To configure a router directly through its CLI, you can access it through the extension, selecting the SSH option.</p>
-<p>To capture packets in your lab, choose the port where the capture will occur and select the Capture option.</p>
-<h1 id="best-practices">Best Practices</h1>
-<ul>
-<li>Use Git for topology versioning</li>
-<li>Keep configs in separate folders</li>
-<li>Use consistent interface naming</li>
-<li>Capture traffic frequently to troubleshoot your labs</li>
-<li>Validate Linux bridges carefully</li>
-<li>Document addressing schemes</li>
-</ul>
+<h2 id="installation">Installation</h2>
+<p>The ContainerLab team has an updated website on how to install their emulator here: <a href="https://containerlab.dev/install/">https://containerlab.dev/install/</a></p>
+<h2 id="vscode-extensions">VSCode Extensions</h2>
+<p>ContainerLab has an extension that allows it to be fully run through a GUI in VSCode. This is very helpful to start working in ContainerLab and performing the laboratories as simply and as fast as possible. A guide for it is available in: <a href="https://containerlab.dev/manual/gui/vsc-extension/">https://containerlab.dev/manual/gui/vsc-extension/</a></p>
 
 
 

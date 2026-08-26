@@ -1840,7 +1840,7 @@
   <h1>Experiments</h1>
 
 <h2 id="laboratory-experiments">Laboratory Experiments</h2>
-<p>We will now begin the SSH experiments, studying its handshake, algorithms used for key exchange, host-key generation and as cyphers, the authentication of the server´s host-key, the differences in configuration and in practice between password and public key authentication, and how SSH can handle a replay attack, like the one we tested other protocols with.</p>
+<p>We will now begin the SSH experiments, studying its handshake, algorithms used for key exchange, host-key generation and cyphers, the authentication of the server´s host-key, the differences in configuration and in practice between password and public key authentication, and how SSH can handle a replay attack, like the one we tested other protocols with.</p>
 <h2 id="ssh-handshake-and-algorithms">SSH Handshake and Algorithms</h2>
 <p>We will begin our experiments by studying the handshake that SSH uses to establish a tunnel between a client and a server and verifying if it matches what we saw in the Overview.</p>
 <p>To do this, begin by setting a WireShark probe between SSHClient and MitM, then establish a connection between SSHClient and SSHServer1.</p>
@@ -1976,7 +1976,7 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="m">256</span><span class="w"> </span>SHA256:FbflQZqRspzFr6G9b3Q3/wZrWem0ECAIybM7wK3aqGE<span class="w"> </span>root@buildkitsandbox<span class="w"> </span><span class="o">(</span>ED25519<span class="o">)</span>
 </span></code></pre></div>
 <p>This is what a server can use to authenticate itself with a client.
-In the first connection, a client must accept the server host key to begin a connection, but further attempts will no longer ask for this, since for the client, the server is now a known entity.</p>
+In the first connection, a client must accept the server host key to begin a connection, but further attempts will no longer ask for this, since for the client, the server is now a trusted entity.</p>
 <p>This helps protect against server impersonation attacks, since if we try to connect to a server, and there is a mismatch between the host key that is sent and the one that is stored, SSH knows that there is a problem with that server and does not allow the connection to move forward.</p>
 <p>To reset the host key of a server, for example to see the first connection again, you can use the following command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ssh-keygen<span class="w"> </span>-R<span class="w"> </span><span class="m">10</span>.0.2.10
@@ -2024,7 +2024,7 @@ In the first connection, a client must accept the server host key to begin a con
   </p>
 <figcaption>Figure 10: SSH Client authenticated through key pair</figcaption>
 </figure>
-<p>Despite the additional steps necessary to configure, this method offers a more streamlined login experience, and more secure, since for an attacker to login with this method, they would need either to gain access to the server in some other way and add its own key, or it would need to steal the key pair from the client, which should prove more difficult than guessing or stealing a password.</p>
+<p>Despite the additional steps necessary to configure, this method offers a more streamlined login experience, and more secure, since for an attacker to login with this method, they would need either to gain access to the server in some other way and add its own key, or they would need to steal the key pair from the client, which should prove more difficult than guessing or stealing a password.</p>
 <h2 id="replay-attack">Replay Attack</h2>
 <p>For our final experiment, we will be subjecting SSH to our now, well-known Replay Attack, to see if this protocol is vulnerable to this kind of attack.</p>
 <p>To do this, prepare the MitM device to listen in on traffic with:</p>
@@ -2035,8 +2035,8 @@ In the first connection, a client must accept the server host key to begin a con
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>tcpreplay<span class="w"> </span>-i<span class="w"> </span>eth1<span class="w"> </span>/pcaps/replay-capture.pcap
 </span></code></pre></div>
 <p>Although we sent a replayed handshake, and several packets of captured messages to the server, there has been no response by SSHServer1, as we can see in SSHClient since the session is still intact and with no responses to the replayed messages from MitM.</p>
-<p>SSH achieves its replay protection in two layers. Firstly, through TCP, which has its own mechanism to detect duplicate and out-of-order packets and discards them. Then at SSH itself, the MAC used in the messages also contain a sequence number within that tells SSH which packet it should be expecting next.</p>
-<p>From this experiments we hope that your knowledge of SSH has improved, understanding better what happens in its handshake, how its layers perform different jobs at different levels, what its algorithms are, how it a server authenticates itself to a user and vice-versa, and how SSH can protect itself from attacks, namely a replay attack.</p>
+<p>SSH achieves its replay protection in two layers. Firstly, through TCP, which has its own mechanism to detect duplicate and out-of-order packets and discards them. Then at SSH itself, the MAC used in the messages also contains a sequence number within that tells SSH which packet it should be expecting next.</p>
+<p>From these experiments we hope that your knowledge of SSH has improved, understanding better what happens in its handshake, how its layers perform different jobs at different levels, what its algorithms are, how a server authenticates itself to a user and vice-versa, and how SSH can protect itself from attacks, namely a replay attack.</p>
 <p>We hope you have enjoyed our SSH lab, and hope to see you in the final lab regarding PKI!</p>
 
 

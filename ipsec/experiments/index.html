@@ -1862,7 +1862,7 @@
   <h1>Experiments</h1>
 
 <h2 id="laboratory-experiments">Laboratory Experiments</h2>
-<p>With the laboratory setup complete, we shall now perform our experiences, in order to better understand and use IPsec. We will see IKEv1 and IKEv2 in action, see the operating differences of AH and ESP, and understand how certificates and signatures can be used in the authnetication process of Tunnelling protocols.</p>
+<p>With the laboratory setup complete, we shall now perform our experiences, in order to better understand and use IPsec. We will see IKEv1 and IKEv2 in action, see the operating differences of AH and ESP, and understand how certificates and signatures can be used in the authentication process of Tunnelling protocols.</p>
 <h2 id="verify-ikev1-handshake-keepalive-and-regular-operation">Verify IKEv1 Handshake, KeepAlive and Regular Operation</h2>
 <p>For our first experiment, we will observe the handshake performed by IKEv1, which we saw theoretically in Figure 1 of the Overview page, comparing our diagram with the one we will observe in the simulation.</p>
 <p>To perform this observation, we need to see the handshake occuring. To this end, we will first set up a WireShark probe between R1 and RA. Afterwards, we will access R1, and use the command:</p>
@@ -1885,7 +1885,7 @@
 <figcaption>Figure 2: IKEv1 Policy Negotiation</figcaption>
 </figure>
 <p>As we can see in Figure 2, the policy negotiation packets follow the policy we configured to the letter, including all expected elements in the proposed transform set and policy.</p>
-<p>Moving forward, let´s look at the second set, which handles the Key Exchange. In this packets, we expect to find a Nonce, the key being exchanged and then some information regarding Vendor IDs.</p>
+<p>Moving forward, let´s look at the second set, which handles the Key Exchange. In these packets, we expect to find a Nonce, the key being exchanged and then some information regarding Vendor IDs.</p>
 <figure id="figure-3">
 <p><img alt="Figure 3: IKEv1 Key Exchange" src="../../images/IPSECHANDKEY.png" />
   </p>
@@ -1933,7 +1933,7 @@
 <p>As we can see in Figure 6, the traffic is now passing in the clear. We can now see it is ICMP, and the real source and destination of the packets. We can also see the Authentication Header, which includes an ICV to guarantee the integrity of this message.</p>
 <p>In conclusion, we can see that the difference between AH and ESP only exists in the actual operation of the protocol. Whilst IKE is unaffected, the regular operation of IPsec changes, with packets now crossing in the clear, with only their integrity and authenticity assured, unlike ESP, which secures the packets integrity, authenticity and confidentiality.</p>
 <h2 id="ikev2-configuration-and-comparison-with-ikev1">IKEv2 configuration and comparison with IKEv1</h2>
-<p>We will now analyse IKEv2, comparing it to its predecessor IKEv1, seeing the changes in the handshake and in available modes, cryptographic algorithms and other factors.</p>
+<p>We will now analyse IKEv2, comparing it to its predecessor, IKEv1, seeing the changes in the handshake and in available modes, cryptographic algorithms and other factors.</p>
 <p>To clear the routers for the new configuration, use the following commands:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>write<span class="w"> </span>erase
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>reload
@@ -1997,7 +1997,7 @@
 </span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>router<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span>
 </span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a><span class="w"> </span>router-id<span class="w"> </span><span class="m">11</span>.11.11.11
 </span></code></pre></div>
-<p>We can see some changes in the configurations used for IKEv2. Namely, stronger encryption and hash algorithms, a Pseudo Random function for added security, larger Diffie-Hellman groups, a Keyring with the peer address and key and an IKEv2 profile that goes within the IPsec profile.</p>
+<p>We can see some changes in the configurations used for IKEv2. Namely, stronger encryption and hash algorithms, a Pseudo Random function for added security, larger Diffie-Hellman groups, a Keyring with the peer address and key, and an IKEv2 profile that goes within the IPsec profile.</p>
 <p>Now for R2:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hostname<span class="w"> </span>R2
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
@@ -2068,7 +2068,7 @@
 <figcaption>Figure 7: IKEv2 Handshake</figcaption>
 </figure>
 <p>As we can see in Figure 7, the handshake matches what we had seen before in the diagram, starting with two IKE_SA_INIT messages, that handle both policy negotiation and key exchange, followed by two IKE_AUTH messages, already encrypted and responsible for authenticating the two peers.</p>
-<p>One of the major differences between both IKE, is the number of handshake messages. IKEv2 can do in 4 messages what IKEv1 needs 6 to do, improving overall performance.</p>
+<p>One of the major differences between both IKEs, is the number of handshake messages. IKEv2 can do in 4 messages what IKEv1 needs 6 to do, improving overall performance.</p>
 <p>Another important difference lies in IKEv1 several operating modes for several scenarios, while IKEv2 only has IKE_SA_INIT and IKE_AUTH, simplifying the handshake process and reducing the room for misconfigurations and attacks.</p>
 <p>Another important detail, is the fact that IKEv2 has a reduced and updated algorithm list, meaning that the algorithms used for encryption and integrity are stronger, more secure, leaving behind outdated algorithms that could invite easy attacks.</p>
 <p>We can see some of these updated algorithms in Figures 8 and 9:</p>
@@ -2242,7 +2242,7 @@
 </span><span id="__span-9-64"><a id="__codelineno-9-64" name="__codelineno-9-64" href="#__codelineno-9-64"></a><span class="w"> </span>router-id<span class="w"> </span><span class="m">22</span>.22.22.22
 </span></code></pre></div>
 <p>When both configurations are set and saved into the startup configuration, reload both routers for the changes to take effect.</p>
-<p>With this done, the final step of the setup, is to ask the Certificate Authority for a certificate. To do this use the following commands on R1 and R2, in configuration mode:</p>
+<p>With this done, the final step of the setup is to ask the Certificate Authority for a certificate. To do this use the following commands on R1 and R2, in configuration mode:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>crypto<span class="w"> </span>pki<span class="w"> </span>authenticate<span class="w"> </span>myTrustpoint
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>crypto<span class="w"> </span>pki<span class="w"> </span>enroll<span class="w"> </span>myTrustpoint
 </span></code></pre></div>
@@ -2259,9 +2259,9 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>show<span class="w"> </span>crypto<span class="w"> </span>pki<span class="w"> </span>certificate
 </span></code></pre></div>
 <p>This command will display both certificates stored in R1, its own and the trustpoint certificate.</p>
-<details class="question">
-<summary>What are the informations stored in each certificate? Are they important for identification and authentication purposes?</summary>
-</details>
+<div class="admonition question">
+<p class="admonition-title">What are the informations stored in each certificate? Are they important for identification and authentication purposes?</p>
+</div>
 <h2 id="replay-protection-and-attack">Replay Protection and Attack</h2>
 <p>Our final experiment will focus on testing the capability of IPsec to withstand replay attacks. One of IPsec´s features is its replay protection, using sequence numbers to detect messages out of order, discarding them, in order to keep the users safe.</p>
 <p>For our experiment, we will place a new device between R1 and RA, which we will use to capture traffic crossing the tunnel, and then replay it to R1, hoping to see the packets get dropped by IPsec.</p>
@@ -2315,8 +2315,8 @@
 <figcaption>Figure 12: Rejected packets by IPsec</figcaption>
 </figure>
 <p>As we can see in the last line, 24 packets were rejected for being part of our replay attack, confirming that our attack happened, and that it was sucessfully defended by IPsec.</p>
-<p>With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell, or through its several security features, namely Replay Protection.</p>
-<p>Thank you for finishing our laboratory, and we hope to see you in the next protocol!</p>
+<p>With this, we conclude our series of experiments. We hope that through these experiments, you have learned more about how IPsec works, how tunnelling protocols perform their handshake, in this case through IKEv1 and IKEv2, how there are several methods to authenticate two devices on the internet and how IPsec itself protects the packets that cross its tunnels, be it through AH ensuring their integrity and authenticity, or ESP which builds upon AH and ensures their confidentiality aswell.</p>
+<p>Thank you for finishing our laboratory, and we hope to see you in TLS!</p>
 
 
 

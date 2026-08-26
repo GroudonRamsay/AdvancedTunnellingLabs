@@ -1912,7 +1912,7 @@
 <p>To support secure operation, the MACsec Key Agreement (MKA) protocol, defined within IEEE 802.1X, performs authentication of participants, derives cryptographic keys, and manages security
 associations.</p>
 <h2 id="macsec-architecture">MACsec Architecture</h2>
-<p>MACsec organizes link-layer protection around Connectivity Associations (CAs), which are responsible for the distribution of keys performed by MKA, Secure Associations (SAs), which are used to identify transmitted and received data within MACsec, and Secure Channels (SCs), which contain multiple SAs, are unidirectional and are used to transmit and receive data.</p>
+<p>MACsec organizes link-layer protection around Connectivity Associations (CAs), which are responsible for the distribution of keys performed by MKA, Secure Associations (SAs), which are used to identify transmitted and received data within MACsec, and Secure Channels (SCs), which contain multiple SAs, are unidirectional and are used to transmit or receive data.</p>
 <p>Each SA is bound to a distinct Security Association Key (SAK), used to encrypt and decrypt data sent using that specific SA.
 As seen in Figure 1, protected frames include a MACsec Security Tag and Integrity Check Value, with encryption and authentication performed using AES-GCM.</p>
 <figure id="figure-1">
@@ -2095,7 +2095,7 @@ As seen in Figure 1, protected frames include a MACsec Security Tag and Integrit
 </span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>        }
 </span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    }
 </span></code></pre></div>
-<p>These configuration creates the CA name "MACSEC_12", which will encrypt the traffic that passes within, and uses a Pre-Shared Key to authenticate devices during MKA.</p>
+<p>These configurations create the CA named "MACSEC_12", which will encrypt the traffic that passes within, and use a Pre-Shared Key to authenticate devices during MKA.</p>
 <p>Now we will configure the ports used by the router, 1/1/c2/1 for MACsec and 1/1/c1/1 for Host1:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>port 1/1/c2 {
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>        admin-state enable

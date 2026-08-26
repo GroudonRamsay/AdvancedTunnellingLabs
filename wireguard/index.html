@@ -1842,7 +1842,7 @@
 <h2 id="wireguard-laboratory">WireGuard Laboratory</h2>
 <p>WireGuard is a modern VPN protocol that prioritises simplicity, minimal attack surface, and high performance. Designed to be small and auditable, WireGuard contrasts with the complex, feature-rich
 designs of older VPN stacks by providing a concise codebase and a clear security model.</p>
-<p>At its core, WireGuard implements a lightweight network tunnel with strong cryptography, aiming to deliver nearkernel-space performance while remaining easy to configure and maintain.</p>
+<p>At its core, WireGuard implements a lightweight network tunnel with strong cryptography, aiming to deliver near kernel-space performance while remaining easy to configure and maintain.</p>
 <p>The protocol is built around a small set of cryptographic primitives chosen for performance and modern security characteristics: Curve25519 for ephemeral Diffie–Hellman, ChaCha20-Poly1305 for authenticated encryption, and Blake2s for hashing. Together these primitives provide robust perfect forward secrecy and resistance to common classes of attacks.</p>
 <h2 id="noise-based-handshake">Noise-based Handshake</h2>
 <p>WireGuard’s handshake is built on the Noise Protocol Framework, specifically the Noise_IKpsk2 pattern, defined by the prior knowledge of the initiator and responder static public keys, used
@@ -1883,7 +1883,6 @@ for authentication, and optionally of a Preshared Key for stronger key derivatio
 <p>For the options use Telnet, 1 Adapter and for Envirnoment Variable use --cap-add NET_ADMIN.</p>
 <p>With the Docker appliance created, it is just a matter of placing all three machines and an ethernet switch connecting them all together.</p>
 <p>Now that the hosts are in place and connected to the switch, start them all, and let´s begin the configuration.</p>
-<p>Now, we will generate the key pair for each host and setup their WireGuard configurations.</p>
 <p>Firstly, we will generate the private/public key pair for WG1 and WG2, using the following commands:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wg<span class="w"> </span>genkey<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>privatekey<span class="w"> </span><span class="p">|</span><span class="w"> </span>wg<span class="w"> </span>pubkey<span class="w"> </span>&gt;<span class="w"> </span>publickey
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cat<span class="w"> </span>privatekey

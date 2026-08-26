@@ -1846,7 +1846,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>--cap-add<span class="w"> </span>NET_ADMIN
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>--cap-add<span class="w"> </span>NET_RAW
 </span></code></pre></div>
-<p>Before beggining the configuration, modify all machines to persist the folder /root/pki, in order to keep the PKI setup. Further modify IntermediateCA1 and IntermediateCA2 to have 3 adapters.</p>
+<p>Before beggining the configuration, modify all machines to persist the folder /root/pki, in order to keep the PKI setup. Furthermore, modify IntermediateCA1 and IntermediateCA2 to have 3 adapters.</p>
 <h2 id="device-configuration">Device Configuration</h2>
 <p>We will begin the configuration by adding all the necessary IPs and routes for the PKI to properly function.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>RootCA:
@@ -2419,7 +2419,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a><span class="w">    </span>-cert_chain<span class="w"> </span>/root/pki/dtls-client/int-ca2.crt<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="w">    </span>-verify_return_error
 </span></code></pre></div>
-<p>You should see the same authentication process occur and suceed in your DTLS connection.</p>
+<p>You should see the same authentication process occur and succeed in your DTLS connection.</p>
 <p>With all these configurations implemented and successfully tested, we can now move forward to the <a href="experiments/">Experiments</a>.</p>
 
 

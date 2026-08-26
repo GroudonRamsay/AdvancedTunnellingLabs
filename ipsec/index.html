@@ -1841,13 +1841,10 @@
 
 <h2 id="ipsec-laboratory">IPsec Laboratory</h2>
 <p>IPsec is a widely deployed suite of protocols that provides confidentiality, integrity, authentication, and
-replay protection for IP communications, enabling secure tunnels over untrusted networks without
-modifying upper-layer applications.</p>
-<p>Its position at the network layer makes it suitable for a variety of
-scenarios, including enterprise site-to-site VPNs, remote access solutions, and backbone protection
-mechanisms.</p>
-<p>The focus of this laboratory shall be in understanding the configuration of IPsec, and observing its functioning, with both IKEv1 and IKEv2, seeing the differences and evolution between them. We will also analyse its functioning using the Authentication Header and the Encapsulating Security Payload.</p>
-<p>The experiments will focus on understanding the handshake of both IKEv1 and IKEv2, their KeepAlive, the operating difference, seeing the practical difference between AH and ESP, and seeing how this protocol can operate with Digital Signatures, instead of Pre Shared Keys.</p>
+replay protection for IP communications, enabling secure tunnels over untrusted networks without modifying upper-layer applications.</p>
+<p>Its position at the network layer makes it suitable for a variety of scenarios, including enterprise site-to-site VPNs, remote access solutions, and backbone protection mechanisms.</p>
+<p>The focus of this laboratory shall be in understanding the configuration of IPsec, and observe it functioning, with both IKEv1 and IKEv2, seeing the differences and evolution between them. We will also analyse its functioning using the Authentication Header and the Encapsulating Security Payload.</p>
+<p>The experiments will focus on understanding the handshake of both IKEv1 and IKEv2, their KeepAlive, their operating difference, seeing the practical difference between AH and ESP, and seeing how this protocol can operate with Digital Signatures, instead of Pre Shared Keys.</p>
 <h2 id="ikev1-and-ikev2">IKEv1 and IKEv2</h2>
 <p>IKEv1 was a major step toward automated key management for IPsec, although its design introduced significant complexity and security trade-offs. The protocol is fragmented into Main Mode, Aggressive
 Mode, and Quick Mode, each serving different purposes in the establishment of the IKE SA and IPsec SAs.</p>
@@ -1860,7 +1857,7 @@ Mode, and Quick Mode, each serving different purposes in the establishment of th
 <figcaption>Figure 1: IKEv1 vs IKEv2</figcaption>
 </figure>
 <h2 id="ah-and-esp">AH and ESP</h2>
-<p>IPsec consists primarily of two protection mechanisms, the Authentication Header (AH), which is used to authenticate and guarantee the integrity of the messages that the IPsec tunnel protects, although it does not encrypt the messages, thus not providing confidentiality, and the Encapsulating Security Payload (ESP), which is an evolution of the AH, providing both integrity and confidentiality of the messages IPsec is protecting, not only ensuring these messages are authentic but also cryptographically protected.</p>
+<p>IPsec consists primarily of two protection mechanisms: the Authentication Header (AH), which is used to authenticate and guarantee the integrity of the messages that the IPsec tunnel protects, although it does not encrypt the messages, thus not providing confidentiality, and the Encapsulating Security Payload (ESP), which is an evolution of the AH, providing both integrity and confidentiality of the messages IPsec is protecting, not only ensuring these messages are authentic but also cryptographically protected.</p>
 <h2 id="laboratory-topology">Laboratory Topology</h2>
 <p>The topology of this laboratory consists in:</p>
 <ul>
@@ -1923,7 +1920,7 @@ Mode, and Quick Mode, each serving different purposes in the establishment of th
 </span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w"> </span>tunnel<span class="w"> </span>protection<span class="w"> </span>ipsec<span class="w"> </span>profile<span class="w"> </span>myIPSecProfile
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w"> </span>ip<span class="w"> </span>ospf<span class="w"> </span><span class="m">2</span><span class="w"> </span>area<span class="w"> </span><span class="m">0</span>
 </span></code></pre></div>
-<p>From the configuration we can observe that the key is "ipsec" and that the peer address is 2.2.2.2. We can see that the Transform set, named myTSet, will use ESP, with AES for encryption and SHA for integrity. We can also see the the profile we created, named myIPSecProfile will use this Transform set. Finally, we create the tunnel interface, Tunnel0, which will use g0/1 IP address, as its source the interface l0, as its peer 2.2.2.2, using IPsec with IPv4 and our profile, myIPSecProfile as its security policy, which in turn will use the Transform set we configured.</p>
+<p>From the configuration we can observe that the key is "ipsec" and that the peer address is 2.2.2.2. We can see that the Transform set, named myTSet, will use ESP, with AES for encryption and SHA for integrity. We can also see the the profile we created, named myIPSecProfile will use this Transform set. Finally, we create the tunnel interface, Tunnel0, which will use g0/1 IP address, as its source, the interface l0, as its peer 2.2.2.2, using IPsec with IPv4 and our profile, myIPSecProfile as its security policy, which in turn will use the Transform set we configured.</p>
 <p>For last, we add the final routing configurations needed for the network to function properly:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>router<span class="w"> </span>ospf<span class="w"> </span><span class="m">1</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w"> </span>router-id<span class="w"> </span><span class="m">1</span>.1.1.1

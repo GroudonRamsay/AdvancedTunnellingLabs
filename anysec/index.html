@@ -1813,7 +1813,7 @@
 <li>Two Provider Edge routers, named PE1 and PE2, who receive the MACsec packets from the consumers, and then switch them for ANYsec packets to send through the network to the other provider.</li>
 <li>Two routers acting as network between Provider Edges, P3 and P4.</li>
 </ul>
-<p>With this topology, we will be able to see both MACsec and ANYsec working and see some of ANYsec´s most important features related to tunnelling and security, such as MKA over UDP, End-to-End encryption, Tunnel Encryption and Tunnel Slicing and Service Encryption.</p>
+<p>With this topology, we will be able to see both MACsec and ANYsec working and see some of ANYsec´s most important features related to tunnelling and security, such as MKA over UDP, End-to-End encryption, Tunnel Encryption and Service Encryption.</p>
 <h2 id="router-configuration">Router Configuration</h2>
 <p>To begin our configuration, we create the folder for this laboratory, named:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>anysec-main-lab
@@ -2637,7 +2637,7 @@
 </span><span id="__span-9-50"><a id="__codelineno-9-50" name="__codelineno-9-50" href="#__codelineno-9-50"></a>/configure service vprn &quot;1003&quot; interface &quot;to_client7&quot; sap 1/1/c3/1:1003 admin-state enable
 </span><span id="__span-9-51"><a id="__codelineno-9-51" name="__codelineno-9-51" href="#__codelineno-9-51"></a>/configure system name &quot;pe1&quot;
 </span></code></pre></div>
-<p>In this final step, we configured each of the services, an EPIPE that will go through P3 to reach PE2, a VPRN that uses a flexible routing algorithm and a VPLS that goes through P4 to reach PE2.</p>
+<p>In this final step, we configured each of the services, an EPIPE that will go through P3 to reach PE2, a VPRN that uses a flexible routing algorithm and an EPIPE that goes through P4 to reach PE2.</p>
 <p>The configuration for PE2 is the following, and it is very similar to PE1 with minor changes to addresses and labels:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/configure anysec reserved-label-block &quot;Anysec&quot;
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>/configure anysec mka-over-ip mka-udp-port 10000
