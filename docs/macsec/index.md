@@ -11,7 +11,7 @@ associations.
 
 ## MACsec Architecture
 
-MACsec organizes link-layer protection around Connectivity Associations (CAs), which are responsible for the distribution of keys performed by MKA, Secure Associations (SAs), which are used to identify transmitted and received data within MACsec, and Secure Channels (SCs), which contain multiple SAs, are unidirectional and are used to transmit and receive data.
+MACsec organizes link-layer protection around Connectivity Associations (CAs), which are responsible for the distribution of keys performed by MKA, Secure Associations (SAs), which are used to identify transmitted and received data within MACsec, and Secure Channels (SCs), which contain multiple SAs, are unidirectional and are used to transmit or receive data.
 
 Each SA is bound to a distinct Security Association Key (SAK), used to encrypt and decrypt data sent using that specific SA.
 As seen in Figure 1, protected frames include a MACsec Security Tag and Integrity Check Value, with encryption and authentication performed using AES-GCM.
@@ -225,7 +225,7 @@ configure {
     }
 ```
 
-These configuration creates the CA name "MACSEC_12", which will encrypt the traffic that passes within, and uses a Pre-Shared Key to authenticate devices during MKA.
+These configurations create the CA named "MACSEC_12", which will encrypt the traffic that passes within, and use a Pre-Shared Key to authenticate devices during MKA.
 
 Now we will configure the ports used by the router, 1/1/c2/1 for MACsec and 1/1/c1/1 for Host1:
 

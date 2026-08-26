@@ -66,7 +66,7 @@ To achieve that, we will reboot both R2 and R4, and place Wireshark probes on bo
 
 To place the probes, use the available Capture function from VSCode, and place on both interfaces of both routers.
 
-To reboot the routers, you can use the following commands:
+To reboot the routers, you can use the following command:
 
 ```srl
 admin reboot now
@@ -365,3 +365,5 @@ In R1, we can see that MACsec identified 24 packets as being late, which means t
 We can observe that in this case, MACsec detected 31 late packets and discarded them.
 
 With this experiment, we activated MACsec´s replay protection, learned about its functioning and features, such as the replay protection window, and performed a simple replay attack against the routers of CA12, confirming that MACsec detected the late packets we sent, and promptly discarded them.
+
+We hope that these experiments helped you understand MACsec and provided you with the necessary tools to configure it and use it in real-world scenarios. We hope you enjoyed this laboratory and we are waiting for you in ANYsec!
