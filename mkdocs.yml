@@ -1,10 +1,10 @@
-site_name: Advanced Tunnelling Labs
-site_url: https://groudonramsay.github.io/AdvancedTunnellingLabs/
-site_description: Advanced labs for MACsec, ANYsec WireGuard, IPsec, TLS, DTLS and SSH
+site_name: Secure Tunneling Labs
+site_url: https://groudonramsay.github.io/SecureTunnelingLabs/
+site_description: Secure Tunneling Labs is a collection of experiments and tutorials that demonstrate the use of various tunneling protocols and techniques for secure communication over untrusted networks. The labs cover a range of protocols, including MACsec, ANYsec, WireGuard, IPsec, TLS, DTLS, SSH, PKI, and PQ.
 site_author: Miguel
 
-repo_url: https://github.com/groudonramsay/AdvancedTunnellingLabs
-repo_name: groudonramsay/AdvancedTunnellingLabs
+repo_url: https://github.com/groudonramsay/SecureTunnelingLabs
+repo_name: groudonramsay/SecureTunnelingLabs
 
 theme:
   name: material
@@ -122,40 +122,37 @@ extra:
 nav:
   - Home: index.md
 
-  - ContainerLab:
-      - Overview: containerlab/index.md
+  - Artifact Overview: artifact_overview/index.md
 
-  - GNS3:
-      - Overview: gns3/index.md
+  - Emulator Setup:
+      - ContainerLab: containerlab/index.md
+      - GNS3: gns3/index.md
 
-  - MACsec:
-      - Overview: macsec/index.md
-      - Experiments: macsec/experiments.md
-
-  - ANYsec:
-      - Overview: anysec/index.md
-      - Experiments: anysec/experiments.md
-
-  - WireGuard:
-      - Overview: wireguard/index.md
-      - Experiments: wireguard/experiments.md
-
-  - IPsec:
-      - Overview: ipsec/index.md
-      - Experiments: ipsec/experiments.md
-
-  - TLS:
-      - Overview: tls/index.md
-      - Experiments: tls/experiments.md
-
-  - DTLS:
-      - Overview: dtls/index.md
-      - Experiments: dtls/experiments.md
-
-  - SSH:
-      - Overview: ssh/index.md
-      - Experiments: ssh/experiments.md
-
-  - PKI:
-      - Overview: pki/index.md
-      - Experiments: pki/experiments.md
+  - Experiments:
+      - MACsec:
+          - Overview: macsec/index.md
+          - Experiments: macsec/experiments.md
+      - ANYsec:
+          - Overview: anysec/index.md
+          - Experiments: anysec/experiments.md
+      - WireGuard:
+          - Overview: wireguard/index.md
+          - Experiments: wireguard/experiments.md
+      - IPsec:
+          - Overview: ipsec/index.md
+          - Experiments: ipsec/experiments.md
+      - TLS:
+          - Overview: tls/index.md
+          - Experiments: tls/experiments.md
+      - DTLS:
+          - Overview: dtls/index.md
+          - Experiments: dtls/experiments.md
+      - SSH:
+          - Overview: ssh/index.md
+          - Experiments: ssh/experiments.md
+      - PKI:
+          - Overview: pki/index.md
+          - Experiments: pki/experiments.md
+      - Post-Quantum and Hybrid Key Exchange:
+          - Overview: pq/index.md
+          - Experiments: pq/experiments.md
