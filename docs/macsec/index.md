@@ -2,9 +2,9 @@
 
 MACsec, standardized in IEEE 802.1AE, provides link-layer security by ensuring confidentiality, integrity, and authenticity of Ethernet frames.
 
-Operating at Layer 2 allows MACsec to protect traffic between adjacent devices such as switches, routers, and hosts. Its hop-by-hop protection model distinguishes it from network-layer solutions like IPsec, enabling protection across enterprise LANs, data centres, and metropolitan Ethernet networks.
+Operating at Layer 2 allows MACsec to protect traffic between adjacent devices such as switches, routers, and hosts. Its hop-by-hop protection model distinguishes it from network-layer solutions like IPsec, enabling protection across enterprise LANs, data centers, and metropolitan Ethernet networks.
 
-MACsec addresses long-standing weaknesses in switched networks, such as, susceptibility to eavesdropping, MAC spoofing, manipulation of broadcast traffic, and insertion of rogue devices.
+MACsec addresses long-standing weaknesses in switched networks, such as susceptibility to eavesdropping, MAC spoofing, manipulation of broadcast traffic, and insertion of rogue devices.
 
 To support secure operation, the MACsec Key Agreement (MKA) protocol, defined within IEEE 802.1X, performs authentication of participants, derives cryptographic keys, and manages security
 associations.
@@ -13,29 +13,29 @@ associations.
 
 MACsec organizes link-layer protection around Connectivity Associations (CAs), which are responsible for the distribution of keys performed by MKA, Secure Associations (SAs), which are used to identify transmitted and received data within MACsec, and Secure Channels (SCs), which contain multiple SAs, are unidirectional and are used to transmit or receive data.
 
-Each SA is bound to a distinct Security Association Key (SAK), used to encrypt and decrypt data sent using that specific SA.
-As seen in Figure 1, protected frames include a MACsec Security Tag and Integrity Check Value, with encryption and authentication performed using AES-GCM.
+Each SA is bound to a distinct Security Association Key (SAK), used to encrypt and decrypt data sent over that SA.
+As seen in Figure 1, protected frames include a MACsec Security Tag and an Integrity Check Value, with encryption and authentication performed using AES-GCM.
 
 <figure markdown id="figure-1">
   ![Figure 1: MACsec Frame](../images/MACSec frame.drawio.png)
   <figcaption>Figure 1: MACsec Frame</figcaption>
 </figure>
 
-The MACsec Security Tag, present in Figure 1 as SecTAG, is inserted into Ethernet frames after the destination and source MAC addresses, which allows it to operate with other higher-layer protocols without conflict.
+The MACsec Security Tag, shown in Figure 1 as SecTAG, is inserted into Ethernet frames after the destination and source MAC addresses, which allows it to operate with other higher-layer protocols without conflict.
 
 MACsec can protect both user data and control-plane traffic such as LLDP or Spanning Tree. MKA integrates with this architecture by authenticating devices and securely distributing SAKs to all authorized members of a Connectivity Association.
 
 ## MKA Overview
 
-The MACsec Key Agreement (MKA) protocol relies on a pre-established Connectivity Association Key (CAK), derived either from successful authentication, for example, EAP-TLS, or from pre-shared credentials.
+The MACsec Key Agreement (MKA) protocol relies on a pre-established Connectivity Association Key (CAK), derived either from successful authentication, such as EAP-TLS, or from pre-shared credentials.
 
 The CAK is not used directly for data protection, instead, it is used to derive a Key Encryption Key (KEK) and an Integrity Check Key (ICK).
 
-The KEK protects sensitive MKA payload fields, whilst the ICK is used to generate the ICV, shown in Figure 1, which is used to authenticate the entire MKA Protocol Data Unit (MKPDUs), ensuring both confidentiality, for sensitive key material, and integrity/authenticity of control messages.
+The KEK protects sensitive MKA payload fields, while the ICK is used to generate the ICV, shown in Figure 1. The ICV is used to authenticate the entire MKA Protocol Data Unit (MKPDU), ensuring the confidentiality of sensitive key material, and the integrity and authenticity of control messages.
 
 ## MACsec Laboratory Overview
 
-Now that we have studied some of the basic concepts and features of MACsec, we will begin the configuration of the laboratory itself, to see all this concepts and more in practice.
+Now that we have studied some of the basic concepts and features of MACsec, we will begin configuring the laboratory itself to see all these concepts and more in practice.
 
 This laboratory demonstrates:
 
@@ -47,7 +47,7 @@ This laboratory demonstrates:
 
 ## What Are Linux Bridges?
 
-Linux bridges are virtual, Layer 2 switches, implemented directly inside the Linux kernel.
+Linux bridges are virtual Layer 2 switches implemented directly inside the Linux kernel.
 
 They forward Ethernet frames between interfaces similarly to a physical Ethernet switch.
 
@@ -88,13 +88,13 @@ mgmt:
 
 topology:
   kinds:
-    # Nokia´s router image
+    # Nokia's router image
     nokia_srsim:
       type: sr-1x-48d
       image: localhost/nokia/srsim:25.10.R3
       license: (Your License File).txt
 
-    # Host computers image
+    # Host computer image
     linux:
       image: ghcr.io/srl-labs/network-multitool
 
@@ -134,7 +134,7 @@ topology:
     MACBridge2:
       kind: bridge
 
-    #Linux Computers
+    # Linux Computers
     host1:
       kind: linux
       mgmt-ipv4: 172.10.10.31
@@ -181,15 +181,15 @@ topology:
 
 !!! warning
 
-    To perform this laboratory you must possess a Nokia SR SIM image, and its associated license key. If not, you may try with the publicly available SR Linux but the commands to setup may differ.
+    To perform this laboratory, you must possess a Nokia SR SIM image and its associated license key. If not, you may try using the publicly available SR Linux, but the commands to setup may differ.
 
 ## Router Setup
 
-We will now proceed to setup the routers for our laboratory. We will begin with R1_macsec.
+We will now set up the routers for our laboratory. We will begin with R1_macsec.
 
 To begin the configuration, we will create a configuration file that will be used on startup, allowing our routers to be immediately configured when the laboratory is deployed.
 
-Within the laboratory folder, create another folder named "configs" and place within the following files:
+Within the laboratory folder, create another folder named "configs" and place the following files inside:
 
 <figure markdown id="figure-3">
   ![Figure 3: Configs folder](../images/ConfigsFolder.png)
@@ -225,9 +225,9 @@ configure {
     }
 ```
 
-These configurations create the CA named "MACSEC_12", which will encrypt the traffic that passes within, and use a Pre-Shared Key to authenticate devices during MKA.
+These configurations create the CA named "MACSEC_12", which will encrypt traffic passing through it and use a pre-shared key to authenticate devices during MKA.
 
-Now we will configure the ports used by the router, 1/1/c2/1 for MACsec and 1/1/c1/1 for Host1:
+Now we will configure the ports used by the router: 1/1/c2/1 for MACsec and 1/1/c1/1 for Host1:
 
 ```srl
 port 1/1/c2 {
@@ -274,9 +274,9 @@ port 1/1/c2 {
     }
 ```
 
-As we can see, port 1/1/c2/1 includes an additional configuration aimed at enabling MACsec, choosing the CA and how many peers can connect at most.
+As we can see, port 1/1/c2/1 includes an additional configuration to enable MACsec, select the CA and specify the maximum number of peers that can connect.
 
-Now we will finish the configuration by adding the remaining necessary steps, the IP configuration and the IS-IS setup:
+Now we will finish the configuration by adding the remaining necessary settings: the IP configuration and the IS-IS setup:
 
 ```srl
 system {
@@ -339,11 +339,11 @@ system {
 }
 ```
 
-As we can observe, we set the IP addresses for the two interfaces we are using, enabled them, and set the IS-IS in R1 to allow routing to other subnets.
+As we can observe, we set the IP addresses for the two interfaces we are using, enabled them, and configured IS-IS in R1 to allow routing to other subnets.
 
-With all these configurations, your R1 should now fully work.
+With all these configurations, R1 should now be fully operational.
 
-We will now demonstrate the configuration for R2, since it slightly differs from R1.
+We will now demonstrate the configuration for R2 which differs slightly from R1.
 
 We begin again with the MACsec configuration, this time with two CAs, since R2 is in the middle and connects to two different MACsec CAs:
 
@@ -388,9 +388,9 @@ configure {
     }
 ```
 
-The configurations are similar, with the difference being in the name and the Pre-Shared Key.
+The configurations are similar, with the differences being the name and the pre-shared key.
 
-The ports are both configured for MACsec, with a different CA in each one:
+Both ports are configured for MACsec, with a different CA assigned to each one:
 
 ```srl
 port 1/1/c2 {
@@ -442,7 +442,7 @@ port 1/1/c2 {
     }
 ```
 
-The remaining configuration is similar to R1, with the due changes to IPs and to IS-IS:
+The remaining configuration is similar to R1, with the necessary changes to the IP addresses and IS-IS configuration:
 
 ```srl
 system {
@@ -508,11 +508,11 @@ system {
 }
 ```
 
-With these R2 now works properly and should form a CA with R1.
+With these configurations, R2 now works properly and should form a CA with R1.
 
 ??? question "Can you configure R3 and R4, based on the previous configurations?"
 
-    ??? solution "Solution for R3 is the following:"
+    ??? solution "The solution for R3 is as follows:"
 
         ```srl
         configure {
@@ -635,7 +635,7 @@ With these R2 now works properly and should form a CA with R1.
         }
         ```
 
-    ??? solution "Solution for R4 is the following:"
+    ??? solution "The solution for R4 is as follows:"
 
         ```srl
         configure {
@@ -754,9 +754,9 @@ With these R2 now works properly and should form a CA with R1.
           }
         ```
 
-With all routers and hosts configured, we are only missing the configuration for our Linux Bridges.
+With all the routers and hosts configured, we are only missing the configuration for our Linux bridges.
 
-Since these bridges operate on Linux itself, and not on the emulated environment, their configuration is performed directly on the CLI. Their configuration is the following:
+Since these bridges operate on Linux itself rather than in the emulated environment, they are configured directly through the CLI. Their configuration is as follows:
 
 ```bash
 sudo ip link add dev MACBridge1 type bridge group_fwd_mask 0xFFF8
@@ -778,6 +778,6 @@ sudo ip link set dev MACBridge2 arp on
 sudo ip link set dev MACBridge2 promisc on
 ```
 
-This configuration ensures the bridges allow the necessary MKA and MACsec traffic to flow through, allowing the CAs to form, then the SAs and IS-IS to create its database, allowing packets to go from host1 to host2 fully encrypted.
+This configuration ensures that the bridges allow the necessary MKA and MACsec traffic to flow through, enabling the CAs and SAs to form and IS-IS to establish its database. As a result, packets can travel from host1 to host2 while remaining fully encrypted.
 
-With the setup complete, let´s move forward and perform some tests and experiences in the [Experiments](experiments.md) section.
+With the setup complete, let's move on to the tests and experiments in the [Experiments](experiments.md) section.
