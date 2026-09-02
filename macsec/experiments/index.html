@@ -6,13 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Advanced labs for MACsec, ANYsec WireGuard, IPsec, TLS, DTLS and SSH">
+        <meta name="description" content="Secure Tunneling Labs is a collection of experiments and tutorials that demonstrate the use of various tunneling protocols and techniques for secure communication over untrusted networks. The labs cover a range of protocols, including MACsec, ANYsec, WireGuard, IPsec, TLS, DTLS, SSH, PKI, and PQ.">
       
       
         <meta name="author" content="Miguel">
       
       
-        <link rel="canonical" href="https://groudonramsay.github.io/AdvancedTunnellingLabs/macsec/experiments/">
+        <link rel="canonical" href="https://groudonramsay.github.io/SecureTunnelingLabs/macsec/experiments/">
       
       
         <link rel="prev" href="../">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Experiments - Advanced Tunnelling Labs</title>
+        <title>Experiments - Secure Tunneling Labs</title>
       
     
     
@@ -98,7 +98,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Advanced Tunnelling Labs" class="md-header__button md-logo" aria-label="Advanced Tunnelling Labs" data-md-component="logo">
+    <a href="../.." title="Secure Tunneling Labs" class="md-header__button md-logo" aria-label="Secure Tunneling Labs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +112,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Advanced Tunnelling Labs
+            Secure Tunneling Labs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -205,13 +205,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/groudonramsay/AdvancedTunnellingLabs" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/groudonramsay/SecureTunnelingLabs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </div>
   <div class="md-source__repository">
-    groudonramsay/AdvancedTunnellingLabs
+    groudonramsay/SecureTunnelingLabs
   </div>
 </a>
       </div>
@@ -248,6 +248,25 @@
   
   
   
+    <li class="md-tabs__item">
+      <a href="../../artifact_overview/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Artifact Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
     
     
       <li class="md-tabs__item">
@@ -255,7 +274,7 @@
           
   
   
-  ContainerLab
+  Emulator Setup
 
         </a>
       </li>
@@ -267,23 +286,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../gns3/" class="md-tabs__link">
-          
-  
-  
-  GNS3
-
-        </a>
-      </li>
-    
-  
-
       
-        
   
   
   
@@ -297,150 +305,13 @@
           
   
   
-  MACsec
+  Experiments
 
         </a>
       </li>
     
   
 
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../anysec/" class="md-tabs__link">
-          
-  
-  
-  ANYsec
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../wireguard/" class="md-tabs__link">
-          
-  
-  
-  WireGuard
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../ipsec/" class="md-tabs__link">
-          
-  
-  
-  IPsec
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../tls/" class="md-tabs__link">
-          
-  
-  
-  TLS
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../dtls/" class="md-tabs__link">
-          
-  
-  
-  DTLS
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../ssh/" class="md-tabs__link">
-          
-  
-  
-  SSH
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../pki/" class="md-tabs__link">
-          
-  
-  
-  PKI
-
-        </a>
-      </li>
     
   
 
@@ -473,23 +344,23 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Advanced Tunnelling Labs" class="md-nav__button md-logo" aria-label="Advanced Tunnelling Labs" data-md-component="logo">
+    <a href="../.." title="Secure Tunneling Labs" class="md-nav__button md-logo" aria-label="Secure Tunneling Labs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Advanced Tunnelling Labs
+    Secure Tunneling Labs
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/groudonramsay/AdvancedTunnellingLabs" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/groudonramsay/SecureTunnelingLabs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </div>
   <div class="md-source__repository">
-    groudonramsay/AdvancedTunnellingLabs
+    groudonramsay/SecureTunnelingLabs
   </div>
 </a>
     </div>
@@ -529,69 +400,15 @@
   
   
   
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ContainerLab
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    ContainerLab
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
-      <a href="../../containerlab/" class="md-nav__link">
+      <a href="../../artifact_overview/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Overview
+    Artifact Overview
   
 
     
@@ -600,14 +417,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -644,7 +453,7 @@
   <span class="md-ellipsis">
     
   
-    GNS3
+    Emulator Setup
   
 
     
@@ -660,11 +469,39 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    GNS3
+    Emulator Setup
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../containerlab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ContainerLab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -680,7 +517,7 @@
   <span class="md-ellipsis">
     
   
-    Overview
+    GNS3
   
 
     
@@ -736,7 +573,7 @@
   <span class="md-ellipsis">
     
   
-    MACsec
+    Experiments
   
 
     
@@ -749,6 +586,63 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MACsec
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_1">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -940,9 +834,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -954,19 +849,22 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_2" >
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
             
   
   
@@ -984,8 +882,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1057,9 +955,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -1071,19 +970,22 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_3" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
             
   
   
@@ -1101,8 +1003,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1174,9 +1076,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -1188,19 +1091,22 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_4" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
             
   
   
@@ -1218,8 +1124,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1291,9 +1197,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -1305,19 +1212,22 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_5" >
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
             
   
   
@@ -1335,8 +1245,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1408,9 +1318,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -1422,19 +1333,22 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6" >
         
           
-          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -1452,8 +1366,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_9">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1525,9 +1439,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -1539,19 +1454,22 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_7" >
         
           
-          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="">
             
   
   
@@ -1569,8 +1487,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_10">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1642,9 +1560,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -1656,19 +1575,22 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_8" >
         
           
-          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="">
             
   
   
@@ -1686,8 +1608,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_11">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1748,6 +1670,135 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_9" id="__nav_4_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Post-Quantum and Hybrid Key Exchange
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Post-Quantum and Hybrid Key Exchange
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pq/experiments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1884,37 +1935,37 @@
   <h1>Experiments</h1>
 
 <h2 id="laboratory-experiments">Laboratory Experiments</h2>
-<p>Now that we have completed the laboratory setup, including its routers, hosts and linux bridges, we can begin with the experimental section, seeing MKA and MACsec in action, testing their features and learning about their inner workings.</p>
+<p>Now that we have completed the laboratory setup, including its routers, hosts, and Linux bridges, we can begin the experimental section by seeing MKA and MACsec in action, testing their features, and learning about their inner workings.</p>
 <h2 id="deploy-your-laboratory">Deploy your laboratory</h2>
-<p>Let´s begin with deploying our laboratory. Go to the ContainerLab page in VSCode, open the folder with your laboratory and select Deploy.</p>
+<p>Let's begin by deploying our laboratory. Go to the ContainerLab page in VSCode, open the folder with your laboratory and select Deploy.</p>
 <figure id="figure-4">
 <p><img alt="Figure 4: Deploy function" src="../../images/DeployFunction.png" width="200" />
   </p>
 <figcaption>Figure 4: Deploy Function</figcaption>
 </figure>
-<p>When the deployment is finished you should have your laboratory and its devices appear in the deployed section.</p>
+<p>When the deployment is finished, your laboratory and its devices should appear in the deployed section.</p>
 <figure id="figure-5">
 <p><img alt="Figure 5: Deployed lab" src="../../images/Deployedlab.png" width="200" />
   </p>
 <figcaption>Figure 5: Deployed Lab</figcaption>
 </figure>
 <h2 id="verify-mka-macsec-and-is-is">Verify MKA, MACsec and IS-IS</h2>
-<p>Now that everything is running, access all four routers, and ensure that MKA has live peers, that MACsec has the CAs formed and that the routing table displays the subnets learnt from IS-IS.</p>
+<p>Now that everything is running, access all four routers and ensure that MKA has active peers, that the MACsec CAs have been formed, and that the routing table displays the subnets learned from IS-IS.</p>
 <p>To check the first two, you can run the following commands:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>show macsec connectivity-association
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>show macsec mka-session
 </span></code></pre></div>
-<p>The first command will show the CAs present at that router, and the second will display all the peers that are running MKA with the selected router.</p>
+<p>The first command will show the CAs present on that router, and the second will display all the peers running MKA with the selected router.</p>
 <details class="question">
 <summary>How many CAs does R1 have? What about the other routers? Is there a difference between them?</summary>
 <div class="admonition solution">
-<p class="admonition-title">R1 has one CA, MACSEC_12, since it is the only association it participates in. R3 also participates in only one CA, MACSEC_23. The other two routers, R2 and R4, differ from the previous two, since they participate in two associations at the same time, showing in their tables both MACSEC_12 and MACSEC_23.</p>
+<p class="admonition-title">R1 has one CA, MACSEC_12, since it participates in only one association. R3 also participates in only one CA, MACSEC_23. The other two routers, R2 and R4, differ from the previous two because they participate in two associations at the same time, with both MACSEC_12 and MACSEC_23 shown in their tables.</p>
 </div>
 </details>
-<p>After this check being positive, we will check the routing table to ensure we are capable of communicating between the two hosts. To do that we use the command:</p>
+<p>After confirming that these checks are successful, we will check the routing table to ensure that we can communicate between the two hosts. To do that we use the command:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>show router route-table
 </span></code></pre></div>
-<p>The result for this command should be a table similar in entries to the one presented below:</p>
+<p>The result of this command should be a table with entries similar to those shown below:</p>
 <figure id="figure-6">
 <p><img alt="Figure 6: Route Table" src="../../images/RouteTable.png" />
   </p>
@@ -1924,94 +1975,95 @@
 <p>Now we will ping from host 1 to host 2. To do that, simply access host 1 through its shell and ping host 2 with the command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ping<span class="w"> </span><span class="m">172</span>.31.0.1
 </span></code></pre></div>
-<p>You should see a positive response and your ping being answered by host 2.</p>
+<p>You should receive successful responses to your ping from host 2.</p>
 <h2 id="mka-and-macsec-packet-analysis">MKA and MACsec packet analysis</h2>
-<p>For this section, we will start going more in-depth regarding MKA and MACsec, triggering MKA to start again in order to see its handshake and the packets that are involved.</p>
-<p>To achieve that, we will reboot both R2 and R4, and place Wireshark probes on both of their interfaces, in order to see the MKA packets traversing our laboratory.</p>
-<p>To place the probes, use the available Capture function from VSCode, and place on both interfaces of both routers.</p>
+<p>In this section, we will take a more in-depth look at MKA and MACsec by triggering MKA to start again so that we can observe its handshake and the packets involved.</p>
+<p>To achieve this, we will reboot both R2 and R4 and place Wireshark probes on their interfaces to observe the MKA packets traversing our laboratory.</p>
+<p>To place the probes, use the available Capture function in VS Code and place a probe on both interfaces of both routers.</p>
 <p>To reboot the routers, you can use the following command:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>admin reboot now
 </span></code></pre></div>
-<p>This command should restart both routers, dropping your connection shortly after, you can reconnect into the router and see that the Live Peer list is now empty or still forming. This is where MKA comes in, rebuilding the CAs, reelecting a Key Server and redistributing the SAKs to initiate MACsec again.</p>
-<p>By sorting your Wireshark for EAPOL, you will be able to see only MKA packets. With this filter, it will be easy to identify a pattern of MKA normal operation with the connection already formed and functioning. But when the reboot is performed, we will be able to detect a major change in this pattern, which will allow us to detect and study the packets sent during the handshake.</p>
+<p>This command should restart both routers, causing your connection to drop shortly afterward. You can then reconnect to the router and see that the Live Peer list is either empty or still forming.</p>
+<p>This is where MKA comes in, rebuilding the CAs, reelecting a Key Server, and redistributing the SAKs to reestablish MACsec.</p>
+<p>By filtering Wireshark for EAPOL packets, you will be able to see only MKA packets. With this filter, it will be easy to identify the normal MKA operation pattern once the connection has been established and is functioning. When the reboot is performed, we will be able to detect a major change in this pattern, allowing us to identify and study the packets sent during the handshake.</p>
 <p>MKA normal operation should look like this:</p>
 <figure id="figure-7">
 <p><img alt="Figure 7: MKA Normal Operation" src="../../images/MKAnormal.png" />
   </p>
 <figcaption>Figure 7: MKA Normal Operation</figcaption>
 </figure>
-<p>In Figure 7, the first packet that we see is from the Key Server, which announces itself, and then sends information to keep the association alive. The other routers respond with their own information and the KeepAlive is complete.</p>
-<p>When we upset this pattern by resetting the connection, we expect something similar to the next image to appear:</p>
+<p>In Figure 7, the first packet we see is from the Key Server, which announces itself and then sends information to keep the association alive. The other routers respond with their own information, completing the KeepAlive exchange.</p>
+<p>When we disrupt this pattern by resetting the connection, we expect to see something similar to the following image:</p>
 <figure id="figure-8">
 <p><img alt="Figure 8: MKA Handshake" src="../../images/MKAreconn.png" />
   </p>
 <figcaption>Figure 8: MKA Handshake</figcaption>
 </figure>
-<p>The first five packets are unsuccessful attempts to find more peers and begin MKA. But at the sixth packet, numbered 512, we see that both peer lists and basic parameters are sent, signaling that peers were found and that the Key Server election has begun.</p>
-<p>The following message comes from the elected Key Server notifying its peers of its election, which the other peers respond positively.</p>
-<p>Finally the Key Server distributes the SAK, which will be used by all peers to encrypt packets that use MACsec for protection.</p>
+<p>The first five packets are unsuccessful attempts to find more peers and begin MKA. However, in the sixth packet, numbered 512, we see that both peer lists and basic parameters are sent, signaling that peers have been found and that the Key Server election has begun.</p>
+<p>The following message comes from the elected Key Server, notifying its peers of its election, to which the other peers respond positively.</p>
+<p>Finally, the Key Server distributes the SAK, which will be used by all peers to encrypt packets protected by MACsec.</p>
 <div class="admonition question">
 <p class="admonition-title">What is the cypher used for the key? What is this key identifier number? According to MACsec SAK Use were there any keys before this one?</p>
 </div>
-<p>Now that MKA has been analysed, and its packets dissected, let´s move forward and view packets encrypted by MACsec and what are their contents.</p>
-<p>To begin, keep your Wireshark probes active, in order to capture the ICMP packets that will be crossing from our ping, encrypted by MACsec.</p>
-<p>With the probes active, return to host 1, and begin a ping to host 2.</p>
+<p>Now that MKA has been analyzed and its packets dissected, let's move on to viewing packets encrypted by MACsec and examining their contents.</p>
+<p>To begin, keep your Wireshark probes active to capture the ICMP packets generated by our ping and encrypted by MACsec.</p>
+<p>With the probes active, return to host 1 and begin a ping to host 2.</p>
 <p>With the ping active, we will be able to see packets like the following pass through:</p>
 <figure id="figure-9">
 <p><img alt="Figure 9: MACsec packets" src="../../images/MACsecPackets.png" />
   </p>
 <figcaption>Figure 9: MACsec Packets</figcaption>
 </figure>
-<p>These packets contain within the ICMP packets that compose a Ping, albeit we cannot see them due to MACsec´s encryption. Let´s analyse the security tag, and see if it matches what was displayed in Figure 1.</p>
+<p>These packets contain the ICMP packets that make up the ping, although we cannot see them because they are encrypted by MACsec. Let's analyze the security tag and see if it matches what was shown in Figure 1.</p>
 <figure id="figure-10">
 <p><img alt="Figure 10: Live Security Tag" src="../../images/LiveTag.png" />
   </p>
 <figcaption>Figure 10: Live Security Tag</figcaption>
 </figure>
-<p>As we can see, the security tag in our packet contains the TCI and AN in the beggining, followed by the SL, PN, the SCI and finally the ICV, which matches what we saw theoretically in the introduction of this laboratory. The following data is protected by the SAK and we cannot view it, as we expected.</p>
+<p>As we can see, the security tag in our packet contains the TCI and AN at the beginning, followed by the SL, PN, SCI, and finally the ICV, matching what we saw in the theoretical introduction to this laboratory. The following data is protected by the SAK, so we cannot view it, as expected.</p>
 <h2 id="key-server-election-and-reelection">Key Server Election and Reelection</h2>
-<p>In this experience, our focus will be on the Key Server Election mechanism in the beggining of MKA, and in the reelection of a Key Server when the current one is no longer available. We will also explore changing priorities to choose the Key Server.</p>
-<p>The first step of our experience is to analyse the configurations that we used for the routers and look for a specific line that changes the whole Key Server Election process.</p>
+<p>In this experiment, our focus will be on the Key Server Election mechanism at the beginning of MKA and on the reelection of a Key Server when the current one is no longer available. We will also explore changing priorities to choose the Key Server.</p>
+<p>The first step of this experiment is to analyze the router configurations and look for a specific line that changes the Key Server Election process.</p>
 <p>In the configuration of R4, we can identify in the MACsec configuration the following line:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mka-key-server-priority 0
 </span></code></pre></div>
-<p>When a Key Server is being elected, if there is no configuration targeting the priority of these routers, MKA will use other elements, for example, their member identifier. However, if there is a configuration altering all of the devices priorities, similar to our laboratory, then MKA elects the server with the highest priority, which is the device with a priority number closer or equal to zero.</p>
-<p>In our configurations, we can identify that R4 has a priority of 0, which means it will always be elected if it is available, then R2 has a priority of 1, and R1 and R3 have a priority of 10. These values were chosen with the intent of making the Key Server always a device present in both CAs, if possible.</p>
-<p>We will now trigger an election process, so that we can follow it with WireShark and see what happens.</p>
+<p>When a Key Server is being elected, if there is no configuration specifying the priority of these routers, MKA will use other factors, such as their member identifier. However, if all devices have their priorities explicitly configured, as in our laboratory, MKA elects the server with the highest priority, which is the device with a priority number closer to or equal to zero.</p>
+<p>In our configurations, R4 has a priority of 0, which means it will always be elected if it is available. R2 has a priority of 1, while R1 and R3 have a priority of 10. These values were chosen with the intention of making the Key Server a device present in both CAs whenever possible.</p>
+<p>We will now trigger an election process so that we can follow it in Wireshark and observe what happens.</p>
 <p>To do so, set a probe in R1 and R3 facing their respective CAs.</p>
-<p>To be able to trigger a full election process, and not just a reelection, we will need to reboot all routers at the same time. To do so, use SSH to access to all four routers at the same time, and prepare in each one the following command to execute at the same time:</p>
+<p>To trigger a full election process rather than just a reelection, we will need to reboot all routers at the same time. To do so, use SSH to access all four routers and prepare the following command on each one to execute at the same time:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>admin reboot now
 </span></code></pre></div>
-<p>By rebooting all nodes, with WireShark open, we will be able to watch the whole handshake process occur again, but this time we will only focus on the Key Server Election part.</p>
-<p>After ordering the reboot, traffic in WireShark will pause, when it resumes the first few EAPOL packets will contain what we want to see. We will focus on the first few packets received in R1 and R3, where we can see them receiving a message from R4, with its priority, but still unelected.</p>
+<p>By rebooting all nodes with Wireshark open, we will be able to watch the entire handshake process occur again, but this time we will focus only on the Key Server Election process.</p>
+<p>After initiating the reboot, traffic in Wireshark will pause. When it resumes, the first few EAPOL packets will contain what we want to see. We will focus on the first few packets received in R1 and R3, where we can see them receiving a message from R4, with its priority, but still unelected.</p>
 <figure id="figure-11">
 <p><img alt="Figure 11: First packet from R4" src="../../images/MACKEYElection.png" />
   </p>
 <figcaption>Figure 11: First packet from R4</figcaption>
 </figure>
-<p>After this message we can see the packet where the Key Server annouces its eletion, seeing that the tag Key Server changes from False to True.</p>
+<p>After this message, we can see the packet in which the Key Server announces its election, with the Key Server tag changing from False to True.</p>
 <figure id="figure-12">
 <p><img alt="Figure 12: Second packet from R4" src="../../images/MACKEYElected.png" />
   </p>
 <figcaption>Figure 12: Second packet from R4</figcaption>
 </figure>
-<p>And after this MKA follows its regular course and enables MACsec to start working on protecting traffic.</p>
-<p>Now we will see a reelection occur in an already established CA, by shutting down R4, making R2 the new elected Key Server.</p>
-<p>To do this we keep the previous WireShark probes, and run in R4 the command:</p>
+<p>After this, MKA follows its regular process and enables MACsec to begin protecting traffic.</p>
+<p>We will now observe a reelection in an already established CA by shutting down R4, causing R2 to become the new Key Server.</p>
+<p>To do this, we will keep the previous Wireshark probes and run the following command on R4:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>configure global
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>card 1 admin-state disable
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>commit
 </span></code></pre></div>
-<p>This command disables the router card, effectively cutting it from communicating with the remaining routers.</p>
-<p>We can then notice that after the last message from R4, a few KeepAlives will still arrive from R2, since the timer for R4 has yet to expire. After this we will notice a message from R2, annoucing itself as the new Key Server and distributing the new SAK.</p>
+<p>This command disables the router card, effectively preventing it from communicating with the remaining routers.</p>
+<p>We can then observe that, after the last message from R4, a few KeepAlives will still arrive from R2 because the timer for R4 has not yet expired. After this, we will see a message from R2 announcing itself as the new Key Server and distributing the new SAK.</p>
 <figure id="figure-13">
 <p><img alt="Figure 13: Key Server Reelection" src="../../images/MACKEYReelection.png" />
   </p>
 <figcaption>Figure 13: Key Server Reelection</figcaption>
 </figure>
-<p>After a brief period of waiting for a KeepAlive, the members of the CA notice that R4 is gone, begin a reelection, electing R2 as the new Key Server, following our chosen priority, and resume normal operations without having to perform the whole handshake again.</p>
+<p>After a brief wait for a KeepAlive, the members of the CA detect that R4 is no longer available, begin a reelection, elect R2 as the new Key Server according to our configured priorities, and resume normal operations without having to perform the entire handshake again.</p>
 <h2 id="key-rollover-and-rekeying">Key Rollover and Rekeying</h2>
-<p>We will now analyse another important feature of MACsec, its capability of changing keys during operation, or rollover, and the rekeying that occurs as a consequence.</p>
+<p>We will now analyze another important feature of MACsec: its ability to change keys during operation, known as rollover, and the rekeying that occurs as a consequence.</p>
 <p>To begin, we will change the MACsec configuration of CA12 in R1, R2 and R4, to have a second pre-shared key:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>macsec {
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        connectivity-association &quot;MACSEC_12&quot; {
@@ -2038,19 +2090,19 @@
 </span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>        }
 </span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>    }
 </span></code></pre></div>
-<p>With the addition of a second key, we can now ask the routers during operation, to switch their active pre-shared key to the new one, starting a rollover process in CA12, that leads to the rekeying of that CA´s keys.</p>
-<p>Now save the new configurations and redeploy the laboratory for them to take effect. When the laboratory is redeployed, you can enter any router with CA12, and verify that it is using psk 1, using:</p>
+<p>With the addition of a second key, we can now instruct the routers to switch their active pre-shared key to the new one during operation, starting a rollover process in CA12 that leads to the rekeying of the CA's keys.</p>
+<p>Now save the new configurations and redeploy the laboratory for them to take effect. When the laboratory is redeployed, you can access any router with CA12 and verify that it is using PSK 1 with:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>show macsec connectivity-association &quot;MACSEC_12&quot; detail
 </span></code></pre></div>
-<p>After confirming that, open two WireShark probes, in R1 and R2, facing CA12, and run the following command in all three routers:</p>
+<p>After confirming this, open two Wireshark probes on R1 and R2, facing CA12, and run the following command on all three routers:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>configure global
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>macsec connectivity-association &quot;MACSEC_12&quot; static-cak active-psk 2
 </span></code></pre></div>
 <p>When you have done this in all three routers, run the following command at the same time:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>commit
 </span></code></pre></div>
-<p>This will activate the change of active pre-shared keys, beggining a Key Rollover process, where the CA will begin rekeying all of its keys in order to use the new active psk.</p>
-<p>We can witness this process happening in WireShark, by noticing that the regular operation pattern is briefly affected, and a singular packet is all that is necessary to process the rekeying:</p>
+<p>This will activate the change of the active pre-shared key, beginning a Key Rollover process in which the CA will begin rekeying its keys to use the new active PSK.</p>
+<p>We can observe this process in Wireshark by noticing that the regular operation pattern is briefly affected and that a single packet is sufficient to process the rekeying:</p>
 <figure id="figure-14">
 <p><img alt="Figure 14: Key Rollover and Rekeying" src="../../images/MACKEYRoll2.png" />
   </p>
@@ -2061,16 +2113,16 @@
   </p>
 <figcaption>Figure 15: Key Rollover and Rekeying Part 2</figcaption>
 </figure>
-<p>In Figure 14, we can identify that a singular packet from the Key Server, ordering the rekeying was all it took to alter the SAK used by the CA. We can also notice in the details of the packet, that the CAK name has changed from ca12, to ca21, which is the new key we added. We can also confirm that this is a new key by noticing that the Latest key, which is the new one, has been transmited or received yet.</p>
-<p>Then, in Figure 15, we can identify the new Key number was updated, from the old one being 1, to the new one which is 2.</p>
+<p>In Figure 14, we can see that a single packet from the Key Server ordering the rekeying was sufficient to change the SAK used by the CA. We can also see in the packet details that the CAK name has changed from CA12 to CA21, which is the new key we added. We can also confirm that this is a new key by observing that the Latest Key, which is the new one, has not yet been transmitted or received.</p>
+<p>Then, in Figure 15, we can see that the Key Number has been updated from 1 to 2.</p>
 <p>And if we do the previous command:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>show macsec connectivity-association &quot;MACSEC_12&quot; detail
 </span></code></pre></div>
-<p>We will see that the Active Pre-Shared-Key Index is now 2, and the CKN is CA21, proving that the rollover and rekeying has effectively occured.</p>
-<p>With this experiment, we have added a new pre-shared key to CA12, altered the active pre-shared key to be the new one during operation, leading to a Key Rollover process, that led to a rekeying process coordinated by the Key Server, which generated new keys and resumed normal operation without having to reform the CA.</p>
+<p>We will see that the Active Pre-Shared-Key Index is now 2 and the CKN is CA21, proving that the rollover and rekeying have occurred successfully.</p>
+<p>With this experiment, we added a new pre-shared key to CA12 and changed the active pre-shared key to the new one during operation. This initiated a Key Rollover process that led to a rekeying process coordinated by the Key Server, which generated new keys and resumed normal operation without having to reform the CA.</p>
 <h2 id="replay-attack-and-protection">Replay Attack and Protection</h2>
-<p>Another important feature of MACsec is its capability of preventing several types of attacks from occuring against its peers and communications. Some examples are, denial of service, intrusions, man in the middle, masquerading, and most importantly for our experiment, replay attacks.</p>
-<p>These attacks consist in capturing packets sent by a legitimate peer of MACsec´s CA, and replaying them, in an attempt to obtain the keys used for encryption.</p>
+<p>Another important feature of MACsec is its ability to prevent several types of attacks against its peers and communications. Some examples include denial-of-service attacks, intrusions, man-in-the-middle attacks, masquerading, and, most importantly for our experiment, replay attacks.</p>
+<p>These attacks consist of capturing packets sent by a legitimate peer of a MACsec CA and replaying them in an attempt to obtain the keys used for encryption.</p>
 <p>In our laboratory, the protection against this kind of attack is currently turned off, but we can easily turn it on by using the following configuration in all routers:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>macsec {
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>        connectivity-association &quot;MACSEC_12&quot; {
@@ -2099,42 +2151,42 @@
 </span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>        }
 </span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>    }
 </span></code></pre></div>
-<p>This configuration includes two new lines, that activate replay protection, and set its replay window at 32. This means that if a packet number differs from the current counter in that peer by more than 32, MACsec will drop that packet.</p>
+<p>This configuration includes two new lines that activate replay protection and set the replay window to 32. This means that if a packet number differs from the current counter for that peer by more than 32, MACsec will drop the packet.</p>
 <p>To confirm that the changes took effect, run the command:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>show macsec connectivity-association &quot;MACSEC_12&quot; detail
 </span></code></pre></div>
-<p>And verify that the replay protection is now enabled and that the replay window is 32.</p>
-<p>Now that the protection is active, we must attack it to test its functioning. To do that, we will perform a continuous ping from host1 to host2, capturing its packets when they are crossing the Linux Bridge.</p>
+<p>Verify that replay protection is now enabled and that the replay window is 32.</p>
+<p>Now that the protection is active, we must test it by performing an attack. To do this, we will perform a continuous ping from host1 to host2 and capture its packets as they cross the Linux bridge.</p>
 <p>To perform this capture, first start a ping from host1 to host2, using the command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ping<span class="w"> </span><span class="m">172</span>.31.0.1
 </span></code></pre></div>
 <p>Then, on your main device terminal, run the command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>MACBridge1<span class="w"> </span>-w<span class="w"> </span>macsec.pcap<span class="w"> </span>ether<span class="w"> </span>proto<span class="w"> </span>0x88e5
 </span></code></pre></div>
-<p>This command will capture all MACsec traffic crossing MACBridge1, which is mostly our pings. Let it run for 10 seconds and then stop it.</p>
-<p>With this large collection of packets, most of them if not all, are guaranteed to be considered late by MACsec and dropped.</p>
+<p>This command will capture all MACsec traffic crossing MACBridge1, which will consist mostly of our ping packets.</p>
+<p>With this large collection of packets, most, if not all, will be considered late by MACsec and dropped.</p>
 <p>Now, run the command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>tcpreplay<span class="w"> </span>-i<span class="w"> </span>MACBridge1<span class="w"> </span>macsec.pcap
 </span></code></pre></div>
-<p>This command uses MACBridge1 to replay the captured packets to their respective receivers. After this is done, we expect to see in the receivers some statistics that show late packets in MACsec, which will be dropped according to the replay protection we activated.</p>
+<p>This command uses MACBridge1 to replay the captured packets to their respective receivers. After this is done, we expect to see statistics on the receivers showing late packets detected by MACsec, which will be dropped according to the replay protection we activated.</p>
 <p>To see these statistics we go to R1 and use the command:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>show port 1/1/c2/1 macsec sub-port 1 statistics
 </span></code></pre></div>
-<p>This will show us many statistics of different parts of MACsec, the part that is of our interest is the following:</p>
+<p>This will show statistics for different parts of MACsec. The statistics we are interested in are shown below:</p>
 <figure id="figure-16">
 <p><img alt="Figure 16: Replay Attack Statistics in R1" src="../../images/MACReplay1.png" />
   </p>
 <figcaption>Figure 16: Replay Attack Statistics in R1</figcaption>
 </figure>
-<p>In R1, we can see that MACsec identified 24 packets as being late, which means they were outside of the replay protection window, and as such were discarded. We can observe this same behaviour in R2:</p>
+<p>In R1, we can see that MACsec identified 24 packets as late, meaning that they were outside the replay protection window and were therefore discarded. We can observe this same behavior in R2:</p>
 <figure id="figure-17">
-<p><img alt="Figure 16: Replay Attack Statistics in R2" src="../../images/MACReplay2.png" />
+<p><img alt="Figure 17: Replay Attack Statistics in R2" src="../../images/MACReplay2.png" />
   </p>
-<figcaption>Figure 16: Replay Attack Statistics in R2</figcaption>
+<figcaption>Figure 17: Replay Attack Statistics in R2</figcaption>
 </figure>
 <p>We can observe that in this case, MACsec detected 31 late packets and discarded them.</p>
-<p>With this experiment, we activated MACsec´s replay protection, learned about its functioning and features, such as the replay protection window, and performed a simple replay attack against the routers of CA12, confirming that MACsec detected the late packets we sent, and promptly discarded them.</p>
-<p>We hope that these experiments helped you understand MACsec and provided you with the necessary tools to configure it and use it in real-world scenarios. We hope you enjoyed this laboratory and we are waiting for you in ANYsec!</p>
+<p>With this experiment, we activated MACsec's replay protection, learned about its functionality and features, such as the replay protection window, and performed a simple replay attack against the routers in CA12. This confirmed that MACsec detected the late packets we sent and promptly discarded them.</p>
+<p>We hope that these experiments helped you understand MACsec and provided you with the necessary tools to configure and use it in real-world scenarios. We hope you enjoyed this laboratory, and we look forward to seeing you in the ANYsec laboratory!</p>
 
 
 
