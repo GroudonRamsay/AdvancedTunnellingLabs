@@ -2,33 +2,31 @@
 
 A public key infrastructure (PKI) consists of the components necessary to securely distribute public keys: certificates, a method to revoke certificates, and a method to evaluate a chain of certificates from public keys that are known and trusted in advance (trust anchors) to the target name.
 
-Its primary purpose is to bind public keys to verified identities through digital certificates, allowing entities to authenticate one another without prior contact. At the centre of this infrastructure are Certificate Authorities (CAs), which issue certificates after validating the identity of the subject.
+Its primary purpose is to bind public keys to verified identities through digital certificates, allowing entities to authenticate one another without prior contact. At the center of this infrastructure are Certificate Authorities (CAs), which issue certificates after validating the identity of the subject according to their issuance policies.
 
-PKI is structured as a hierarchical trust model consisting of a root CA, subordinate or intermediate CAs, and end-entity certificates. The root CA acts as the trust anchor and is self-signed, meaning its legitimacy must be provisioned securely into devices or software beforehand.
+PKI is structured as a hierarchical trust model consisting of a root CA, subordinate or intermediate CAs, and end-entity certificates. The root CA acts as the trust anchor and is self-signed, meaning that its certificate must be provisioned securely into devices or software beforehand.
 
-Intermediate CAs extend trust outward by issuing certificates to end entities, while also providing separation of responsibilities
-and risk containment in case of compromise. Certificate chains linking end-entity certificates to the root provide a verifiable path of trust that can be validated during protocol handshakes.
+Intermediate CAs extend trust outward by issuing certificates to end entities, while also providing separation of responsibilities and risk containment in case of compromise. Certificate chains linking end-entity certificates to the root provide a verifiable path of trust that can be validated during protocol handshakes.
 
 ## Certificate Management
 
-The lifecycle of a digital certificate begins with enrolment, where a subject generates a key pair, followed by a submission of a Certificate Signing Request (CSR) to a CA.
+The lifecycle of a digital certificate begins with enrollment, where a subject generates a key pair, followed by the submission of a Certificate Signing Request (CSR) to a CA.
 
-The CA verifies the identity of the subject using authentication procedures appropriate to the intended security level, ranging from simple domain validation to more stringent organisational or extended validation checks.
+The CA validates the identity of the subject using authentication procedures appropriate to the intended security level, ranging from simple domain validation to more stringent organizational or extended validation checks.
 
-Once validated, the CA signs the certificate and publishes it along with its status information, enabling entities to retrieve it for several operations, such as identity authentication, secure key exchange, digital signing of documents and establishment of trust between two parties, among others.
+Once validated, the CA signs the certificate and may publish it along with its status information, enabling entities to retrieve it for several operations, such as identity authentication, secure key exchange, digital signing of documents, and establishing trust between two parties, among others.
 
-Certificate validity must be continuously maintained through renewal and rotation. Renewal occurs before certificate expiration or revocation to ensure uninterrupted operation, while
-rotation involves periodically replacing key pairs to maintain cryptographic freshness and minimise long-term exposure.
+Certificate validity must be continuously maintained through renewal and rotation. Renewal occurs before certificate expiration to ensure uninterrupted operation, while rotation involves periodically replacing key pairs to maintain cryptographic freshness and minimize long-term exposure.
 
-Revocation is also a critical part of lifecycle management, addressing scenarios where private keys are compromised or where certificate information becomes invalid. Revocation information is distributed through Certificate Revocation Lists (CRLs) and online services such as the Online Certificate Status Protocol (OCSP), which enables real-time verification of certificate status.
+Revocation is also a critical part of lifecycle management, addressing scenarios where private keys are compromised or certificate information becomes invalid. Revocation information can be distributed through Certificate Revocation Lists (CRLs) and online services such as the Online Certificate Status Protocol (OCSP), which enables the status of a certificate to be checked.
 
-Automated mechanisms such as the Automatic Certificate Management Environment (ACME), have become increasingly important for scaling PKI operations in large distributed systems. ACME enables automated certificate issuance, renewal, and revocation processes.
+Automated mechanisms such as the Automatic Certificate Management Environment (ACME) have become increasingly important for scaling PKI operations in large distributed systems. ACME enables automated certificate issuance, renewal, and revocation processes.
 
 ## Laboratory Topology
 
-The topology of this laboratory consists in:
+The topology of this laboratory consists of:
 
-- Seven docker containers, using the image ghcr.io/groudonramsay/ubuntu-tls:latest, which are RootCA, IntermediateCA1 and IntermediateCA2, TLSClient, TLSServer, DTLSClient and DTLSServer.
+- Seven Docker containers, using the image ghcr.io/groudonramsay/ubuntu-tls:latest, which are RootCA, IntermediateCA1 and IntermediateCA2, TLSClient, TLSServer, DTLSClient and DTLSServer.
 
 The topology is visible in Figure 1:
 
@@ -44,11 +42,11 @@ When adding the container to your templates, use 2 adapters and the following en
 --cap-add NET_RAW
 ```
 
-Before beggining the configuration, modify all machines to persist the folder /root/pki, in order to keep the PKI setup. Furthermore, modify IntermediateCA1 and IntermediateCA2 to have 3 adapters.
+Before beginning the configuration, modify all machines to persist the /root/pki folder in order to preserve the PKI setup. Furthermore, modify IntermediateCA1 and IntermediateCA2 to have three adapters.
 
 ## Device Configuration
 
-We will begin the configuration by adding all the necessary IPs and routes for the PKI to properly function.
+We will begin the configuration by adding all the necessary IP addresses and routes for the PKI to function properly.
 
 ```bash
 
@@ -119,7 +117,7 @@ After this setup, you should be able to ping any device from RootCA.
 
 With this stage complete, we will now begin configuring our Certificate Authorities. In our topology, we will have a root Certificate Authority, RootCA, which will have a self-signed certificate.
 
-Then, this CA will sign the certificates for other two CAs to use, IntermediateCA1 and IntermediateCA2. These CAs will be responsible for signing certificates for the end devices. IntermediateCA1 will sign the certificates for the TLS devices, and IntermediateCA2 will sign the certificates for the DTLS devices.
+This CA will then sign the certificates for the other two CAs, IntermediateCA1 and IntermediateCA2. These CAs will be responsible for signing certificates for the end devices. IntermediateCA1 will sign the certificates for the TLS devices, and IntermediateCA2 will sign the certificates for the DTLS devices.
 
 We will begin by configuring RootCA. The first step is generating the directory where we will work and securing it using:
 
@@ -128,7 +126,7 @@ mkdir -p /root/pki/root/{private,certs,csr}
 chmod 700 /root/pki/root/private
 ```
 
-Afterwards, we will generate the key pair that this CA will use, with:
+Afterward, we will generate the key pair that this CA will use, with:
 
 ```bash
 openssl genpkey \
@@ -139,7 +137,7 @@ openssl genpkey \
 chmod 600 /root/pki/root/private/root-ca.key
 ```
 
-And finally, we will generate the RootCA certificate:
+Finally, we will generate the RootCA certificate:
 
 ```bash
 openssl req \
@@ -161,11 +159,11 @@ To check our certificate, we can use the command:
  openssl x509     -in /root/pki/root/certs/root-ca.crt     -noout     -text
 ```
 
-This will provide information regarding issuer, validity, subject, the public key used, the signature, its extensions, and other valuable information.
+This will provide information regarding the issuer, validity, subject, public key, signature, extensions, and other valuable information.
 
-With this our RootCA is ready to sign the certificates for the other two CAs. Let´s begin with IntermediateCA1.
+With this, our RootCA is ready to sign the certificates for the other two CAs. Let's begin with IntermediateCA1.
 
-Firstly, go to IntermediateCA1, and create its directory and generate its key pair:
+First, go to IntermediateCA1, create its directory, and generate its key pair:
 
 ```bash
 mkdir -p /root/pki/int-ca1/{private,certs,csr}
@@ -190,7 +188,7 @@ openssl req \
     -subj "/C=PT/O=Advanced Tunnelling Labs/OU=PKI/CN=Intermediate CA 1"
 ```
 
-Now, inspect the contents of the request, and copy it into the RootCA using:
+Now, inspect the contents of the request and copy it into the RootCA using:
 
 ```bash
 cat /root/pki/int-ca1/csr/int-ca1.csr
@@ -200,7 +198,7 @@ Copy the content and paste into RootCA with:
 nano /root/pki/root/csr/int-ca1.csr
 ```
 
-Now that the CSR is in the RootCA, we will create the .ext file that will contain the parameters that we want our certificate to use:
+Now that the CSR is on RootCA, we will create the .ext file containing the parameters that we want our certificate to use:
 
 ```bash
 cat > /root/pki/root/int-ca.ext <<'EOF'
@@ -211,7 +209,7 @@ authorityKeyIdentifier=keyid,issuer
 EOF
 ```
 
-Now, we will generate the certificate for IntermediateCA1 to use using its CSR, the RootCA own certificate and signing key and the .ext file we created:
+Now, we will generate the certificate for IntermediateCA1 using its CSR, the RootCA certificate and signing key, and the .ext file we created:
 
 ```bash
 openssl x509 \
@@ -226,15 +224,15 @@ openssl x509 \
     -extfile /root/pki/root/int-ca.ext
 ```
 
-We can see the resulting certificate using:
+We can inspect the resulting certificate using:
 
 ```bash
 openssl x509     -in /root/pki/root/certs/int-ca1.crt     -noout     -text
 ```
 
-It will be similar to the one used by the RootCA, but in this case it is not self signed and will be used to sign certificates for end-devices.
+It will be similar to the one used by RootCA, but in this case, it is not self-signed and will be used to sign certificates for end devices.
 
-To complete this process for IntermediateCA1, we need to copy the certificate back to CA1, and the RootCA´s own certificate aswell, for certificate chain validation:
+To complete this process for IntermediateCA1, we need to copy the certificate back to IntermediateCA1, as well as RootCA's own certificate, for certificate chain validation:
 
 ```bash
 cat /root/pki/root/certs/int-ca1.crt
@@ -252,7 +250,9 @@ Copy content and paste into IntCA1:
 nano /root/pki/int-ca1/certs/root-ca.crt
 ```
 
-With this, IntermediateCA1 is ready to sign certificates. The steps for IntermediateCA2 are identical, with only changes to names and file paths. The commands used are the following:
+With this, IntermediateCA1 is ready to sign certificates.
+
+The steps for IntermediateCA2 are identical, with only changes to the names and file paths. The commands used are as follows:
 
 ```bash
 mkdir -p /root/pki/int-ca2/{private,certs,csr}
@@ -325,7 +325,7 @@ nano /root/pki/int-ca2/certs/root-ca.crt
 
 With all CAs finished, we will now generate and sign the certificates for the end devices, starting with the TLS devices.
 
-Firstly, we will generate the certificate for TLSServer. We begin by creating the directory, generating the key pair, and creating the CSR:
+First, we will generate the certificate for TLSServer. We begin by creating the directory, generating the key pair, and creating the CSR:
 
 ```bash
 mkdir -p /root/pki/tls-server
@@ -377,7 +377,7 @@ openssl x509 \
     -extfile /root/pki/int-ca1/tls-server.ext
 ```
 
-Finally, we send the certificate back to TLSServer for it to use. Additionaly, we will send IntCA1´s own certificate and the root certificate, so that TLSServer can perform certificate chain validation, in order to trust certificates sent to it:
+Finally, we send the certificate back to TLSServer for it to use. Additionally, we will send IntermediateCA1's own certificate and the RootCA certificate so that TLSServer has the certificates required to validate the certificate chain:
 
 ```bash
 cat /root/pki/int-ca1/certs/tls-server.crt
@@ -403,7 +403,7 @@ Copy content and paste into TLSServer:
 nano /root/pki/tls-server/root-ca.crt
 ```
 
-The configuration for TLSClient, DTLSServer and DTLSClient is extremely similar to this one, varying only in some names, file paths and parameters. As such, we will present their configurations in a more sucint and direct way.
+The configuration for TLSClient, DTLSServer, and DTLSClient is extremely similar to this one, varying only in some names, file paths, and parameters. As such, we will present their configurations in a more succinct and direct way.
 
 Starting with TLSClient:
 
@@ -545,7 +545,7 @@ Copy content and paste into DTLSServer:
 nano /root/pki/dtls-server/root-ca.crt
 ```
 
-And finally, DTLSClient:
+Finally, DTLSClient:
 
 ```bash
 mkdir -p /root/pki/dtls-client
@@ -655,9 +655,9 @@ cat \
 
 Now, when we create a TLS or DTLS tunnel, we can see the devices authenticating through the certificates we generated using our PKI.
 
-Furthermore, on DTLS, if we use a WireShark probe during the handshake, we will be able to see the certificate and its information when it is reassembled.
+Furthermore, on DTLS, if we use a Wireshark probe during the handshake, we will be able to see the certificate and its information when it is reassembled.
 
-To test if everything is working, for TLS, use the commands:
+To test whether everything is working, for TLS, use the following commands:
 
 ```bash
 
@@ -684,9 +684,9 @@ openssl s_client \
 
 ```
 
-The connection should form, and you should see in your terminal the process of authentication occur and suceed.
+The connection should be established, and you should see the authentication process occur successfully in your terminal.
 
-The commands for DTLS are the following:
+The commands for DTLS are as follows:
 
 ```bash
 
@@ -715,5 +715,7 @@ openssl s_client \
 ```
 
 You should see the same authentication process occur and succeed in your DTLS connection.
+
+!!! note "Because Docker images and containers are used for our devices, it is also possible to perform this laboratory in Containerlab if that is your preference."
 
 With all these configurations implemented and successfully tested, we can now move forward to the [Experiments](experiments.md).
