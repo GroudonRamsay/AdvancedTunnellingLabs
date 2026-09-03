@@ -14,15 +14,15 @@ Secure Tunneling Labs is an open-source laboratory package for reproducible expe
 
 ## Supported Protocols
 
-- MACsec
-- ANYsec
-- IPsec
-- WireGuard
-- TLS
-- DTLS
-- SSH
-- PKI
-- Post-quantum and hybrid key-establishment experiments
+- [MACsec](https://1.ieee802.org/security/802-1ae/)
+- [ANYsec](https://documentation.nokia.com/sr/24-7/7750-sr/books/segment-routing-pce-user/anysec.html)
+- [IPsec](https://datatracker.ietf.org/doc/html/rfc6071)
+- [WireGuard](https://www.wireguard.com/papers/wireguard.pdf)
+- [TLS](https://datatracker.ietf.org/doc/html/rfc8446)
+- [DTLS](https://www.rfc-editor.org/info/rfc9147/)
+- [SSH](https://www.rfc-editor.org/info/rfc4251/)
+- [PKI](https://datatracker.ietf.org/doc/html/rfc5280)
+- [Post-quantum and hybrid key-establishment](https://datatracker.ietf.org/doc/html/rfc9794)
 
 ## Intended Use
 
