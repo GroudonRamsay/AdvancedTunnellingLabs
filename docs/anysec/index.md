@@ -4,11 +4,11 @@ ANYSec is a Nokia tunnelling technology that provides low-latency and line-rate 
 
 Based on MACSec standards as the foundation, it introduces the flexibility to offset the authentication and encryption to allow L2, L2.5 and L3 encryption.
 
-In this laboratory, we will create a ContainerLab topology, that uses both ANYsec and MACsec, in order to compare them in terms of functioning, similarities, differences and available features.
+In this laboratory, we will create a Containerlab topology that uses both ANYsec and MACsec to compare their functionality, similarities, differences, and available features.
 
 ## Laboratory Topology
 
-The laboratory topology uses as its source the topology for Nokia´s public laboratory, [SR OS FP5 ANYSec and MACSec Demo](https://github.com/srl-labs/sros-anysec-macsec-lab/tree/main), although with important simplifications and modifications. The focus of our laboratory will be on the tunnelling side of ANYsec and its comparison with similar protocols like MACsec and IPsec. If you want to further investigate ANYsec´s functionalities beyond this we strongly suggest Nokia´s public laboratories.
+The laboratory topology is based on the topology from Nokia's public laboratory, [SR OS FP5 ANYSec and MACSec Demo](https://github.com/srl-labs/sros-anysec-macsec-lab/tree/main), although with significant simplifications and modifications. The focus of our laboratory will be on the tunneling aspects of ANYsec and its comparison with similar protocols such as MACsec and IPsec. If you want to further investigate ANYsec's functionality beyond this laboratory, we strongly recommend Nokia's public laboratories.
 
 <figure markdown id="figure-1">
   ![Figure 1: Laboratory Topology](../images/ANYTOPO.png)
@@ -18,21 +18,21 @@ The laboratory topology uses as its source the topology for Nokia´s public labo
 Our laboratory topology includes:
 
 - Two linux hosts at the edges that act as the users/sources of three distinct services.
-- Two Consumer Edge routers, named CE5 and CE6, who receive the packets from the different services and send them using MACsec to the following routers.
-- Two Provider Edge routers, named PE1 and PE2, who receive the MACsec packets from the consumers, and then switch them for ANYsec packets to send through the network to the other provider.
+- Two Consumer Edge routers, named CE5 and CE6, which receive packets from different services and send them using MACsec to the following routers.
+- Two Provider Edge routers, named PE1 and PE2, which receive the MACsec packets from the consumers and then switch them for ANYsec packets to send through the network to the other provider.
 - Two routers acting as network between Provider Edges, P3 and P4.
 
-With this topology, we will be able to see both MACsec and ANYsec working and see some of ANYsec´s most important features related to tunnelling and security, such as MKA over UDP, End-to-End encryption, Tunnel Encryption and Service Encryption.
+With this topology, we will be able to observe both MACsec and ANYsec in operation and examine some of ANYsec's most important tunneling and security features, such as MKA over UDP, end-to-end encryption, tunnel encryption, and service encryption.
 
 ## Router Configuration
 
-To begin our configuration, we create the folder for this laboratory, named:
+To begin the configuration, create a folder for this laboratory named:
 
 ```bash
 anysec-main-lab
 ```
 
-And then the topology file, named:
+Then, create the topology file named:
 
 ```bash
 anysec-main-lab.clab.yaml
@@ -40,7 +40,7 @@ anysec-main-lab.clab.yaml
 
 !!!warning "Do not forget to create the configs folder and the configuration files for all six routers."
 
-For our topology file we will write the following:
+For the topology file, use the following:
 
 ```yaml
 name: anysec-main-lab
@@ -143,11 +143,11 @@ topology:
     - endpoints: ["host2:eth3", "ce6:1/1/c3/1"]
 ```
 
-!!!warning "Remember to change the path and names for your router image and license file."
+!!!warning "Remember to change the path and names of your router image and license file."
 
-You might notice from this topology, that the hosts have three IP addresses, this is done to simulate the presence of the three different services we will be using, with each IP being used by 3 different interfaces connected to the consumer edge routers.
+You might notice that the hosts have three IP addresses. This is done to simulate the presence of the three different services we will be using, with each IP address assigned to a different interface connected to the Consumer Edge routers.
 
-We will now begin the router configuration. We start with the configuration for P3 and P4, since there is nothing related to tunnelling, only routing-related content.
+We will now begin configuring the routers. We start with the configuration for P3 and P4 because there is nothing related to tunneling, only routing-related configuration.
 
 The configuration for P3 is:
 
@@ -521,7 +521,7 @@ And the configuration for P4 is:
 /configure system name "p4"
 ```
 
-With this done, we will move forward to the most interesting routers, the provider edge.
+With this done, we will move on to the Provider Edge routers.
 
 We will begin with PE1:
 
@@ -546,9 +546,9 @@ We will begin with PE1:
 /configure anysec security-termination-policies policy "STP_SERV-1002" igp-instance-id 2
 ```
 
-This first section starts up ANYsec and chooses the port MKA will use, which is 10000, It also includes the setup of the security policies which each service will use within ANYsec.
+This first section starts ANYsec and selects the port that MKA will use, which is 10000. It also includes the configuration of the security policies that each service will use within ANYsec.
 
-The next configuration is the following:
+The next configuration is as follows:
 
 ```srl
 /configure anysec tunnel-encryption encryption-group "EG_VPRN-1003" admin-state enable
@@ -573,9 +573,9 @@ The next configuration is the following:
 /configure anysec service-encryption encryption-group "EG_SERV-1002" peer 10.0.0.22 admin-state enable
 ```
 
-In this step, we create the encryption group that each service will use within ANYsec, associating the security policy, the CA it will use, the encryption label and its peer.
+In this step, we create the encryption group that each service will use, associating the security policy, the CA it will use, the encryption label and its peer.
 
-We can also see that two of the services will be using tunnel encryption, which means that these two services will be protected the same way by the same tunnel, and then we can see that EG_SERV-1002 is using service encryption, which means that the encryption targets the service itself instead of all the content within the tunnel.
+We can also see that two of the services will be using tunnel encryption, which means that these two services will be protected the same way by the same tunnel. Then we can see that EG_SERV-1002 is using service encryption, which means that the encryption targets the service itself instead of all the content within the tunnel.
 
 Afterwards, the next step is:
 
@@ -634,9 +634,9 @@ Afterwards, the next step is:
 /configure macsec connectivity-association "CA_MACSec1" static-cak pre-shared-key 2 cak-name "123456789ABCDEF0"
 ```
 
-In this step we create the CAs that ANYsec will use for each service/tunnel and the CA to communicate with the consumer edge.
+In this step, we create the CAs that ANYsec will use for each service/tunnel and the CA used to communicate with the Consumer Edge.
 
-The next step of the setup is about setting up routing and ports:
+The next step of the setup involves configuring routing and ports:
 
 ```srl
 /configure multicast-management chassis-level per-mcast-plane-capacity total-capacity dynamic
@@ -827,7 +827,7 @@ The next step of the setup is about setting up routing and ports:
 /configure routing-options flexible-algorithm-definitions flex-algo "Flex-Algo-128_TE-metric" metric-type te-metric
 ```
 
-And finally we configure the services that we will be using:
+Finally, we configure the services that we will use:
 
 ```srl
 /configure service customer "1"
@@ -883,9 +883,9 @@ And finally we configure the services that we will be using:
 /configure system name "pe1"
 ```
 
-In this final step, we configured each of the services, an EPIPE that will go through P3 to reach PE2, a VPRN that uses a flexible routing algorithm and an EPIPE that goes through P4 to reach PE2.
+In this final step, we configure each of the services: an Epipe that goes through P3 to reach PE2, a VPRN that uses a flexible routing algorithm, and an Epipe that goes through P4 to reach PE2.
 
-The configuration for PE2 is the following, and it is very similar to PE1 with minor changes to addresses and labels:
+The configuration for PE2 is as follows. It is very similar to PE1, with minor changes to addresses and labels:
 
 ```srl
 /configure anysec reserved-label-block "Anysec"
@@ -1220,7 +1220,7 @@ The configuration for PE2 is the following, and it is very similar to PE1 with m
 /configure system name "pe2"
 ```
 
-With the provider edges complete, we will move to the final two routers, the consumer edges. Their configuration is rather simple, comprising of the MACsec used with the PEs, the services and the ports used by each service and routing configurations.
+With the Provider Edge routers complete, we will move on to the final two routers, the Consumer Edge routers. Their configuration is relatively simple, consisting of the MACsec connection to the PEs, the services and ports used by each service, and the routing configuration.
 
 We will first configure CE5:
 
@@ -1301,7 +1301,7 @@ We will first configure CE5:
 /configure system name "ce5"
 ```
 
-As we can see this configuration is much simpler than the PEs, configuring the CA used to protect traffic to the PEs, setting up the ports for each service and for MACsec and finally attributing the services to their ports.
+As we can see, this configuration is much simpler than that of the PEs. It configures the CA used to protect traffic to the PEs, sets up the ports for each service and for MACsec, and finally assigns the services to their respective ports.
 
 The configuration for CE6 is very similar:
 
@@ -1382,9 +1382,9 @@ The configuration for CE6 is very similar:
 /configure system name "ce6"
 ```
 
-With all the machines configured, we will now quickly test if everything is running as intended.
+With all the machines configured, we will now quickly verify that everything is running as intended.
 
-Start up the laboratory, then access both PE1 and PE2, and check if their ANYsec is working properly using the commands:
+Start the laboratory, then access PE1 and PE2 and verify that ANYsec is working properly using the following commands:
 
 ```srl
 show anysec tunnel-encryption
@@ -1403,14 +1403,14 @@ For the output of the first command, you should see both of the services that ar
   <figcaption>Figure 3: Tunnel Encryption Information for VPRN</figcaption>
 </figure>
 
-And for the second command, you should see the singular service using service encryption, which should be similar to Figure 4:
+For the second command, you should see the single service using service encryption. The output should be similar to Figure 4:
 
 <figure markdown id="figure-4">
   ![Figure 4: Service Encryption Information for VPLS](../images/ANYSERVVPLS.png)
   <figcaption>Figure 4: Service Encryption Information for VPLS</figcaption>
 </figure>
 
-To verify in a more practical manner, you can access Host 1 and perform pings to three different addresses:
+To verify this in practice, access Host 1 and ping the following three addresses:
 
 ```bash
 ping 192.168.51.8
@@ -1418,4 +1418,4 @@ ping 192.168.52.8
 ping 192.168.63.8
 ```
 
-These pings target the services in Host 2, therefore using all ports, different ANYsec encryptions and paths. If all of these work the laboratory is properly setup and ready for our [Experiments](experiments.md).
+These pings target the services on Host 2, using all three ports, different ANYsec encryption methods, and different paths. If all of them succeed, the laboratory is properly set up and ready for our [Experiments](experiments.md).
