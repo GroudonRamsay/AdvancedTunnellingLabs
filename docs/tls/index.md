@@ -25,7 +25,7 @@ A major innovation in TLS 1.3 is its support for 0-RTT data during session resum
 
 The topology of this laboratory consists of:
 
-- Three docker containers using the container ghcr.io-groudonramsay-tls:latest, labeled as TLSClient, TLSServer and MitM.
+- Three docker containers using the container ghcr.io/groudonramsay/tls:latest, labeled as TLSClient, TLSServer and MitM.
 
 The topology is visible in Figure 2:
 

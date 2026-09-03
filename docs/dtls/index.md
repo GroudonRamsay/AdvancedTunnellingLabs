@@ -21,7 +21,7 @@ Like TLS 1.3, DTLS 1.3 provides a simplified handshake, shown in Figure 1, which
 
 The topology of this laboratory consists of:
 
-- Three Docker containers, using the container in ghcr.io-groudonramsay-tls:latest, labeled as DTLSClient, DTLSServer and MitM.
+- Three Docker containers, using the container in ghcr.io/groudonramsay/tls:latest, labeled as DTLSClient, DTLSServer and MitM.
 
 The topology is visible in Figure 2:
 
