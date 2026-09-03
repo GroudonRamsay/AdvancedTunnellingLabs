@@ -1891,14 +1891,13 @@
   <h1>Overview</h1>
 
 <h2 id="wireguard-laboratory">WireGuard Laboratory</h2>
-<p>WireGuard is a modern VPN protocol that prioritises simplicity, minimal attack surface, and high performance. Designed to be small and auditable, WireGuard contrasts with the complex, feature-rich
-designs of older VPN stacks by providing a concise codebase and a clear security model.</p>
-<p>At its core, WireGuard implements a lightweight network tunnel with strong cryptography, aiming to deliver near kernel-space performance while remaining easy to configure and maintain.</p>
-<p>The protocol is built around a small set of cryptographic primitives chosen for performance and modern security characteristics: Curve25519 for ephemeral Diffie–Hellman, ChaCha20-Poly1305 for authenticated encryption, and Blake2s for hashing. Together these primitives provide robust perfect forward secrecy and resistance to common classes of attacks.</p>
+<p>WireGuard is a modern VPN protocol that prioritizes simplicity, minimal attack surface, and high performance. Designed to be small and auditable, WireGuard contrasts with the complex, feature-rich designs of older VPN stacks by providing a concise codebase and a clear security model.</p>
+<p>At its core, WireGuard implements a lightweight network tunnel with strong cryptography, aiming to deliver near-kernel-space performance while remaining easy to configure and maintain.</p>
+<p>The protocol is built around a small set of cryptographic primitives chosen for performance and modern security characteristics: Curve25519 for ephemeral Diffie–Hellman, ChaCha20-Poly1305 for authenticated encryption, and BLAKE2s for hashing. Together, these primitives provide robust perfect forward secrecy and resistance to common classes of attacks.</p>
 <h2 id="noise-based-handshake">Noise-based Handshake</h2>
-<p>WireGuard’s handshake is built on the Noise Protocol Framework, specifically the Noise_IKpsk2 pattern, defined by the prior knowledge of the initiator and responder static public keys, used
-for authentication, and optionally of a Preshared Key for stronger key derivation.</p>
-<p>In this construction, each peer possesses a long-term static Curve25519 keypair and generates fresh ephemeral keys for every handshake. This pattern provides mutual authentication by requiring the initiator to prove knowledge of the responder’s static public key via keyed MACs, while both sides verify possession of the corresponding private keys through multiple ECDH computations over static–ephemeral and ephemeral–ephemeral key pairs. The resulting shared secrets are expanded with HKDF-BLAKE2s to derive session keys with perfect forward secrecy.</p>
+<p>WireGuard’s handshake is built on the Noise Protocol Framework, specifically the Noise_IKpsk2 pattern, which is based on prior knowledge of the initiator's and responder's static public keys, used for authentication, and optionally a preshared key for stronger key derivation.</p>
+<p>In this construction, each peer possesses a long-term static Curve25519 key pair and generates fresh ephemeral keys for every handshake. This pattern provides mutual authentication by requiring the initiator to prove knowledge of the responder’s static public key via keyed MACs, while both sides verify possession of the corresponding private keys through multiple ECDH computations over static–ephemeral and ephemeral–ephemeral key pairs.</p>
+<p>The resulting shared secrets are expanded with HKDF-BLAKE2s to derive session keys with perfect forward secrecy.</p>
 <p>The practical application of this handshake is rather simple, completing in 1-RTT. The following figure depicts the handshake:</p>
 <figure id="figure-1">
 <p><img alt="Figure 1: WireGuard´s Handshake" src="../images/WGHand.png" />
@@ -1906,19 +1905,19 @@ for authentication, and optionally of a Preshared Key for stronger key derivatio
 <figcaption>Figure 1: WireGuard´s Handshake</figcaption>
 </figure>
 <h2 id="wireguard-laboratory-overview">WireGuard Laboratory Overview</h2>
-<p>Now that we grasp some of WireGuard´s most important concepts and features, we will advance to the configuration of its experimental laboratory to see all these concepts in practice.</p>
+<p>Now that we understand some of WireGuard’s most important concepts and features, we will move on to configuring its experimental laboratory to see all these concepts in practice.</p>
 <p>This laboratory demonstrates:</p>
 <ul>
-<li>GNS3 configuration for 3 Docker hosts with WireGuard installed</li>
+<li>GNS3 configuration for three Docker hosts with WireGuard installed</li>
 <li>Setup for two WireGuard peers to form a tunnel</li>
 <li>Roaming capability of WireGuard to form a tunnel with the same peer in two different hosts</li>
-<li>Packet analysis of WireGuard´s handshake, KeepAlive messages and normal operation</li>
+<li>Packet analysis of WireGuard's handshake, KeepAlive messages and normal operation</li>
 </ul>
 <h2 id="laboratory-topology">Laboratory Topology</h2>
 <p>The topology contains:</p>
 <ul>
 <li>Three Docker containers with WireGuard pre-installed</li>
-<li>An ethernet switch to connect all devices</li>
+<li>An Ethernet switch to connect all devices</li>
 <li>Two WireGuard peers, with two machines sharing the same host</li>
 </ul>
 <figure id="figure-2">
@@ -1927,31 +1926,31 @@ for authentication, and optionally of a Preshared Key for stronger key derivatio
 <figcaption>Figure 2: WireGuard Laboratory Topology</figcaption>
 </figure>
 <h2 id="topology-configuration">Topology Configuration</h2>
-<p>To create this topology, we need to obtain the necessary docker container, which can be done by doing:</p>
+<p>To create this topology, we need to obtain the necessary Docker container. This can be done by following these steps:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>New<span class="w"> </span>Template<span class="w"> </span>-&gt;<span class="w"> </span>Manually<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>new<span class="w"> </span>template<span class="w"> </span>-&gt;<span class="w"> </span>Docker<span class="w"> </span>Containers<span class="w"> </span>-&gt;
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>New<span class="w"> </span>-&gt;<span class="w"> </span>New<span class="w"> </span>Image<span class="w"> </span>-&gt;<span class="w"> </span>ghcr.io/groudonramsay/ubuntu-wireguard:1.0
 </span></code></pre></div>
-<p>For the options use Telnet, 1 Adapter and for Envirnoment Variable use --cap-add NET_ADMIN.</p>
-<p>With the Docker appliance created, it is just a matter of placing all three machines and an ethernet switch connecting them all together.</p>
-<p>Now that the hosts are in place and connected to the switch, start them all, and let´s begin the configuration.</p>
-<p>Firstly, we will generate the private/public key pair for WG1 and WG2, using the following commands:</p>
+<p>For the options, use Telnet, 1 Adapter, and --cap-add NET_ADMIN as the environment variable.</p>
+<p>With the Docker appliance created, simply place all three machines and an Ethernet switch connecting them all together.</p>
+<p>Now that the hosts are in place and connected to the switch, start them all, and let's begin the configuration.</p>
+<p>First, we will generate the private/public key pair for WG1 and WG2 using the following commands:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wg<span class="w"> </span>genkey<span class="w"> </span><span class="p">|</span><span class="w"> </span>tee<span class="w"> </span>privatekey<span class="w"> </span><span class="p">|</span><span class="w"> </span>wg<span class="w"> </span>pubkey<span class="w"> </span>&gt;<span class="w"> </span>publickey
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cat<span class="w"> </span>privatekey
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>cat<span class="w"> </span>publickey
 </span></code></pre></div>
-<p>Save the two keys from both hosts in a note file to use afterwards.</p>
-<p>With the keys generated and saved, we now need to set the IP address of all devices. To do so use the commands:</p>
+<p>Save the two keys from both hosts in a note file for later use.</p>
+<p>With the keys generated and saved, we now need to set the IP address of all devices. To do so, use the following commands:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ip<span class="w"> </span>address<span class="w"> </span>add<span class="w"> </span>dev<span class="w"> </span>eth0<span class="w"> </span><span class="m">100</span>.0.0.1
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span><span class="m">100</span>.0.0.0/24<span class="w"> </span>dev<span class="w"> </span>eth0
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>ip<span class="w"> </span>add<span class="w"> </span>show<span class="w"> </span>eth0
 </span></code></pre></div>
-<p>For WG2, change the last digit to 2, and for RoamingTester change the last digit to 3.</p>
-<p>With all the keys and necessary information obtained, we will now configure our WireGuard devices to be able to connect to each other and form a tunnel.</p>
+<p>For WG2, change the last digit to 2, and for RoamingTester, change the last digit to 3.</p>
+<p>With all the keys and necessary information obtained, we will now configure our WireGuard devices so that they can connect to each other and form a tunnel.</p>
 <p>For WG1, use the following command to create and open a configuration file:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nano<span class="w"> </span>/etc/wireguard/wg0.conf
 </span></code></pre></div>
-<p>Then, paste the following configuration into the file using right click:</p>
+<p>Then, paste the following configuration into the file:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[Interface]
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>PrivateKey = cat privatekey (WG1)
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Address = 10.0.0.1/24
@@ -1962,7 +1961,7 @@ for authentication, and optionally of a Preshared Key for stronger key derivatio
 </span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>AllowedIPs = 10.0.0.2/32
 </span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>PersistentKeepalive = 25
 </span></code></pre></div>
-<p>Place the respective private and public keys in the marked spots, and then save and exit from the file.</p>
+<p>Place the respective private and public keys in the marked spots, and then save and exit the file.</p>
 <p>With this configuration, we instruct WireGuard to create the virtual interface wg0, which will listen on port 51820 and use the address 10.0.0.1.</p>
 <p>Now we will configure both WG2 and RoamingTester with the same configuration:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>[Interface]
@@ -1976,61 +1975,61 @@ for authentication, and optionally of a Preshared Key for stronger key derivatio
 </span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>Endpoint = 100.0.0.1:51820
 </span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>PersistentKeepalive = 25
 </span></code></pre></div>
-<p>With this configuration on both devices, we instruct them to create the wg0 interface, with 10.0.0.2 as their IP. Furthermore, we instruct them that their peer is 10.0.0.1, and that the IP to respond back during the handshake is the IP of WG1.</p>
+<p>With this configuration on both devices, we instruct them to create the wg0 interface with 10.0.0.2 as its IP address. Furthermore, we instruct them that their peer is 10.0.0.1 and that the IP address to which they should send handshake messages is the IP address of WG1.</p>
 <div class="admonition question">
 <p class="admonition-title">Why did we configure RoamingTester with the same keys and interface as WG2? What can we accomplish with this?</p>
 </div>
-<p>With the configurations complete, all that is left is to test if it was properly setup and if the tunnel forms.</p>
-<p>To test this, first we will activate the interface in WG1, using the command:</p>
+<p>With the configurations complete, all that is left is to test whether everything was properly set up and whether the tunnel forms.</p>
+<p>To test this, first activate the interface on WG1 using the following command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>wg-quick<span class="w"> </span>up<span class="w"> </span>wg0
 </span></code></pre></div>
-<p>And we will check on its status using:</p>
+<p>Then, check its status using:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>wg
 </span></code></pre></div>
-<p>You should see an output similar to the one presented in Figure 3.</p>
+<p>You should see output similar to that presented in Figure 3.</p>
 <figure id="figure-3">
 <p><img alt="Figure 3: WireGuard Interface Output" src="../images/WGInt.png" width="400" />
   </p>
 <figcaption>Figure 3: WireGuard Interface Output</figcaption>
 </figure>
-<p>This means that our interface is up and waiting for a peer to begin the connection. Now we will start the interface on WG2 to check if everything is correct.</p>
-<p>To start the interface we will do the same command as WG1:</p>
+<p>This means that our interface is up and waiting for a peer to begin the connection. Now we will start the interface on WG2 to check whether everything is correct.</p>
+<p>To start the interface, we will use the same command as on WG1:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>wg-quick<span class="w"> </span>up<span class="w"> </span>wg0
 </span></code></pre></div>
-<p>And the same command to check the interface:</p>
+<p>Use the same command to check the interface:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>wg
 </span></code></pre></div>
-<p>The difference this time, is the fact that now there are two interfaces up that are each other´s peer, which means that a tunnel will now form, and we will get a different output, detailed in Figure 4:</p>
+<p>The difference this time is that there are now two interfaces that are up and are each other's peers, which means that a tunnel can now be formed. We will get a different output, as shown in Figure 4:</p>
 <figure id="figure-4">
 <p><img alt="Figure 4: WireGuard Interface Output2" src="../images/WGInt2.png" width="400" />
   </p>
 <figcaption>Figure 4: WireGuard Tunnel formed</figcaption>
 </figure>
-<p>With this output we can verify that this interface is also functioning, and that a peer, WG1, has formed a tunnel.</p>
-<p>We will end our testing by opening WireShark in GNS3 in a link between WG1 and WG2, and then by performing a ping from WG1 to the tunnel entrance of WG2, to ensure that WireGuard is in use.</p>
-<p>To test this we will first ping the regular interface of WG2, to see that the underlying connection still exists and works:</p>
+<p>With this output, we can verify that this interface is also functioning and that a peer, WG1, has formed a tunnel.</p>
+<p>We will end our testing by opening Wireshark in GNS3 on a link between WG1 and WG2 and then performing a ping from WG1 to the tunnel endpoint of WG2 to ensure that WireGuard is in use.</p>
+<p>To test this, we will first ping the regular interface of WG2 to verify that the underlying connection still exists and works:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>ping<span class="w"> </span><span class="m">100</span>.0.0.2
 </span></code></pre></div>
-<p>And we will see in WireShark that the ICMP packets appear as usual and that connection is still here.</p>
+<p>We should see in Wireshark that the ICMP packets appear as usual and that the connection is still working.</p>
 <figure id="figure-5">
 <p><img alt="Figure 5: WG1 Regular Ping" src="../images/WGPing1.png" />
   </p>
 <figcaption>Figure 5: WG1 Regular Ping</figcaption>
 </figure>
-<p>Now we will ping through the WireGuard tunnel, and see that the connection is now encrypted. First, we ping using:</p>
+<p>Now we will ping through the WireGuard tunnel and see that the connection is now encrypted. First, we ping using:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ping<span class="w"> </span><span class="m">10</span>.0.0.2
 </span></code></pre></div>
-<p>And now we should see in WireShark the following packets:</p>
+<p>We should now see the following packets in Wireshark:</p>
 <figure id="figure-6">
-<p><img alt="Figure 5: WG1 Tunnel Ping" src="../images/WGPing2.png" />
+<p><img alt="Figure 6: WG1 Tunnel Ping" src="../images/WGPing2.png" />
   </p>
 <figcaption>Figure 6: WG1 Tunnel Ping</figcaption>
 </figure>
-<p>Which means that the tunnel has successfully formed and the packets that go through it are encrypted with WireGuard.</p>
+<p>This means that the tunnel has successfully formed and that the packets sent through it are encrypted with WireGuard.</p>
 <div class="admonition note">
-<p class="admonition-title">With the usage of Docker Image and containers for our WireGuard devices, it is entirely possible to perform this laboratory in ContainerLab if that is your preference.</p>
+<p class="admonition-title">Because Docker images and containers are used for our WireGuard devices, it is also possible to perform this laboratory in Containerlab if that is your preference.</p>
 </div>
-<p>Now that the setup is complete, we will perform some experiments to see WireGuard in action, following the guides in <a href="experiments/">WireGuard Experiments</a></p>
+<p>Now that the setup is complete, we will perform some experiments to see WireGuard in action by following the guides in <a href="experiments/">WireGuard Experiments</a></p>
 
 
 

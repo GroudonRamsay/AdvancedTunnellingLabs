@@ -1870,22 +1870,20 @@
 
 <h2 id="pki-laboratory">PKI Laboratory</h2>
 <p>A public key infrastructure (PKI) consists of the components necessary to securely distribute public keys: certificates, a method to revoke certificates, and a method to evaluate a chain of certificates from public keys that are known and trusted in advance (trust anchors) to the target name.</p>
-<p>Its primary purpose is to bind public keys to verified identities through digital certificates, allowing entities to authenticate one another without prior contact. At the centre of this infrastructure are Certificate Authorities (CAs), which issue certificates after validating the identity of the subject.</p>
-<p>PKI is structured as a hierarchical trust model consisting of a root CA, subordinate or intermediate CAs, and end-entity certificates. The root CA acts as the trust anchor and is self-signed, meaning its legitimacy must be provisioned securely into devices or software beforehand.</p>
-<p>Intermediate CAs extend trust outward by issuing certificates to end entities, while also providing separation of responsibilities
-and risk containment in case of compromise. Certificate chains linking end-entity certificates to the root provide a verifiable path of trust that can be validated during protocol handshakes.</p>
+<p>Its primary purpose is to bind public keys to verified identities through digital certificates, allowing entities to authenticate one another without prior contact. At the center of this infrastructure are Certificate Authorities (CAs), which issue certificates after validating the identity of the subject according to their issuance policies.</p>
+<p>PKI is structured as a hierarchical trust model consisting of a root CA, subordinate or intermediate CAs, and end-entity certificates. The root CA acts as the trust anchor and is self-signed, meaning that its certificate must be provisioned securely into devices or software beforehand.</p>
+<p>Intermediate CAs extend trust outward by issuing certificates to end entities, while also providing separation of responsibilities and risk containment in case of compromise. Certificate chains linking end-entity certificates to the root provide a verifiable path of trust that can be validated during protocol handshakes.</p>
 <h2 id="certificate-management">Certificate Management</h2>
-<p>The lifecycle of a digital certificate begins with enrolment, where a subject generates a key pair, followed by a submission of a Certificate Signing Request (CSR) to a CA.</p>
-<p>The CA verifies the identity of the subject using authentication procedures appropriate to the intended security level, ranging from simple domain validation to more stringent organisational or extended validation checks.</p>
-<p>Once validated, the CA signs the certificate and publishes it along with its status information, enabling entities to retrieve it for several operations, such as identity authentication, secure key exchange, digital signing of documents and establishment of trust between two parties, among others.</p>
-<p>Certificate validity must be continuously maintained through renewal and rotation. Renewal occurs before certificate expiration or revocation to ensure uninterrupted operation, while
-rotation involves periodically replacing key pairs to maintain cryptographic freshness and minimise long-term exposure.</p>
-<p>Revocation is also a critical part of lifecycle management, addressing scenarios where private keys are compromised or where certificate information becomes invalid. Revocation information is distributed through Certificate Revocation Lists (CRLs) and online services such as the Online Certificate Status Protocol (OCSP), which enables real-time verification of certificate status.</p>
-<p>Automated mechanisms such as the Automatic Certificate Management Environment (ACME), have become increasingly important for scaling PKI operations in large distributed systems. ACME enables automated certificate issuance, renewal, and revocation processes.</p>
+<p>The lifecycle of a digital certificate begins with enrollment, where a subject generates a key pair, followed by the submission of a Certificate Signing Request (CSR) to a CA.</p>
+<p>The CA validates the identity of the subject using authentication procedures appropriate to the intended security level, ranging from simple domain validation to more stringent organizational or extended validation checks.</p>
+<p>Once validated, the CA signs the certificate and may publish it along with its status information, enabling entities to retrieve it for several operations, such as identity authentication, secure key exchange, digital signing of documents, and establishing trust between two parties, among others.</p>
+<p>Certificate validity must be continuously maintained through renewal and rotation. Renewal occurs before certificate expiration to ensure uninterrupted operation, while rotation involves periodically replacing key pairs to maintain cryptographic freshness and minimize long-term exposure.</p>
+<p>Revocation is also a critical part of lifecycle management, addressing scenarios where private keys are compromised or certificate information becomes invalid. Revocation information can be distributed through Certificate Revocation Lists (CRLs) and online services such as the Online Certificate Status Protocol (OCSP), which enables the status of a certificate to be checked.</p>
+<p>Automated mechanisms such as the Automatic Certificate Management Environment (ACME) have become increasingly important for scaling PKI operations in large distributed systems. ACME enables automated certificate issuance, renewal, and revocation processes.</p>
 <h2 id="laboratory-topology">Laboratory Topology</h2>
-<p>The topology of this laboratory consists in:</p>
+<p>The topology of this laboratory consists of:</p>
 <ul>
-<li>Seven docker containers, using the image ghcr.io/groudonramsay/ubuntu-tls:latest, which are RootCA, IntermediateCA1 and IntermediateCA2, TLSClient, TLSServer, DTLSClient and DTLSServer.</li>
+<li>Seven Docker containers, using the image ghcr.io/groudonramsay/ubuntu-tls:latest, which are RootCA, IntermediateCA1 and IntermediateCA2, TLSClient, TLSServer, DTLSClient and DTLSServer.</li>
 </ul>
 <p>The topology is visible in Figure 1:</p>
 <figure id="figure-1">
@@ -1897,9 +1895,9 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>--cap-add<span class="w"> </span>NET_ADMIN
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>--cap-add<span class="w"> </span>NET_RAW
 </span></code></pre></div>
-<p>Before beggining the configuration, modify all machines to persist the folder /root/pki, in order to keep the PKI setup. Furthermore, modify IntermediateCA1 and IntermediateCA2 to have 3 adapters.</p>
+<p>Before beginning the configuration, modify all machines to persist the /root/pki folder in order to preserve the PKI setup. Furthermore, modify IntermediateCA1 and IntermediateCA2 to have three adapters.</p>
 <h2 id="device-configuration">Device Configuration</h2>
-<p>We will begin the configuration by adding all the necessary IPs and routes for the PKI to properly function.</p>
+<p>We will begin the configuration by adding all the necessary IP addresses and routes for the PKI to function properly.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>RootCA:
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.0.1.10/24<span class="w"> </span>dev<span class="w"> </span>eth0
@@ -1963,12 +1961,12 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span></code></pre></div>
 <p>After this setup, you should be able to ping any device from RootCA.</p>
 <p>With this stage complete, we will now begin configuring our Certificate Authorities. In our topology, we will have a root Certificate Authority, RootCA, which will have a self-signed certificate.</p>
-<p>Then, this CA will sign the certificates for other two CAs to use, IntermediateCA1 and IntermediateCA2. These CAs will be responsible for signing certificates for the end devices. IntermediateCA1 will sign the certificates for the TLS devices, and IntermediateCA2 will sign the certificates for the DTLS devices.</p>
+<p>This CA will then sign the certificates for the other two CAs, IntermediateCA1 and IntermediateCA2. These CAs will be responsible for signing certificates for the end devices. IntermediateCA1 will sign the certificates for the TLS devices, and IntermediateCA2 will sign the certificates for the DTLS devices.</p>
 <p>We will begin by configuring RootCA. The first step is generating the directory where we will work and securing it using:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/root/pki/root/<span class="o">{</span>private,certs,csr<span class="o">}</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>/root/pki/root/private
 </span></code></pre></div>
-<p>Afterwards, we will generate the key pair that this CA will use, with:</p>
+<p>Afterward, we will generate the key pair that this CA will use, with:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>openssl<span class="w"> </span>genpkey<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>-algorithm<span class="w"> </span>RSA<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>-pkeyopt<span class="w"> </span>rsa_keygen_bits:4096<span class="w"> </span><span class="se">\</span>
@@ -1976,7 +1974,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>/root/pki/root/private/root-ca.key
 </span></code></pre></div>
-<p>And finally, we will generate the RootCA certificate:</p>
+<p>Finally, we will generate the RootCA certificate:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>openssl<span class="w"> </span>req<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>-x509<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>-new<span class="w"> </span><span class="se">\</span>
@@ -1992,9 +1990,9 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 <p>To check our certificate, we can use the command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w">     </span>-in<span class="w"> </span>/root/pki/root/certs/root-ca.crt<span class="w">     </span>-noout<span class="w">     </span>-text
 </span></code></pre></div>
-<p>This will provide information regarding issuer, validity, subject, the public key used, the signature, its extensions, and other valuable information.</p>
-<p>With this our RootCA is ready to sign the certificates for the other two CAs. Let´s begin with IntermediateCA1.</p>
-<p>Firstly, go to IntermediateCA1, and create its directory and generate its key pair:</p>
+<p>This will provide information regarding the issuer, validity, subject, public key, signature, extensions, and other valuable information.</p>
+<p>With this, our RootCA is ready to sign the certificates for the other two CAs. Let's begin with IntermediateCA1.</p>
+<p>First, go to IntermediateCA1, create its directory, and generate its key pair:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/root/pki/int-ca1/<span class="o">{</span>private,certs,csr<span class="o">}</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>/root/pki/int-ca1/private
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
@@ -2013,14 +2011,14 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span>-out<span class="w"> </span>/root/pki/int-ca1/csr/int-ca1.csr<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span>-subj<span class="w"> </span><span class="s2">&quot;/C=PT/O=Advanced Tunnelling Labs/OU=PKI/CN=Intermediate CA 1&quot;</span>
 </span></code></pre></div>
-<p>Now, inspect the contents of the request, and copy it into the RootCA using:</p>
+<p>Now, inspect the contents of the request and copy it into the RootCA using:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cat<span class="w"> </span>/root/pki/int-ca1/csr/int-ca1.csr
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Copy<span class="w"> </span>the<span class="w"> </span>content<span class="w"> </span>and<span class="w"> </span>paste<span class="w"> </span>into<span class="w"> </span>RootCA<span class="w"> </span>with:
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>nano<span class="w"> </span>/root/pki/root/csr/int-ca1.csr
 </span></code></pre></div>
-<p>Now that the CSR is in the RootCA, we will create the .ext file that will contain the parameters that we want our certificate to use:</p>
+<p>Now that the CSR is on RootCA, we will create the .ext file containing the parameters that we want our certificate to use:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>/root/pki/root/int-ca.ext<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="s">basicConstraints=critical,CA:true,pathlen:0</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="s">keyUsage=critical,keyCertSign,cRLSign</span>
@@ -2028,7 +2026,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="s">authorityKeyIdentifier=keyid,issuer</span>
 </span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="s">EOF</span>
 </span></code></pre></div>
-<p>Now, we will generate the certificate for IntermediateCA1 to use using its CSR, the RootCA own certificate and signing key and the .ext file we created:</p>
+<p>Now, we will generate the certificate for IntermediateCA1 using its CSR, the RootCA certificate and signing key, and the .ext file we created:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>openssl<span class="w"> </span>x509<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span>-req<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span>-sha256<span class="w"> </span><span class="se">\</span>
@@ -2040,11 +2038,11 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span>-out<span class="w"> </span>/root/pki/root/certs/int-ca1.crt<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span>-extfile<span class="w"> </span>/root/pki/root/int-ca.ext
 </span></code></pre></div>
-<p>We can see the resulting certificate using:</p>
+<p>We can inspect the resulting certificate using:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>openssl<span class="w"> </span>x509<span class="w">     </span>-in<span class="w"> </span>/root/pki/root/certs/int-ca1.crt<span class="w">     </span>-noout<span class="w">     </span>-text
 </span></code></pre></div>
-<p>It will be similar to the one used by the RootCA, but in this case it is not self signed and will be used to sign certificates for end-devices.</p>
-<p>To complete this process for IntermediateCA1, we need to copy the certificate back to CA1, and the RootCA´s own certificate aswell, for certificate chain validation:</p>
+<p>It will be similar to the one used by RootCA, but in this case, it is not self-signed and will be used to sign certificates for end devices.</p>
+<p>To complete this process for IntermediateCA1, we need to copy the certificate back to IntermediateCA1, as well as RootCA's own certificate, for certificate chain validation:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>cat<span class="w"> </span>/root/pki/root/certs/int-ca1.crt
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Copy<span class="w"> </span>content<span class="w"> </span>and<span class="w"> </span>paste<span class="w"> </span>into<span class="w"> </span>IntCA1:
@@ -2059,7 +2057,8 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
 </span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>nano<span class="w"> </span>/root/pki/int-ca1/certs/root-ca.crt
 </span></code></pre></div>
-<p>With this, IntermediateCA1 is ready to sign certificates. The steps for IntermediateCA2 are identical, with only changes to names and file paths. The commands used are the following:</p>
+<p>With this, IntermediateCA1 is ready to sign certificates.</p>
+<p>The steps for IntermediateCA2 are identical, with only changes to the names and file paths. The commands used are as follows:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/root/pki/int-ca2/<span class="o">{</span>private,certs,csr<span class="o">}</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>/root/pki/int-ca2/private
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
@@ -2128,7 +2127,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-13-66"><a id="__codelineno-13-66" name="__codelineno-13-66" href="#__codelineno-13-66"></a>nano<span class="w"> </span>/root/pki/int-ca2/certs/root-ca.crt
 </span></code></pre></div>
 <p>With all CAs finished, we will now generate and sign the certificates for the end devices, starting with the TLS devices.</p>
-<p>Firstly, we will generate the certificate for TLSServer. We begin by creating the directory, generating the key pair, and creating the CSR:</p>
+<p>First, we will generate the certificate for TLSServer. We begin by creating the directory, generating the key pair, and creating the CSR:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/root/pki/tls-server
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>openssl<span class="w"> </span>genpkey<span class="w"> </span><span class="se">\</span>
@@ -2171,7 +2170,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">    </span>-out<span class="w"> </span>/root/pki/int-ca1/certs/tls-server.crt<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="w">    </span>-extfile<span class="w"> </span>/root/pki/int-ca1/tls-server.ext
 </span></code></pre></div>
-<p>Finally, we send the certificate back to TLSServer for it to use. Additionaly, we will send IntCA1´s own certificate and the root certificate, so that TLSServer can perform certificate chain validation, in order to trust certificates sent to it:</p>
+<p>Finally, we send the certificate back to TLSServer for it to use. Additionally, we will send IntermediateCA1's own certificate and the RootCA certificate so that TLSServer has the certificates required to validate the certificate chain:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>cat<span class="w"> </span>/root/pki/int-ca1/certs/tls-server.crt
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
 </span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>Copy<span class="w"> </span>content<span class="w"> </span>and<span class="w"> </span>paste<span class="w"> </span>into<span class="w"> </span>TLSServer:
@@ -2194,7 +2193,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>
 </span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>nano<span class="w"> </span>/root/pki/tls-server/root-ca.crt
 </span></code></pre></div>
-<p>The configuration for TLSClient, DTLSServer and DTLSClient is extremely similar to this one, varying only in some names, file paths and parameters. As such, we will present their configurations in a more sucint and direct way.</p>
+<p>The configuration for TLSClient, DTLSServer, and DTLSClient is extremely similar to this one, varying only in some names, file paths, and parameters. As such, we will present their configurations in a more succinct and direct way.</p>
 <p>Starting with TLSClient:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/root/pki/tls-client
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
@@ -2329,7 +2328,7 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-19-64"><a id="__codelineno-19-64" name="__codelineno-19-64" href="#__codelineno-19-64"></a>
 </span><span id="__span-19-65"><a id="__codelineno-19-65" name="__codelineno-19-65" href="#__codelineno-19-65"></a>nano<span class="w"> </span>/root/pki/dtls-server/root-ca.crt
 </span></code></pre></div>
-<p>And finally, DTLSClient:</p>
+<p>Finally, DTLSClient:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/root/pki/dtls-client
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>openssl<span class="w"> </span>genpkey<span class="w"> </span><span class="se">\</span>
@@ -2422,8 +2421,8 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span>&gt;<span class="w"> </span>/root/pki/dtls-client/dtls-client-chain.crt
 </span></code></pre></div>
 <p>Now, when we create a TLS or DTLS tunnel, we can see the devices authenticating through the certificates we generated using our PKI.</p>
-<p>Furthermore, on DTLS, if we use a WireShark probe during the handshake, we will be able to see the certificate and its information when it is reassembled.</p>
-<p>To test if everything is working, for TLS, use the commands:</p>
+<p>Furthermore, on DTLS, if we use a Wireshark probe during the handshake, we will be able to see the certificate and its information when it is reassembled.</p>
+<p>To test whether everything is working, for TLS, use the following commands:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>TLSServer:
 </span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
 </span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>openssl<span class="w"> </span>s_server<span class="w"> </span><span class="se">\</span>
@@ -2445,8 +2444,8 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="w">    </span>-cert_chain<span class="w"> </span>/root/pki/tls-client/int-ca1.crt<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">    </span>-verify_return_error
 </span></code></pre></div>
-<p>The connection should form, and you should see in your terminal the process of authentication occur and suceed.</p>
-<p>The commands for DTLS are the following:</p>
+<p>The connection should be established, and you should see the authentication process occur successfully in your terminal.</p>
+<p>The commands for DTLS are as follows:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>DTLSServer:
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
 </span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>openssl<span class="w"> </span>s_server<span class="w"> </span><span class="se">\</span>
@@ -2471,6 +2470,9 @@ rotation involves periodically replacing key pairs to maintain cryptographic fre
 </span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="w">    </span>-verify_return_error
 </span></code></pre></div>
 <p>You should see the same authentication process occur and succeed in your DTLS connection.</p>
+<div class="admonition note">
+<p class="admonition-title">Because Docker images and containers are used for our devices, it is also possible to perform this laboratory in Containerlab if that is your preference.</p>
+</div>
 <p>With all these configurations implemented and successfully tested, we can now move forward to the <a href="experiments/">Experiments</a>.</p>
 
 
