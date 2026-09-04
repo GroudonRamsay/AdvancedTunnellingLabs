@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: "Secure Tunneling Labs"
+message: "If you use this artifact, please cite it using the metadata from this file."
+type: software
+authors:
+  - family-names: "Capitão"
+    given-names: "Miguel"
+  - family-names: "Valadas"
+    given-names: "Rui"
+version: "1.0.0"
+date-released: "TBD"
+license: "TBD"
+repository-code: "https://github.com/groudonramsay/SecureTunnelingLabs"
+url: "https://groudonramsay.github.io/SecureTunnelingLabs/"
