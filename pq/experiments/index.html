@@ -79,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#laboratory-experiments" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1591,7 +1596,7 @@
   <span class="md-ellipsis">
     
   
-    Post-Quantum and Hybrid Key Exchange
+    PQ and Hybrid Key Exchange
   
 
     
@@ -1607,7 +1612,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Post-Quantum and Hybrid Key Exchange
+    PQ and Hybrid Key Exchange
   
 
           </label>
@@ -1655,6 +1660,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1671,6 +1694,78 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-handshake-with-hybrid-kems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS Handshake with Hybrid KEMs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classic-vs-hybrid-kems-in-handshakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classic vs Hybrid KEMs in Handshakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-kem-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ML-KEM primitive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-group-mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid Group Mismatch
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1710,6 +1805,69 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-experiments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Experiments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tls-handshake-with-hybrid-kems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS Handshake with Hybrid KEMs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classic-vs-hybrid-kems-in-handshakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classic vs Hybrid KEMs in Handshakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ml-kem-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ML-KEM primitive
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-group-mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hybrid Group Mismatch
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1730,7 +1888,175 @@
 
   <h1>Experiments</h1>
 
-
+<h2 id="laboratory-experiments">Laboratory Experiments</h2>
+<p>We will now begin the PQ experiments, focusing on observing hybrid algorithms being used during a TLS handshake, comparing classical and hybrid key exchange methods during the handshake, seeing how ML-KEM functions independently, and testing group mismatches between hybrid and classical algorithms.</p>
+<h2 id="tls-handshake-with-hybrid-kems">TLS Handshake with Hybrid KEMs</h2>
+<p>For our first experiment, we will examine the commands available to force TLS to use a hybrid key exchange group and identify where it is referenced in both the terminal output and Wireshark.</p>
+<p>First, we will look at the commands used to force a hybrid key exchange group. In theory, since X25519MLKEM768 is one of the available hybrid methods, it may be selected by default when supported by the implementation, but we can explicitly force its use for this experiment.</p>
+<p>To do this, start the server as usual and then connect the client using the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>openssl<span class="w"> </span>s_client<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>-connect<span class="w"> </span><span class="m">10</span>.10.10.1:4433<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span>-tls1_3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span>-groups<span class="w"> </span>X25519MLKEM768<span class="w"> </span><span class="se">\</span>
+</span></code></pre></div>
+<p>The TLS connection should be successfully established. By analyzing the Wireshark capture and the terminal output, we should find evidence that our hybrid key exchange group was used. Let's start with Wireshark:</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: Hybrid Handshake Client side" src="../../images/PQMLKEM1.png" />
+  </p>
+<figcaption>Figure 1: Hybrid Handshake Client side</figcaption>
+</figure>
+<p>As shown in Figure 1, the Client Hello contains X25519MLKEM768 as the only offered key exchange group in the key_share extension. This is expected because we configured the client to restrict its available groups to this single group.</p>
+<p>We can further confirm the negotiated group by examining the Server Hello in Figure 2:</p>
+<figure id="figure-2">
+<p><img alt="Figure 2: Hybrid Handshake Server side" src="../../images/PQMLKEM2.png" />
+  </p>
+<figcaption>Figure 2: Hybrid Handshake Server side</figcaption>
+</figure>
+<p>The Server Hello confirms that X25519MLKEM768 was selected for the key exchange.</p>
+<p>We can also confirm the negotiated group through the information displayed in the terminal when the client connects to the server.</p>
+<p>By looking at the negotiation section of the output shown in Figure 3, we can see information such as the cipher suite, protocol version, compression, public key information, and certificate verification result. We can also see the negotiated group, which in this case is our chosen X25519MLKEM768.</p>
+<figure id="figure-3">
+<p><img alt="Figure 3: Hybrid Handshake Client side terminal" src="../../images/PQMLKEM3.png" />
+  </p>
+<figcaption>Figure 3: Hybrid Handshake Client side terminal</figcaption>
+</figure>
+<p>Although we can see all this evidence of the use of a hybrid key exchange group, the overall TLS 1.3 handshake structure remains largely unchanged. The main difference is the key exchange mechanism and the cryptographic material used during key establishment, which provides additional protection against future quantum attacks.</p>
+<h2 id="classic-vs-hybrid-kems-in-handshakes">Classic vs Hybrid KEMs in Handshakes</h2>
+<p>As we have seen previously, the overall TLS 1.3 handshake does not change when different key exchange groups are used. The main differences lie in the computational requirements and the amount of resources necessary to perform the handshake when using a classical method compared with a hybrid one.</p>
+<p>Although hybrid methods provide additional post-quantum protection, they generally require more resources to generate and process their cryptographic material. They also result in larger handshake messages that must be transmitted across the network.</p>
+<p>We can observe this difference by examining the size of the key share information in both the Client Hello and Server Hello from our hybrid test.</p>
+<figure id="figure-4">
+<p><img alt="Figure 4: Hybrid Handshake Client Hello length" src="../../images/PQLENGTH1.png" />
+  </p>
+<figcaption>Figure 4: Hybrid Handshake Client Hello length</figcaption>
+</figure>
+<figure id="figure-5">
+<p><img alt="Figure 5: Hybrid Handshake Server Hello length" src="../../images/PQLENGTH2.png" />
+  </p>
+<figcaption>Figure 5: Hybrid Handshake Server Hello length</figcaption>
+</figure>
+<p>As shown in Figure 4, the Client Hello has a length of 1,440 bytes, with the key share alone taking 1,258 bytes, or approximately 87% of the entire packet.</p>
+<p>Similarly, Figure 5 shows that the Server Hello has a length of 1,210 bytes, with the key share taking 1,124 bytes, or approximately 93% of the entire packet.</p>
+<p>This represents a significant amount of space dedicated to key exchange material. While this difference may have little practical impact in a simulated environment, in a real-world scenario it can result in larger handshake messages, increased bandwidth requirements, and additional computational and energy costs.</p>
+<p>We can compare these results with a classical key exchange group by establishing a new client connection:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>openssl<span class="w"> </span>s_client<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span>-connect<span class="w"> </span><span class="m">10</span>.10.10.1:4433<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span>-tls1_3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span>-groups<span class="w"> </span>X25519<span class="w"> </span><span class="se">\</span>
+</span></code></pre></div>
+<p>We can then examine the resulting Client Hello in Wireshark.</p>
+<figure id="figure-6">
+<p><img alt="Figure 6: Classical Handshake Client Hello length" src="../../images/PQLENGTH3.png" />
+  </p>
+<figcaption>Figure 6: Classical Handshake Client Hello length</figcaption>
+</figure>
+<p>As shown in Figure 6, the classical X25519 key share takes 38 bytes out of a total packet size of 210 bytes, or approximately 18% of the total packet.</p>
+<p>Similarly, Figure 7 shows that the classical key share takes 36 bytes out of a total packet size of 122 bytes, or approximately 30% of the total packet.</p>
+<figure id="figure-7">
+<p><img alt="Figure 7: Classical Handshake Server Hello length" src="../../images/PQLENGTH4.png" />
+  </p>
+<figcaption>Figure 7: Classical Handshake Server Hello length</figcaption>
+</figure>
+<p>The difference between the total packet sizes and the proportion of each packet occupied by the key exchange material is significant and demonstrates the expected overhead introduced by the hybrid construction.</p>
+<p>Although hybrid key exchange provides additional protection against future quantum attacks, it naturally requires more cryptographic material than classical key exchange. This material requires additional resources to generate and process, as well as additional bandwidth to store and transmit.</p>
+<p>This illustrates one of the main trade-offs between classical and hybrid methods: classical methods require fewer resources but are vulnerable to sufficiently powerful future quantum computers, while hybrid methods provide additional post-quantum protection at the cost of increased computational, storage, and network requirements.</p>
+<h2 id="ml-kem-primitive">ML-KEM primitive</h2>
+<p>The use of ML-KEM in a key exchange involves the encapsulation and decapsulation of a shared secret. In this experiment, we will perform the encapsulation and decapsulation process locally to understand how it works, what it does, and how the resulting shared secret can be verified.</p>
+<p>We begin by creating a directory to work in on PQ1 and generating a key using ML-KEM-768:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/lab/mlkem
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>/lab/mlkem
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>openssl<span class="w"> </span>genpkey<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span>-algorithm<span class="w"> </span>ML-KEM-768<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span>-out<span class="w"> </span>mlkem768.key
+</span></code></pre></div>
+<p>We can inspect the generated key with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>openssl<span class="w"> </span>pkey<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span>-in<span class="w"> </span>mlkem768.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span>-text<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>-noout
+</span></code></pre></div>
+<p>This displays information about the generated ML-KEM key material, including the components used for encapsulation and decapsulation.</p>
+<p>Next, we will generate the public key and use it to encapsulate a shared secret:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>openssl<span class="w"> </span>pkey<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>-in<span class="w"> </span>mlkem768.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span>-pubout<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span>-out<span class="w"> </span>mlkem768.pub
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>openssl<span class="w"> </span>pkeyutl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span>-encap<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span>-inkey<span class="w"> </span>mlkem768.pub<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span>-pubin<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span>-out<span class="w"> </span>mlkem768.ct<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span>-secret<span class="w"> </span>mlkem768.secret
+</span></code></pre></div>
+<p>This operation generates a shared secret and encapsulates it, producing the corresponding ciphertext.</p>
+<p>We will now decapsulate the ciphertext and compare the resulting secret with the original shared secret, expecting them to match:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>openssl<span class="w"> </span>pkeyutl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span>-decap<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span>-inkey<span class="w"> </span>mlkem768.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span>-in<span class="w"> </span>mlkem768.ct<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span>-secret<span class="w"> </span>mlkem768.decapsulated
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>sha256sum<span class="w"> </span>mlkem768.secret
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>sha256sum<span class="w"> </span>mlkem768.decapsulated
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>cmp<span class="w"> </span>mlkem768.secret<span class="w"> </span>mlkem768.decapsulated
+</span></code></pre></div>
+<p>The first command performs the decapsulation and writes the resulting shared secret to mlkem768.decapsulated. The next two commands calculate the SHA-256 hashes of the original and decapsulated secrets, allowing us to verify that they are identical. Finally, cmp directly compares the two files.</p>
+<p>If the operation was successful, the two SHA-256 hashes should be identical, and cmp should produce no output because the files are identical, as shown in Figure 8.</p>
+<figure id="figure-8">
+<p><img alt="Figure 8: MLKEM encapsulation check" src="../../images/PQENCAP.png" />
+  </p>
+<figcaption>Figure 8: MLKEM encapsulation check</figcaption>
+</figure>
+<h2 id="hybrid-group-mismatch">Hybrid Group Mismatch</h2>
+<p>For our final experiment, we will examine how TLS handles mismatches between key exchange groups, including mismatches between classical and hybrid groups and between different hybrid groups.</p>
+<p>First, we will configure the server to use only the classical X25519 group:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>openssl<span class="w"> </span>s_server<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span>-accept<span class="w"> </span><span class="m">4433</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span>-cert<span class="w"> </span>/lab/certs/server.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>-key<span class="w"> </span>/lab/certs/server.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span>-tls1_3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span>-groups<span class="w"> </span>X25519<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span>-www
+</span></code></pre></div>
+<p>Then, we will connect to it using a client restricted to the hybrid X25519MLKEM768 group:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>openssl<span class="w"> </span>s_client<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span>-connect<span class="w"> </span><span class="m">10</span>.10.10.1:4433<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>-tls1_3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span>-groups<span class="w"> </span>X25519MLKEM768<span class="w"> </span><span class="se">\</span>
+</span></code></pre></div>
+<p>The handshake should fail because the client and server do not have a mutually supported key exchange group.</p>
+<p>The resulting TLS alert can be observed during the handshake. In this case, the alert is SSL alert number 40, as shown in Figure 9. This alert corresponds to a handshake failure, indicating that the peers could not successfully negotiate the required TLS parameters.</p>
+<figure id="figure-9">
+<p><img alt="Figure 9: Handshake failure between classic and hybrid groups" src="../../images/PQMIS1.png" />
+  </p>
+<figcaption>Figure 9: Handshake failure between classic and hybrid groups</figcaption>
+</figure>
+<p>We expected this outcome because the client and server are restricted to different groups. However, what happens if we try the same experiment using two different hybrid groups?</p>
+<p>To do this, reset the server and use the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>openssl<span class="w"> </span>s_server<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span>-accept<span class="w"> </span><span class="m">4433</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span>-cert<span class="w"> </span>/lab/certs/server.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span>-key<span class="w"> </span>/lab/certs/server.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span>-tls1_3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span>-groups<span class="w"> </span>SecP384r1MLKEM1024<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span>-www
+</span></code></pre></div>
+<p>This will start a new server restricted to the SecP384r1MLKEM1024 hybrid key exchange group.</p>
+<p>Then, reconnect using the same hybrid client as before and observe the outcome:</p>
+<figure id="figure-10">
+<p><img alt="Figure 10: Handshake failure between two hybrid groups" src="../../images/PQMIS2.png" />
+  </p>
+<figcaption>Figure 10: Handshake failure between two hybrid groups</figcaption>
+</figure>
+<p>As we can see in Figure 10, even though both groups are hybrid, a mismatch still occurs and the handshake ends with an error.</p>
+<p>The important point is that the failure does not occur simply because one group is classical and the other is hybrid. Instead, the handshake fails because the client and server do not share a mutually supported group.</p>
+<p>The same principle applies when both groups are hybrid. Even though X25519MLKEM768 and SecP384r1MLKEM1024 are both hybrid groups, they are different key exchange groups and cannot be used interchangeably.</p>
+<p>TLS does not require the client and server to use groups from the same algorithm family. Instead, they must have at least one mutually supported group that can be successfully negotiated and used for the handshake.</p>
+<p>With this final experiment, we have completed the PQ and hybrid key exchange section. We hope that this laboratory has helped you learn more about post-quantum and hybrid methods, including what they are, how they differ from classical methods, how they are constructed, how they are used, and the advantages and disadvantages associated with their deployment.</p>
+<p>We hope you have enjoyed our laboratories and that we will see you again!</p>
 
 
 

@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#post-quantum-and-hybrid-key-exchange-methods-laboratory" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1593,7 +1598,7 @@
   <span class="md-ellipsis">
     
   
-    Post-Quantum and Hybrid Key Exchange
+    PQ and Hybrid Key Exchange
   
 
     
@@ -1609,7 +1614,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Post-Quantum and Hybrid Key Exchange
+    PQ and Hybrid Key Exchange
   
 
           </label>
@@ -1629,6 +1634,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1645,6 +1668,67 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#post-quantum-and-hybrid-key-exchange-methods-laboratory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Quantum and Hybrid Key Exchange methods Laboratory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-lattice-based-kems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module-Lattice-based KEMs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1712,6 +1796,58 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#post-quantum-and-hybrid-key-exchange-methods-laboratory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Quantum and Hybrid Key Exchange methods Laboratory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-lattice-based-kems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module-Lattice-based KEMs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Laboratory Topology
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Device Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1732,7 +1868,77 @@
 
   <h1>Overview</h1>
 
-
+<h2 id="post-quantum-and-hybrid-key-exchange-methods-laboratory">Post-Quantum and Hybrid Key Exchange methods Laboratory</h2>
+<p>The post-quantum readiness of secure tunneling protocols is primarily determined by how key establishment, authentication, and trust anchors are defined within their handshake mechanisms.</p>
+<p>Protocols that rely on classical public-key cryptography for key exchange or authentication are vulnerable to future quantum adversaries, particularly under the "harvest now, decrypt later" threat model.</p>
+<p>In contrast, symmetric cryptography remains comparatively resilient, as quantum attacks provide only a quadratic advantage. This can be mitigated through the use of larger key sizes, such as the ones used in AES-256.</p>
+<p>A central element of current post-quantum transition strategies is the use of hybrid key exchange, where session secrets are derived from both a classical Diffie–Hellman exchange and a post-quantum Key Encapsulation Mechanism (KEM). This approach provides confidentiality as long as at least one of the two underlying primitives remains secure.</p>
+<h2 id="module-lattice-based-kems">Module-Lattice-based KEMs</h2>
+<p>The Module-Lattice-Based Key Encapsulation Mechanism (ML-KEM), standardized by NIST as FIPS 203, is derived from the CRYSTALS-Kyber algorithm family.</p>
+<p>ML-KEM is based on the hardness of the Module Learning With Errors (Module-LWE) problem, a generalization of the Learning With Errors (LWE) problem. LWE problems rely on the difficulty of solving systems of noisy linear equations over finite rings or modules.</p>
+<p>Unlike classical public-key schemes such as RSA or elliptic-curve cryptography, whose security is tied to integer factorization or discrete logarithms, no efficient algorithm is currently known for solving Module-LWE on either classical or quantum computers. Module-LWE is believed to be resistant to Shor's algorithm, which renders RSA and ECC insecure in the presence of sufficiently large quantum computers.</p>
+<p>In hybrid constructions, the ML-KEM-derived secret is combined with a classical ECDHE shared secret and expanded via HKDF, providing backward compatibility and supporting incremental deployment.</p>
+<h2 id="laboratory-topology">Laboratory Topology</h2>
+<p>The topology of this laboratory consists of:</p>
+<ul>
+<li>Two Docker containers, PQ1 and PQ2, using the image ghcr.io/groudonramsay/ubuntu-tls:latest.</li>
+</ul>
+<p>The topology is visible in Figure 1:</p>
+<figure id="figure-1">
+<p><img alt="Figure 1: PQ Topology" src="../images/PQTOPO.png" />
+  </p>
+<figcaption>Figure 1: PQ Topology</figcaption>
+</figure>
+<p>When adding the container to your templates, use 2 adapters and the following environment variables:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>--cap-add<span class="w"> </span>NET_ADMIN
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>--cap-add<span class="w"> </span>NET_RAW
+</span></code></pre></div>
+<h2 id="device-configuration">Device Configuration</h2>
+<p>We will begin the configuration by adding the necessary IP addresses for our TLS devices to function properly.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>PQ1:
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.10.10.2/24<span class="w"> </span>dev<span class="w"> </span>eth0
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>PQ2:
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>ip<span class="w"> </span>addr<span class="w"> </span>add<span class="w"> </span><span class="m">10</span>.10.10.1/24<span class="w"> </span>dev<span class="w"> </span>eth0
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>ip<span class="w"> </span>link<span class="w"> </span><span class="nb">set</span><span class="w"> </span>eth0<span class="w"> </span>up
+</span></code></pre></div>
+<p>Then, we will prepare PQ2 to act as the TLS server:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>/lab/certs
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>/lab/certs
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span>server.key<span class="w"> </span><span class="m">2048</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span>-key<span class="w"> </span>server.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span>-out<span class="w"> </span>server.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=tls-server&quot;</span>
+</span></code></pre></div>
+<p>We can test the TLS connection with the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>PQ2/Server
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>openssl<span class="w"> </span>s_server<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span>-accept<span class="w"> </span><span class="m">4433</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span>-cert<span class="w"> </span>/lab/certs/server.crt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span>-key<span class="w"> </span>/lab/certs/server.key<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span>-tls1_3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span>-www
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>PQ1/Client:
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>openssl<span class="w"> </span>s_client<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span>-connect<span class="w"> </span><span class="m">10</span>.10.10.1:4433<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span>-tls1_3<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span>-groups<span class="w"> </span>X25519MLKEM768<span class="w"> </span><span class="se">\</span>
+</span></code></pre></div>
+<p>You should see a successful connection, which includes the usage of a hybrid key exchange method, x25519 ML-KEM768.</p>
+<div class="admonition note">
+<p class="admonition-title">Because Docker images and containers are used for our devices, it is also possible to perform this laboratory in Containerlab if that is your preference.</p>
+</div>
+<p>With all configurations implemented and tested, we can now move forward to the <a href="experiments/">Experiments</a>.</p>
 
 
 
